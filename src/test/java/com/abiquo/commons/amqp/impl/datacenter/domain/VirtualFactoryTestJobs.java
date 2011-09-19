@@ -45,13 +45,13 @@ public class VirtualFactoryTestJobs
                 "sufixDNS", 0) //
             // .primaryDisk("RAW", "1024", "iqn.bla.bla-lun-0")
             .primaryDisk(DiskFormatType.RAW, 1024l, "nfs-devel:/opt/vm_repo",
-                "1/rs.bcn/m0n0/m0n0.iso", "datastore1") //
+                "1/rs.bcn/m0n0/m0n0.iso", "datastore1", "http://localhost/am") //
             .addAuxDisk(DiskFormatType.RAW, 1024l, "iqn....", "sdasd", 1);
 
     }
 
     public static ConfigureVirtualMachineOp testConfigureVirtualMachine(
-        VirtualMachineDescriptionBuilder vmbuilder)
+        final VirtualMachineDescriptionBuilder vmbuilder)
     {
 
         return new ConfigureVirtualMachineJobBuilder() //
@@ -62,7 +62,7 @@ public class VirtualFactoryTestJobs
     }
 
     public static ApplyVirtualMachineStateOp testApplyVirtualMachineState(
-        VirtualMachineDescriptionBuilder vmbuilder)
+        final VirtualMachineDescriptionBuilder vmbuilder)
     {
         return new ApplyVirtualMachineStateJobBuilder() //
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
@@ -72,7 +72,7 @@ public class VirtualFactoryTestJobs
     }
 
     public static SnapshotVirtualMachineOp testSnapshotVirtualMachine(
-        VirtualMachineDescriptionBuilder vmbuilder)
+        final VirtualMachineDescriptionBuilder vmbuilder)
     {
         return new SnapshotVirtualMachineJobBuilder()
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
@@ -83,7 +83,7 @@ public class VirtualFactoryTestJobs
     }
 
     public static ReconfigureVirtualMachineOp testReconfigureVirtualMachine(
-        VirtualMachineDescriptionBuilder vmbuilder)
+        final VirtualMachineDescriptionBuilder vmbuilder)
     {
         return new ReconfigureVirtualMachineJobBuilder()//
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //

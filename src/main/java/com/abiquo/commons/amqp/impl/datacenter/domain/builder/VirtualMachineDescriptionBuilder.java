@@ -42,7 +42,7 @@ public class VirtualMachineDescriptionBuilder
 
     private SecondaryDisks secondaryDisks;
 
-    public VirtualMachineDescriptionBuilder hardware(int virtualCpu, int ramInMb)
+    public VirtualMachineDescriptionBuilder hardware(final int virtualCpu, final int ramInMb)
     {
         hardConf = new HardwareConfiguration();
         hardConf.setNumVirtualCpus(virtualCpu);
@@ -51,7 +51,7 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
-    public VirtualMachineDescriptionBuilder setRdPort(int rdport)
+    public VirtualMachineDescriptionBuilder setRdPort(final int rdport)
     {
         if (netConf == null)
         {
@@ -62,10 +62,11 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
-    public VirtualMachineDescriptionBuilder addNetwork(String macAddress, String ip,
-        String vSwitchName, String networkName, int vlanTag, String leaseName, String forwardMode,
-        String netAddress, String gateway, String mask, String primaryDNS, String secondaryDNS,
-        String sufixDNS, int sequence)
+    public VirtualMachineDescriptionBuilder addNetwork(final String macAddress, final String ip,
+        final String vSwitchName, final String networkName, final int vlanTag,
+        final String leaseName, final String forwardMode, final String netAddress,
+        final String gateway, final String mask, final String primaryDNS,
+        final String secondaryDNS, final String sufixDNS, final int sequence)
     {
         if (netConf == null)
         {
@@ -95,8 +96,9 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
-    public VirtualMachineDescriptionBuilder primaryDisk(DiskFormatType format,
-        long capacityInBytes, String repository, String sourcePath, String destinationDatastore)
+    public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
+        final long capacityInBytes, final String repository, final String sourcePath,
+        final String destinationDatastore, final String repositoryManagerAddress)
     {
 
         DiskStandard disk = new DiskStandard();
@@ -105,6 +107,7 @@ public class VirtualMachineDescriptionBuilder
         disk.setRepository(repository);
         disk.setPath(sourcePath);
         disk.setDestinationDatastore(destinationDatastore);
+        disk.setRepositoryManagerAddress(repositoryManagerAddress);
 
         primaryDisk = new PrimaryDisk();
         primaryDisk.setDiskStandard(disk);
@@ -113,8 +116,8 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
-    public VirtualMachineDescriptionBuilder primaryDisk(DiskFormatType format,
-        long capacityInBytes, String iqn, String destinationDatastore)
+    public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
+        final long capacityInBytes, final String iqn, final String destinationDatastore)
     {
         DiskStateful disk = new DiskStateful();
         disk.setFormat(format);
@@ -127,8 +130,9 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
-    public VirtualMachineDescriptionBuilder addAuxDisk(DiskFormatType format, long capacityInBytes,
-        String iqn, String destinationDatastore, int sequence)
+    public VirtualMachineDescriptionBuilder addAuxDisk(final DiskFormatType format,
+        final long capacityInBytes, final String iqn, final String destinationDatastore,
+        final int sequence)
     {
         if (secondaryDisks == null)
         {
@@ -146,7 +150,7 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
-    public VirtualMachineDefinition build(String uuid)
+    public VirtualMachineDefinition build(final String uuid)
     {
         VirtualMachineDefinition virtualMachine = new VirtualMachineDefinition();
         // TODO check not null
