@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://abiquo.com/tarantino/model/jobs"
+	xmlns:vf="http://abiquo.com/tarantino/model/jobs" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0"
+	attributeFormDefault="qualified" elementFormDefault="qualified">
+
+
+	<!-- HYPERVISOR LOGIN -->
+	<!-- TODO htype TODO restrict protocol -->
+	<xs:complexType name="HypervisorConnection">
+		<xs:sequence>
+			<xs:element name="hypervisorID" type="xs:string" />
+			<xs:element name="hypervisortype" type="xs:string" />
+			<xs:element name="ip" type="xs:string" />
+			<xs:element name="port" type="xs:string" />
+			<xs:element name="protocol" type="xs:string" />
+			<xs:element name="loginUser" type="xs:string" />
+			<xs:element name="loginPassword" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<!-- VIRTUAL MACHINE CREATION -->
+	<xs:complexType name="VirtualNIC">
+		<xs:sequence>
+			<xs:element name="vSwitchName" type="xs:string" />
+			<xs:element name="macAddress" type="xs:string" />
+			<xs:element name="networkName" type="xs:string" />
+			<xs:element name="vlanTag" type="xs:string" />
+			<!-- -->
+			<xs:element name="leaseName" type="xs:string" />
+			<xs:element name="forwardMode" type="xs:string" /> <!-- nat, route, bridget, none -->
+			<xs:element name="ip" type="xs:string" />
+			<xs:element name="netAddress" type="xs:string" />
+			<xs:element name="gateway" type="xs:string" />
+			<xs:element name="mask" type="xs:string" />
+			<!-- -->
+			<xs:element name="primaryDNS" type="xs:string" />
+			<xs:element name="secondaryDNS" type="xs:string" />
+			<xs:element name="sufixDNS" type="xs:string" />
+
+			<!-- -->
+			<xs:element name="sequence" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="HardwareConf">
+		<xs:sequence>
+			<xs:element name="virtualCpu" type="xs:int" />
+			<xs:element name="ramInMb" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="DiskDesc">
+		<xs:sequence>
+			<!-- match virtual machine Id to bundle (powerofff) -->
+			<xs:element name="diskID" type="xs:string" />
+			<xs:element name="format" type="xs:string" />
+			<xs:element name="capacity" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="DiskStandard">
+		<xs:complexContent>
+			<xs:extension base="vf:DiskDesc">
+				<xs:sequence>
+					<!-- on hardware conf ?? not the same on all hypervisors -->
+					<!-- note on create == repository on bundel == datastore -->
+					<!-- note nuless imported is the vmid -->
+					<!--el path en el targetDatastore per convencio es virtual machine id -->
+
+
+					<xs:element name="datastore" type="xs:string" />
+					<xs:element name="path" type="xs:string" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<xs:complexType name="DiskStatefull">
+		<xs:complexContent>
+			<xs:extension base="vf:DiskDesc">
+				<xs:sequence>
+					<xs:element name="iqn" type="xs:string" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="AuxDisk">
+		<xs:complexContent>
+			<xs:extension base="vf:DiskStatefull">
+				<xs:attribute name="sequence" type="xs:int" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+
+	<!-- el id el envia la peticio o el genera el vf ?? -->
+	<xs:complexType name="VirtualMachine">
+		<xs:sequence>
+			<xs:element name="machineID" type="xs:string" />
+			<xs:element name="hardwareConf" type="vf:HardwareConf" />
+			<xs:element name="networkConf">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="virtualNIC" type="vf:VirtualNIC"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="primaryDisk">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="DiskStandardConf">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="DiskStandard" type="vf:DiskStandard" />
+									<xs:element name="destinationDatastore" type="xs:string" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="diskStatefull" type="vf:DiskStatefull" />
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="secondaryDisks">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="auxDisk" type="vf:AuxDisk" minOccurs="0"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<!-- additonal hypervisor connf on the datacenter properties -->
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+
+	<xs:complexType name="CreateVirtualMachine"> <!-- EDIT the same -->
+		<xs:sequence>
+			<xs:element name="hypervisorConnection" type="vf:HypervisorConnection" />
+			<xs:element name="virtualMahine" type="vf:VirtualMachine" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<!-- LIFECYCLE -->
+	<xs:simpleType name="State">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="on" />
+			<xs:enumeration value="off" />
+			<xs:enumeration value="paused" />
+			<xs:enumeration value="resume" />
+			<xs:enumeration value="not_deployed" />
+			<xs:enumeration value="deployed" />
+			<xs:enumeration value="cancelled" />
+			<xs:enumeration value="unknow" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="VirtualMachineAction">
+		<xs:sequence>
+			<xs:element name="hypervisorConnection" type="vf:HypervisorConnection" />
+			<xs:element name="virtualMachineID" type="xs:string" />
+			<xs:element name="state" type="vf:State" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!-- BUNDLE -->
+	<xs:complexType name="SnapshootVirtualMachine">
+		<xs:sequence>
+			<xs:element name="hypervisorConnection" type="vf:HypervisorConnection" />
+			<xs:element name="sourceDisk">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="diskStandard" type="vf:DiskStandard" />
+						<xs:element name="diskStatefull" type="vf:DiskStatefull" />
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="destinationDisk" type="vf:DiskStandard" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<xs:element name="HypervisorConnection" type="vf:HypervisorConnection" />
+	<xs:element name="CreateVirtualMachine" type="vf:CreateVirtualMachine" />
+	<xs:element name="VirtualMachineAction" type="vf:VirtualMachineAction" />
+	<xs:element name="SnapshootVirtualMachine" type="vf:SnapshootVirtualMachine" />
+
+
+</xs:schema>
