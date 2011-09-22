@@ -21,15 +21,15 @@
 
 package com.abiquo.commons.amqp.impl.datacenter.domain;
 
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.CONFIGURE;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.DECONFIGURE;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.PAUSE;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.POWEROFF;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.POWERON;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.RECONFIGURE;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.RESET;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.RESUME;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.SNAPSHOT;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.CONFIGURE;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.DECONFIGURE;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.PAUSE;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.POWEROFF;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.POWERON;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.RECONFIGURE;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.RESET;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.RESUME;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.SNAPSHOT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -38,6 +38,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.testng.annotations.Test;
+
+import com.abiquo.commons.amqp.impl.tarantino.domain.State;
+import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction;
 
 public class StateTransactionTest
 {

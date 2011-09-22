@@ -21,17 +21,18 @@
 
 package com.abiquo.commons.amqp.impl.datacenter.domain;
 
-import com.abiquo.commons.amqp.impl.datacenter.domain.DiskDescription.DiskFormatType;
-import com.abiquo.commons.amqp.impl.datacenter.domain.HypervisorConnection.HypervisorType;
-import com.abiquo.commons.amqp.impl.datacenter.domain.builder.ApplyVirtualMachineStateJobBuilder;
-import com.abiquo.commons.amqp.impl.datacenter.domain.builder.ConfigureVirtualMachineJobBuilder;
-import com.abiquo.commons.amqp.impl.datacenter.domain.builder.ReconfigureVirtualMachineJobBuilder;
-import com.abiquo.commons.amqp.impl.datacenter.domain.builder.SnapshotVirtualMachineJobBuilder;
-import com.abiquo.commons.amqp.impl.datacenter.domain.builder.VirtualMachineDescriptionBuilder;
-import com.abiquo.commons.amqp.impl.datacenter.domain.operations.ApplyVirtualMachineStateOp;
-import com.abiquo.commons.amqp.impl.datacenter.domain.operations.ConfigureVirtualMachineOp;
-import com.abiquo.commons.amqp.impl.datacenter.domain.operations.ReconfigureVirtualMachineOp;
-import com.abiquo.commons.amqp.impl.datacenter.domain.operations.SnapshotVirtualMachineOp;
+import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction;
+import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
+import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
+import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ApplyVirtualMachineStateJobBuilder;
+import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ConfigureVirtualMachineJobBuilder;
+import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ReconfigureVirtualMachineJobBuilder;
+import com.abiquo.commons.amqp.impl.tarantino.domain.builder.SnapshotVirtualMachineJobBuilder;
+import com.abiquo.commons.amqp.impl.tarantino.domain.builder.VirtualMachineDescriptionBuilder;
+import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMachineStateOp;
+import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ConfigureVirtualMachineOp;
+import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ReconfigureVirtualMachineOp;
+import com.abiquo.commons.amqp.impl.tarantino.domain.operations.SnapshotVirtualMachineOp;
 
 public class VirtualFactoryTestJobs
 {

@@ -2,8 +2,9 @@ package com.abiquo.commons.amqp.impl.datacenter.domain;
 
 import org.testng.annotations.Test;
 
-import com.abiquo.commons.amqp.impl.datacenter.domain.dto.BaseJob;
-import com.abiquo.commons.amqp.impl.datacenter.domain.dto.DatacenterTasks;
+import com.abiquo.commons.amqp.impl.tarantino.domain.dto.BaseJob;
+import com.abiquo.commons.amqp.impl.tarantino.domain.dto.DatacenterTasks;
+
 import static org.testng.Assert.*;
 
 public class DatacenterTasksTest

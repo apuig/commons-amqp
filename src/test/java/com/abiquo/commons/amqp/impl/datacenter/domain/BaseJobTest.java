@@ -2,10 +2,10 @@ package com.abiquo.commons.amqp.impl.datacenter.domain;
 
 import org.testng.annotations.Test;
 
-import static com.abiquo.commons.amqp.impl.datacenter.domain.dto.BaseJob.getParent;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.dto.BaseJob.getParentAt;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.dto.BaseJob.isRoot;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.dto.BaseJob.level;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.dto.BaseJob.getParent;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.dto.BaseJob.getParentAt;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.dto.BaseJob.isRoot;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.dto.BaseJob.level;
 import static org.testng.Assert.*;
 
 public class BaseJobTest

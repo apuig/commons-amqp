@@ -29,6 +29,9 @@ import java.util.Set;
 
 import org.testng.annotations.Test;
 
+import com.abiquo.commons.amqp.impl.tarantino.domain.State;
+import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction;
+
 public class StateTest
 {
     @Test
