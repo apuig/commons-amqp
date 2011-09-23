@@ -2,7 +2,7 @@ package com.abiquo.commons.amqp.impl.bpm.domain;
 
 import com.abiquo.commons.amqp.util.JSONUtils;
 
-public class StatefulDiskRequest
+public class StatefulDiskRequest extends BPMRequest
 {
     private String storagePoolTarget;
 
@@ -13,6 +13,10 @@ public class StatefulDiskRequest
     private Long volumeSize;
 
     private Integer enterpriseId;
+
+    public StatefulDiskRequest()
+    {
+    }
 
     public StatefulDiskRequest(final String storagePoolTarget, final String diskPath,
         final int nodeId, final Long volumeSize, final int enterpriseId)

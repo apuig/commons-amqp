@@ -1,21 +1,20 @@
 package com.abiquo.commons.amqp.impl.bpm.domain;
 
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+import org.codehaus.jackson.annotate.JsonTypeInfo.As;
+import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
+
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterRequest;
 import com.abiquo.commons.amqp.util.JSONUtils;
 
+@JsonTypeInfo(use = Id.CLASS, include = As.PROPERTY, property = "@class")
 public class BPMRequest extends DatacenterRequest
 {
     protected Sender sender = Sender.UNKNOWN;
 
-    protected ImageConverterRequest conversionRequest = null;
-
-    protected StatefulDiskRequest statefulRequest = null;
-
     public BPMRequest()
     {
         this.sender = Sender.UNKNOWN;
-        this.conversionRequest = null;
-        this.statefulRequest = null;
     }
 
     public Sender getSender()
@@ -28,38 +27,8 @@ public class BPMRequest extends DatacenterRequest
         this.sender = sender;
     }
 
-    public ImageConverterRequest getConversionRequest()
-    {
-        return conversionRequest;
-    }
-
-    public void setConversionRequest(ImageConverterRequest conversionRequest)
-    {
-        this.conversionRequest = conversionRequest;
-    }
-
-    public StatefulDiskRequest getStatefulRequest()
-    {
-        return statefulRequest;
-    }
-
-    public void setStatefulRequest(StatefulDiskRequest statefulRequest)
-    {
-        this.statefulRequest = statefulRequest;
-    }
-
     public static BPMRequest fromByteArray(final byte[] bytes)
     {
         return JSONUtils.deserialize(bytes, BPMRequest.class);
-    }
-
-    public boolean isConversionRequest()
-    {
-        return conversionRequest != null;
-    }
-
-    public boolean isStatefulRequest()
-    {
-        return statefulRequest != null;
     }
 }

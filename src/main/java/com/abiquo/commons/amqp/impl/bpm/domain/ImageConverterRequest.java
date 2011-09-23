@@ -2,7 +2,7 @@ package com.abiquo.commons.amqp.impl.bpm.domain;
 
 import com.abiquo.commons.amqp.util.JSONUtils;
 
-public class ImageConverterRequest
+public class ImageConverterRequest extends BPMRequest
 {
     private String imagePathSource;
 

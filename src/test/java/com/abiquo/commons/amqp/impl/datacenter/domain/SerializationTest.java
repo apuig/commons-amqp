@@ -21,6 +21,12 @@
 
 package com.abiquo.commons.amqp.impl.datacenter.domain;
 
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import com.abiquo.commons.amqp.impl.bpm.domain.BPMRequest;
+import com.abiquo.commons.amqp.impl.bpm.domain.ImageConverterRequest;
+import com.abiquo.commons.amqp.impl.bpm.domain.StatefulDiskRequest;
 
 public class SerializationTest
 {
@@ -118,4 +124,25 @@ public class SerializationTest
     // {
     // return testSnapshotVirtualMachine(testVirtualMachine());
     // }
+
+    @Test
+    public void test_BPMRequestInheritance()
+    {
+        ImageConverterRequest imageRequest = new ImageConverterRequest();
+        String serialization = new String(imageRequest.toByteArray());
+
+        BPMRequest deserialization = BPMRequest.fromByteArray(serialization.getBytes());
+        Assert.assertNotNull(deserialization);
+        Assert.assertTrue(deserialization instanceof ImageConverterRequest);
+        Assert.assertFalse(deserialization instanceof StatefulDiskRequest);
+
+        StatefulDiskRequest statefulRequest = new StatefulDiskRequest("", "", 1, 22L, 22);
+        serialization = new String(statefulRequest.toByteArray());
+
+        deserialization = BPMRequest.fromByteArray(serialization.getBytes());
+        Assert.assertNotNull(deserialization);
+        Assert.assertTrue(deserialization instanceof StatefulDiskRequest);
+        Assert.assertFalse(deserialization instanceof ImageConverterRequest);
+    }
+
 }
