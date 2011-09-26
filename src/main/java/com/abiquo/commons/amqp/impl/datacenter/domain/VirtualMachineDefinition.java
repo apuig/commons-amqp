@@ -309,7 +309,7 @@ public class VirtualMachineDefinition
         @Override
         public Iterator<AuxiliaryDisk> iterator()
         {
-            return auxiliaryDisks.iterator();
+            return getAuxiliaryDisks().iterator();
         }
     }
 }
