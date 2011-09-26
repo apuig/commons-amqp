@@ -23,9 +23,13 @@ package com.abiquo.commons.amqp.impl.datacenter.domain;
 
 public class DiskDescription
 {
+    protected String name;
+
     protected DiskFormatType format;
 
     protected long capacityInBytes;
+
+    protected long diskFileSizeInBytes;
 
     /**
      * Datastore (rootPath + directory) where the virtualmachine is booted. VirtualMachine UUID is
@@ -38,7 +42,7 @@ public class DiskDescription
         return format;
     }
 
-    public void setFormat(DiskFormatType format)
+    public void setFormat(final DiskFormatType format)
     {
         this.format = format;
     }
@@ -48,7 +52,7 @@ public class DiskDescription
         return capacityInBytes;
     }
 
-    public void setCapacityInBytes(long capacityInBytes)
+    public void setCapacityInBytes(final long capacityInBytes)
     {
         this.capacityInBytes = capacityInBytes;
     }
@@ -60,9 +64,29 @@ public class DiskDescription
         // : destinationDatastore + '/';
     }
 
-    public void setDestinationDatastore(String destinationDatastore)
+    public void setDestinationDatastore(final String destinationDatastore)
     {
         this.destinationDatastore = destinationDatastore;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(final String name)
+    {
+        this.name = name;
+    }
+
+    public long getDiskFileSizeInBytes()
+    {
+        return diskFileSizeInBytes;
+    }
+
+    public void setDiskFileSizeInBytes(final long diskFileSizeInBytes)
+    {
+        this.diskFileSizeInBytes = diskFileSizeInBytes;
     }
 
     // TODO duplicated
@@ -94,7 +118,7 @@ public class DiskDescription
 
         private String libvirtFormat;
 
-        private DiskFormatType(String libvirtFormat)
+        private DiskFormatType(final String libvirtFormat)
         {
             this.libvirtFormat = libvirtFormat;
         }
