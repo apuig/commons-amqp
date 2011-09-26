@@ -6,6 +6,8 @@ import static com.abiquo.commons.amqp.util.ConsumerUtils.rejectMessage;
 import java.io.IOException;
 
 import com.abiquo.commons.amqp.impl.bpm.domain.BPMRequest;
+import com.abiquo.commons.amqp.impl.bpm.domain.ImageConverterRequest;
+import com.abiquo.commons.amqp.impl.bpm.domain.StatefulDiskRequest;
 import com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConfiguration.RequestType;
 import com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConsumer;
 import com.rabbitmq.client.Envelope;
@@ -24,19 +26,15 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer
 
         if (request != null)
         {
-            // for (DatacenterRequestCallback callback : callbacks)
-            // {
-            // BPMRequestCallback call = (BPMRequestCallback) callback;
-            //
-            // if (request.isConversionRequest())
-            // {
-            // call.convertDisk(request.getConversionRequest());
-            // }
-            // else if (request.isStatefulRequest())
-            // {
-            // call.dumpDiskToVolume(request.getStatefulRequest());
-            // }
-            // }
+            for (BPMRequestCallback callback : callbacksMap.get(request.getClass()))
+            {
+                if (request instanceof ImageConverterRequest)
+                {
+                }
+                else if (request instanceof StatefulDiskRequest)
+                {
+                }
+            }
 
             ackMessage(channel, envelope.getDeliveryTag());
         }
