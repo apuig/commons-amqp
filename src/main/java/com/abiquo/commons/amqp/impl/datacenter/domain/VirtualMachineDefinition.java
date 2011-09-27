@@ -306,6 +306,7 @@ public class VirtualMachineDefinition
             return this.auxiliaryDisks;
         }
 
+        @JsonIgnore
         public boolean isEmpty()
         {
             return getAuxiliaryDisks().isEmpty();
