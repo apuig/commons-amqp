@@ -306,6 +306,11 @@ public class VirtualMachineDefinition
             return this.auxiliaryDisks;
         }
 
+        public boolean isEmpty()
+        {
+            return getAuxiliaryDisks().isEmpty();
+        }
+
         @Override
         public Iterator<AuxiliaryDisk> iterator()
         {
