@@ -60,7 +60,7 @@ public class DiskStateful extends DiskDescription
     }
 
     @JsonIgnore
-    public String getIqn()
+    public String getIQN()
     {
         return AddressingUtils.getIQN(location);
     }
