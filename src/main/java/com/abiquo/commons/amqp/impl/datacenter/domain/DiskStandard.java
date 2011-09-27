@@ -40,6 +40,8 @@ public class DiskStandard extends DiskDescription
      */
     protected String repositoryManagerAddress;
 
+    protected long diskFileSizeInBytes;
+
     public String getRepository()
     {
         return repository;
@@ -68,5 +70,15 @@ public class DiskStandard extends DiskDescription
     public void setRepositoryManagerAddress(final String repositoryManagerAddress)
     {
         this.repositoryManagerAddress = repositoryManagerAddress;
+    }
+
+    public long getDiskFileSizeInBytes()
+    {
+        return diskFileSizeInBytes;
+    }
+
+    public void setDiskFileSizeInBytes(final long diskFileSizeInBytes)
+    {
+        this.diskFileSizeInBytes = diskFileSizeInBytes;
     }
 }
