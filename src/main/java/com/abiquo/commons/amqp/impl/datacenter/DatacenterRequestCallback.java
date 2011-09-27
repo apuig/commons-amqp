@@ -1,5 +1,8 @@
 package com.abiquo.commons.amqp.impl.datacenter;
 
-public interface DatacenterRequestCallback
+import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterRequest;
+
+public abstract class DatacenterRequestCallback
 {
+    public abstract Class< ? extends DatacenterRequest> getRequestClass();
 }
