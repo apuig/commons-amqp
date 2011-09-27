@@ -21,15 +21,15 @@
 
 package com.abiquo.commons.amqp.impl.datacenter.domain;
 
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.CONFIGURE;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.DECONFIGURE;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.PAUSE;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.POWEROFF;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.POWERON;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.RECONFIGURE;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.RESET;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.RESUME;
-import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction.SNAPSHOT;
+import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition.CONFIGURE;
+import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition.DECONFIGURE;
+import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition.PAUSE;
+import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition.POWEROFF;
+import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition.POWERON;
+import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition.RECONFIGURE;
+import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition.RESET;
+import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition.RESUME;
+import static com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition.SNAPSHOT;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
@@ -39,26 +39,26 @@ import java.util.Set;
 
 import org.testng.annotations.Test;
 
-public class StateTransactionTest
+public class StateTransitionTest
 {
     @Test
-    public void test_availableTransactions()
+    public void test_availableTransitions()
     {
-        Set<StateTransaction> transactions = new HashSet<StateTransaction>();
+        Set<StateTransition> transactions = new HashSet<StateTransition>();
 
-        transactions.add(StateTransaction.CONFIGURE);
-        transactions.add(StateTransaction.DECONFIGURE);
-        transactions.add(StateTransaction.PAUSE);
-        transactions.add(StateTransaction.POWEROFF);
-        transactions.add(StateTransaction.POWERON);
-        transactions.add(StateTransaction.RECONFIGURE);
-        transactions.add(StateTransaction.RESET);
-        transactions.add(StateTransaction.RESUME);
-        transactions.add(StateTransaction.SNAPSHOT);
+        transactions.add(StateTransition.CONFIGURE);
+        transactions.add(StateTransition.DECONFIGURE);
+        transactions.add(StateTransition.PAUSE);
+        transactions.add(StateTransition.POWEROFF);
+        transactions.add(StateTransition.POWERON);
+        transactions.add(StateTransition.RECONFIGURE);
+        transactions.add(StateTransition.RESET);
+        transactions.add(StateTransition.RESUME);
+        transactions.add(StateTransition.SNAPSHOT);
 
-        assertEquals(StateTransaction.values().length, 9);
+        assertEquals(StateTransition.values().length, 9);
 
-        for (StateTransaction transaction : StateTransaction.values())
+        for (StateTransition transaction : StateTransition.values())
         {
             assertTrue(transactions.contains(transaction));
         }

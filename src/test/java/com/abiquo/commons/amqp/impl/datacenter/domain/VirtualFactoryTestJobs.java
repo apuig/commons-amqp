@@ -67,7 +67,7 @@ public class VirtualFactoryTestJobs
         return new ApplyVirtualMachineStateJobBuilder() //
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
             .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
-            .state(StateTransaction.PAUSE)//
+            .state(StateTransition.PAUSE)//
             .buildApplyVirtualMachineStateDto();
     }
 

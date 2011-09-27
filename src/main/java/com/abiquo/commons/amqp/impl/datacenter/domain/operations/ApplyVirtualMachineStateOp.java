@@ -21,19 +21,19 @@
 
 package com.abiquo.commons.amqp.impl.datacenter.domain.operations;
 
-import com.abiquo.commons.amqp.impl.datacenter.domain.StateTransaction;
+import com.abiquo.commons.amqp.impl.datacenter.domain.StateTransition;
 import com.abiquo.commons.amqp.impl.datacenter.domain.VirtualMachineDefinition;
 
 public class ApplyVirtualMachineStateOp extends DatacenterJob
 {
-    protected StateTransaction transaction;
+    protected StateTransition transaction;
 
-    public StateTransaction getTransaction()
+    public StateTransition getTransaction()
     {
         return transaction;
     }
 
-    public void setTransaction(StateTransaction transaction)
+    public void setTransaction(StateTransition transaction)
     {
         this.transaction = transaction;
     }

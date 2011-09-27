@@ -33,7 +33,7 @@ public enum State
         return State.valueOf(value.toUpperCase());
     }
 
-    public State travel(StateTransaction transaction)
+    public State travel(StateTransition transaction)
     {
         if (!transaction.isValidOrigin(this))
         {
