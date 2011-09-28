@@ -1,15 +1,14 @@
 package com.abiquo.commons.amqp.impl.bpm;
 
-import com.abiquo.commons.amqp.impl.bpm.domain.BPMRequest;
+import com.abiquo.commons.amqp.consumer.RequestBasedCallback;
 import com.abiquo.commons.amqp.impl.bpm.domain.InitiatorRequest;
-import com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestCallback;
 
-public abstract class InitiatorRequestCallback extends DatacenterRequestCallback
+public abstract class InitiatorRequestCallback implements RequestBasedCallback
 {
     public abstract void getInitiatorIQN(InitiatorRequest request);
 
     @Override
-    public Class< ? extends BPMRequest> getRequestClass()
+    public Class<InitiatorRequest> getRequestClass()
     {
         return InitiatorRequest.class;
     }
