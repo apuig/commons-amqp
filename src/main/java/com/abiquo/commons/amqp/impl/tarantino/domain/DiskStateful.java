@@ -22,18 +22,79 @@
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+import com.abiquo.commons.amqp.util.AddressingUtils;
+
+/**
+ * @see AddressingUtils
+ */
 public class DiskStateful extends DiskDescription
 {
-    // TODO change name to location
-    protected String iqn;
+    /** The name of the disk in the storage device. */
+    protected String name;
 
-    public String getIqn()
+    /**
+     * The location of the disk in the form:
+     * 
+     * <pre>
+     * ip-<ip:port>-iscsi-<iqn>-lun-<lun>-part-<partition>
+     * </pre>
+     * 
+     * You should use the helper methods provided in this class to access concrete information about
+     * the location. See {@link AddressingUtils} for details about the format.
+     * 
+     * @see AddressingUtils
+     */
+    protected String location;
+
+    @JsonIgnore
+    public String getStorageDeviceIp()
     {
-        return iqn;
+        return AddressingUtils.getIP(location);
     }
 
-    public void setIqn(String value)
+    @JsonIgnore
+    public String getStorageDevicePort()
     {
-        this.iqn = value;
+        return AddressingUtils.getPort(location);
+    }
+
+    @JsonIgnore
+    public String getIQN()
+    {
+        return AddressingUtils.getIQN(location);
+    }
+
+    @JsonIgnore
+    public String getLUN()
+    {
+        return AddressingUtils.getLUN(location);
+    }
+
+    @JsonIgnore
+    public String getPartition()
+    {
+        return AddressingUtils.getPartition(location);
+    }
+
+    public String getLocation()
+    {
+        return location;
+    }
+
+    public void setLocation(final String value)
+    {
+        this.location = value;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(final String name)
+    {
+        this.name = name;
     }
 }

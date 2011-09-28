@@ -30,7 +30,7 @@ import java.util.Set;
 import org.testng.annotations.Test;
 
 import com.abiquo.commons.amqp.impl.tarantino.domain.State;
-import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction;
+import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
 
 public class StateTest
 {
@@ -57,61 +57,61 @@ public class StateTest
     @Test(expectedExceptions = RuntimeException.class)
     public void test_invalidTravel()
     {
-        State.UNKNOWN.travel(StateTransaction.CONFIGURE);
+        State.UNKNOWN.travel(StateTransition.CONFIGURE);
     }
 
     @Test
     public void test_configureTravel()
     {
-        assertEquals(State.UNDEPLOYED.travel(StateTransaction.CONFIGURE), State.CONFIGURED);
+        assertEquals(State.UNDEPLOYED.travel(StateTransition.CONFIGURE), State.CONFIGURED);
     }
 
     @Test
     public void test_reconfigureTravel()
     {
-        assertEquals(State.OFF.travel(StateTransaction.RECONFIGURE), State.CONFIGURED);
+        assertEquals(State.OFF.travel(StateTransition.RECONFIGURE), State.CONFIGURED);
     }
 
     @Test
     public void test_deconfigureTravel()
     {
-        assertEquals(State.CONFIGURED.travel(StateTransaction.DECONFIGURE), State.UNDEPLOYED);
+        assertEquals(State.CONFIGURED.travel(StateTransition.DECONFIGURE), State.UNDEPLOYED);
     }
 
     @Test
     public void test_powerOnTravel()
     {
-        assertEquals(State.OFF.travel(StateTransaction.POWERON), State.ON);
-        assertEquals(State.CONFIGURED.travel(StateTransaction.POWERON), State.ON);
+        assertEquals(State.OFF.travel(StateTransition.POWERON), State.ON);
+        assertEquals(State.CONFIGURED.travel(StateTransition.POWERON), State.ON);
     }
 
     @Test
     public void test_powerOffTravel()
     {
-        assertEquals(State.ON.travel(StateTransaction.POWEROFF), State.OFF);
+        assertEquals(State.ON.travel(StateTransition.POWEROFF), State.OFF);
     }
 
     @Test
     public void test_resetTravel()
     {
-        assertEquals(State.ON.travel(StateTransaction.RESET), State.ON);
+        assertEquals(State.ON.travel(StateTransition.RESET), State.ON);
     }
 
     @Test
     public void test_pauseTravel()
     {
-        assertEquals(State.ON.travel(StateTransaction.PAUSE), State.PAUSED);
+        assertEquals(State.ON.travel(StateTransition.PAUSE), State.PAUSED);
     }
 
     @Test
     public void test_resumeTravel()
     {
-        assertEquals(State.PAUSED.travel(StateTransaction.RESUME), State.ON);
+        assertEquals(State.PAUSED.travel(StateTransition.RESUME), State.ON);
     }
 
     @Test
     public void test_snapshotTravel()
     {
-        assertEquals(State.OFF.travel(StateTransaction.SNAPSHOT), State.OFF);
+        assertEquals(State.OFF.travel(StateTransition.SNAPSHOT), State.OFF);
     }
 }

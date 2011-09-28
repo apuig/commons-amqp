@@ -22,6 +22,7 @@
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -264,7 +265,7 @@ public class VirtualMachineDefinition
             return requiresMoveToDatastore;
         }
 
-        public void setRequiresMoveToDatastore(Boolean requiresMoveToDatastore)
+        public void setRequiresMoveToDatastore(final Boolean requiresMoveToDatastore)
         {
             this.requiresMoveToDatastore = requiresMoveToDatastore;
         }
@@ -292,7 +293,7 @@ public class VirtualMachineDefinition
         }
     }
 
-    public static class SecondaryDisks
+    public static class SecondaryDisks implements Iterable<AuxiliaryDisk>
     {
         protected List<AuxiliaryDisk> auxiliaryDisks;
 
@@ -304,6 +305,18 @@ public class VirtualMachineDefinition
             }
 
             return this.auxiliaryDisks;
+        }
+
+        @JsonIgnore
+        public boolean isEmpty()
+        {
+            return getAuxiliaryDisks().isEmpty();
+        }
+
+        @Override
+        public Iterator<AuxiliaryDisk> iterator()
+        {
+            return getAuxiliaryDisks().iterator();
         }
     }
 }

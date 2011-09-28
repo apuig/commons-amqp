@@ -122,7 +122,7 @@ public class VirtualMachineDescriptionBuilder
         DiskStateful disk = new DiskStateful();
         disk.setFormat(format);
         disk.setCapacityInBytes(capacityInBytes);
-        disk.setIqn(iqn);
+        disk.setLocation(iqn);
         disk.setDestinationDatastore(destinationDatastore);
 
         primaryDisk = new PrimaryDisk();
@@ -142,7 +142,7 @@ public class VirtualMachineDescriptionBuilder
         AuxiliaryDisk auxDisk = new AuxiliaryDisk();
         auxDisk.setFormat(format);
         auxDisk.setCapacityInBytes(capacityInBytes);
-        auxDisk.setIqn(iqn);
+        auxDisk.setLocation(iqn);
         auxDisk.setDestinationDatastore(destinationDatastore);
 
         secondaryDisks.getAuxiliaryDisks().add(auxDisk);

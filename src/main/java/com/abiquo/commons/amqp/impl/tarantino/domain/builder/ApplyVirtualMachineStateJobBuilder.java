@@ -21,13 +21,13 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain.builder;
 
-import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction;
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
+import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMachineStateOp;
 
 public class ApplyVirtualMachineStateJobBuilder extends ConfigureVirtualMachineJobBuilder
 {
-    private StateTransaction transaction;
+    private StateTransition transaction;
 
     public ApplyVirtualMachineStateJobBuilder connection(HypervisorType hypervisortype, String ip,
         String loginUser, String loginPassword)
@@ -44,7 +44,7 @@ public class ApplyVirtualMachineStateJobBuilder extends ConfigureVirtualMachineJ
         return this;
     }
 
-    public ApplyVirtualMachineStateJobBuilder state(StateTransaction transition)
+    public ApplyVirtualMachineStateJobBuilder state(StateTransition transition)
     {
         this.transaction = transition;
 
