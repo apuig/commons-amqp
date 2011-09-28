@@ -19,7 +19,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo.commons.amqp.mains;
+package com.abiquo.commons.amqp.manual;
 
 import java.io.IOException;
 
@@ -31,11 +31,11 @@ import com.abiquo.commons.amqp.impl.vsm.VSMConsumer;
 import com.abiquo.commons.amqp.impl.vsm.VSMProducer;
 import com.abiquo.commons.amqp.impl.vsm.domain.VirtualSystemEvent;
 
-public class VSMTest
+public class VSMManualTest
 {
     public static void main(String[] args) throws IOException
     {
-        new VSMTest().basic();
+        new VSMManualTest().basic();
     }
 
     @Test(enabled = false)

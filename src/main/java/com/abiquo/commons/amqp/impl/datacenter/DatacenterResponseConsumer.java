@@ -23,32 +23,43 @@ package com.abiquo.commons.amqp.impl.datacenter;
 
 import static com.abiquo.commons.amqp.impl.datacenter.DatacenterResponseConfiguration.NOTIFICATIONS_QUEUE;
 
-import com.abiquo.commons.amqp.consumer.BasicConsumer;
+import java.util.Set;
 
-public abstract class DatacenterResponseConsumer extends BasicConsumer<DatacenterResponseCallback>
+import com.abiquo.commons.amqp.consumer.RequestBasedCallback;
+import com.abiquo.commons.amqp.consumer.RequestBasedConsumer;
+import com.abiquo.commons.amqp.impl.bpm.BPMResponseCallback;
+import com.abiquo.commons.amqp.impl.bpm.domain.BPMResponse;
+import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterResponse;
+import com.rabbitmq.client.Envelope;
+
+public class DatacenterResponseConsumer extends RequestBasedConsumer<DatacenterResponse>
 {
     public DatacenterResponseConsumer()
     {
         super(new DatacenterResponseConfiguration(), NOTIFICATIONS_QUEUE);
     }
 
-    // @Override
-    // public void consume(Envelope envelope, byte[] body) throws IOException
-    // {
-    // DatacenterResponse notification = DatacenterResponse.fromByteArray(body);
-    //
-    // if (notification != null)
-    // {
-    // for (DatacenterResponseCallback callback : callbacks)
-    // {
-    // callback.onMessage(notification);
-    // }
-    //
-    // ackMessage(channel, envelope.getDeliveryTag());
-    // }
-    // else
-    // {
-    // rejectMessage(channel, envelope.getDeliveryTag());
-    // }
-    // }
+    @Override
+    protected DatacenterResponse deserializeRequest(Envelope envelope, byte[] body)
+    {
+        return DatacenterResponse.fromByteArray(body);
+    }
+
+    @Override
+    protected void consume(DatacenterResponse request, Set<RequestBasedCallback> callbacks)
+    {
+        if (request instanceof BPMResponse)
+        {
+            consume((BPMResponse) request, callbacks);
+        }
+    }
+
+    protected void consume(BPMResponse request, Set<RequestBasedCallback> callbacks)
+    {
+        for (RequestBasedCallback callback : callbacks)
+        {
+            BPMResponseCallback realCallback = (BPMResponseCallback) callback;
+            realCallback.processResponse(request);
+        }
+    }
 }
