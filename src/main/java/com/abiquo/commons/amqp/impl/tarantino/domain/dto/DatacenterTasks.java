@@ -12,8 +12,7 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMachineStateOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ConfigureVirtualMachineOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.DatacenterJob;
-
-;
+import com.abiquo.commons.amqp.util.JSONUtils;
 
 /**
  * Dependent or independent BaseJob collection
@@ -160,5 +159,10 @@ public class DatacenterTasks extends BaseJob
             // TODO reconfigure, snapshot
             throw new RuntimeException("Rollback not implemented for " + j.getClass().getName());
         }
+    }
+
+    public static DatacenterTasks fromByteArray(final byte[] bytes)
+    {
+        return JSONUtils.deserialize(bytes, DatacenterTasks.class);
     }
 }

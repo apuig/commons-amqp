@@ -19,7 +19,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo.commons.amqp.impl.datacenter.domain;
+package com.abiquo.commons.amqp.impl.tarantino;
 
 import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.CONFIGURE;
 import static com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction.DECONFIGURE;

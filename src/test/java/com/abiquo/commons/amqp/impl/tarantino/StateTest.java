@@ -19,7 +19,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo.commons.amqp.impl.datacenter.domain;
+package com.abiquo.commons.amqp.impl.tarantino;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
