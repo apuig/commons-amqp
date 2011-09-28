@@ -5,7 +5,7 @@ import com.abiquo.commons.amqp.impl.bpm.domain.BPMResponse;
 
 public abstract class BPMResponseCallback implements RequestBasedCallback
 {
-    public abstract void processResponse(BPMResponse request);
+    public abstract void processResponse(BPMResponse response);
 
     @Override
     public Class<BPMResponse> getRequestClass()
