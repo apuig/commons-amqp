@@ -1,9 +1,9 @@
 package com.abiquo.commons.amqp.impl.bpm.domain;
 
-import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterResponse;
+import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
 import com.abiquo.commons.amqp.util.JSONUtils;
 
-public class BPMResponse extends DatacenterResponse
+public class BPMResponse extends DatacenterNotification
 {
     protected Sender sender = Sender.UNKNOWN;
 

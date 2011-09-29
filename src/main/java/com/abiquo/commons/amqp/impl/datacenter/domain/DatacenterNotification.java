@@ -19,11 +19,26 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo.commons.amqp.impl.datacenter;
+package com.abiquo.commons.amqp.impl.datacenter.domain;
 
-import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterResponse;
+import org.codehaus.jackson.annotate.JsonTypeInfo;
+import org.codehaus.jackson.annotate.JsonTypeInfo.As;
+import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 
-public interface DatacenterResponseCallback
+import com.abiquo.commons.amqp.domain.Queuable;
+import com.abiquo.commons.amqp.util.JSONUtils;
+
+@JsonTypeInfo(use = Id.CLASS, include = As.PROPERTY, property = "@class")
+public abstract class DatacenterNotification implements Queuable
 {
-    public void onMessage(DatacenterResponse notification);
+    @Override
+    public byte[] toByteArray()
+    {
+        return JSONUtils.serialize(this);
+    }
+
+    public static DatacenterNotification fromByteArray(final byte[] bytes)
+    {
+        return JSONUtils.deserialize(bytes, DatacenterNotification.class);
+    }
 }

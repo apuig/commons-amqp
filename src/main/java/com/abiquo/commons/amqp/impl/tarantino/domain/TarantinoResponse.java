@@ -1,9 +1,9 @@
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
-import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterResponse;
+import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
 import com.abiquo.commons.amqp.util.JSONUtils;
 
-public class TarantinoResponse extends DatacenterResponse
+public class TarantinoResponse extends DatacenterNotification
 {
     protected String jobId;
 

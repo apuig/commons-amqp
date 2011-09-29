@@ -21,7 +21,7 @@
 
 package com.abiquo.commons.amqp.impl.datacenter;
 
-import static com.abiquo.commons.amqp.impl.datacenter.DatacenterResponseConfiguration.NOTIFICATIONS_QUEUE;
+import static com.abiquo.commons.amqp.impl.datacenter.DatacenterNotificationConfiguration.NOTIFICATIONS_QUEUE;
 
 import java.util.Set;
 
@@ -29,24 +29,24 @@ import com.abiquo.commons.amqp.consumer.RequestBasedCallback;
 import com.abiquo.commons.amqp.consumer.RequestBasedConsumer;
 import com.abiquo.commons.amqp.impl.bpm.BPMResponseCallback;
 import com.abiquo.commons.amqp.impl.bpm.domain.BPMResponse;
-import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterResponse;
+import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
 import com.rabbitmq.client.Envelope;
 
-public class DatacenterResponseConsumer extends RequestBasedConsumer<DatacenterResponse>
+public class DatacenterNotificationConsumer extends RequestBasedConsumer<DatacenterNotification>
 {
-    public DatacenterResponseConsumer()
+    public DatacenterNotificationConsumer()
     {
-        super(new DatacenterResponseConfiguration(), NOTIFICATIONS_QUEUE);
+        super(new DatacenterNotificationConfiguration(), NOTIFICATIONS_QUEUE);
     }
 
     @Override
-    protected DatacenterResponse deserializeRequest(Envelope envelope, byte[] body)
+    protected DatacenterNotification deserializeRequest(Envelope envelope, byte[] body)
     {
-        return DatacenterResponse.fromByteArray(body);
+        return DatacenterNotification.fromByteArray(body);
     }
 
     @Override
-    protected void consume(DatacenterResponse request, Set<RequestBasedCallback> callbacks)
+    protected void consume(DatacenterNotification request, Set<RequestBasedCallback> callbacks)
     {
         if (request instanceof BPMResponse)
         {
