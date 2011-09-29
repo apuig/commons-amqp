@@ -8,12 +8,11 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeInfo.As;
 import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 
-import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction;
+import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMachineStateOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ConfigureVirtualMachineOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.DatacenterJob;
-
-;
+import com.abiquo.commons.amqp.util.JSONUtils;
 
 /**
  * Dependent or independent BaseJob collection
@@ -134,7 +133,7 @@ public class DatacenterTasks extends BaseJob
         {
             ApplyVirtualMachineStateOp jj = new ApplyVirtualMachineStateOp();
 
-            jj.setTransaction(StateTransaction.DECONFIGURE);
+            jj.setTransaction(StateTransition.DECONFIGURE);
             jj.setHypervisorConnection(j.getHypervisorConnection());
             jj.setVirtualMachine(j.getVirtualMachine());
             jj.setIsRollback(true);
@@ -146,7 +145,7 @@ public class DatacenterTasks extends BaseJob
         {
             ApplyVirtualMachineStateOp jj = new ApplyVirtualMachineStateOp();
 
-            jj.setTransaction(StateTransaction.rollback(((ApplyVirtualMachineStateOp) j)
+            jj.setTransaction(StateTransition.rollback(((ApplyVirtualMachineStateOp) j)
                 .getTransaction()));
             jj.setHypervisorConnection(j.getHypervisorConnection());
             jj.setVirtualMachine(j.getVirtualMachine());
@@ -160,5 +159,10 @@ public class DatacenterTasks extends BaseJob
             // TODO reconfigure, snapshot
             throw new RuntimeException("Rollback not implemented for " + j.getClass().getName());
         }
+    }
+
+    public static DatacenterTasks fromByteArray(final byte[] bytes)
+    {
+        return JSONUtils.deserialize(bytes, DatacenterTasks.class);
     }
 }

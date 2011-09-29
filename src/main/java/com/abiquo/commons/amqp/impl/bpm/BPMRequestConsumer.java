@@ -2,16 +2,17 @@ package com.abiquo.commons.amqp.impl.bpm;
 
 import java.util.Set;
 
+import com.abiquo.commons.amqp.consumer.RequestBasedCallback;
 import com.abiquo.commons.amqp.impl.bpm.domain.BPMRequest;
 import com.abiquo.commons.amqp.impl.bpm.domain.ImageConverterRequest;
 import com.abiquo.commons.amqp.impl.bpm.domain.InitiatorRequest;
 import com.abiquo.commons.amqp.impl.bpm.domain.StatefulDiskRequest;
-import com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestCallback;
 import com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConfiguration.RequestType;
 import com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConsumer;
+import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterRequest;
 import com.rabbitmq.client.Envelope;
 
-public class BPMRequestConsumer extends DatacenterRequestConsumer<BPMRequest>
+public class BPMRequestConsumer extends DatacenterRequestConsumer
 {
     public BPMRequestConsumer(final String datacenterId)
     {
@@ -19,13 +20,14 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer<BPMRequest>
     }
 
     @Override
-    protected BPMRequest deserializeRequest(final Envelope envelope, final byte[] body)
+    protected DatacenterRequest deserializeRequest(final Envelope envelope, final byte[] body)
     {
         return BPMRequest.fromByteArray(body);
     }
 
     @Override
-    protected void consume(final BPMRequest request, final Set<DatacenterRequestCallback> callbacks)
+    protected void consume(final DatacenterRequest request,
+        final Set<RequestBasedCallback> callbacks)
     {
         if (request instanceof ImageConverterRequest)
         {
@@ -42,9 +44,9 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer<BPMRequest>
     }
 
     protected void consume(final ImageConverterRequest request,
-        final Set<DatacenterRequestCallback> callbacks)
+        final Set<RequestBasedCallback> callbacks)
     {
-        for (DatacenterRequestCallback callback : callbacks)
+        for (RequestBasedCallback callback : callbacks)
         {
             ImageConverterRequestCallback realCallback = (ImageConverterRequestCallback) callback;
             realCallback.convertDisk(request);
@@ -52,9 +54,9 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer<BPMRequest>
     }
 
     protected void consume(final StatefulDiskRequest request,
-        final Set<DatacenterRequestCallback> callbacks)
+        final Set<RequestBasedCallback> callbacks)
     {
-        for (DatacenterRequestCallback callback : callbacks)
+        for (RequestBasedCallback callback : callbacks)
         {
             StatefulDiskRequestCallback realCallback = (StatefulDiskRequestCallback) callback;
 
@@ -71,10 +73,9 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer<BPMRequest>
         }
     }
 
-    protected void consume(final InitiatorRequest request,
-        final Set<DatacenterRequestCallback> callbacks)
+    protected void consume(final InitiatorRequest request, final Set<RequestBasedCallback> callbacks)
     {
-        for (DatacenterRequestCallback callback : callbacks)
+        for (RequestBasedCallback callback : callbacks)
         {
             InitiatorRequestCallback realCallback = (InitiatorRequestCallback) callback;
             realCallback.getInitiatorIQN(request);

@@ -32,44 +32,43 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-
 /**
  * Valid transactions between {@link State}.
  */
-public enum StateTransaction
+public enum StateTransition
 {
-    // Configure transaction
+    // Configure transition
     CONFIGURE(singleton(UNDEPLOYED), CONFIGURED),
 
-    // Reconfigure transaction
+    // Reconfigure transition
     RECONFIGURE(singleton(OFF), CONFIGURED),
 
-    // Deconfigure transaction
+    // Deconfigure transition
     DECONFIGURE(singleton(CONFIGURED), UNDEPLOYED),
 
-    // PowerOn transaction
+    // PowerOn transition
     POWERON(new HashSet<State>(Arrays.asList(CONFIGURED, OFF)), ON),
 
-    // PowerOff transaction
+    // PowerOff transition
     POWEROFF(singleton(ON), OFF),
 
-    // Reset transaction
+    // Reset transition
     RESET(singleton(ON), ON),
 
-    // Pause transaction
+    // Pause transition
     PAUSE(singleton(ON), PAUSED),
 
-    // Resume transaction
+    // Resume transition
     RESUME(singleton(PAUSED), ON),
 
-    // Snapshot transaction
+    // Snapshot transition
     SNAPSHOT(singleton(OFF), OFF);
 
     private Set<State> origins;
 
     private State end;
 
-    private StateTransaction(Set<State> origins, State end)
+    private StateTransition(Set<State> origins, State end)
     {
         this.origins = origins;
         this.end = end;
@@ -85,12 +84,12 @@ public enum StateTransaction
         return this.origins.contains(origin);
     }
 
-    public static StateTransaction fromValue(String value)
+    public static StateTransition fromValue(String value)
     {
-        return StateTransaction.valueOf(value.toUpperCase());
+        return StateTransition.valueOf(value.toUpperCase());
     }
 
-    public static StateTransaction rollback(StateTransaction s)
+    public static StateTransition rollback(StateTransition s)
     {
         switch (s)
         {

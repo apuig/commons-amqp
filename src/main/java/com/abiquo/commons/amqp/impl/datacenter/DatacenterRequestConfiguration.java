@@ -24,7 +24,6 @@ package com.abiquo.commons.amqp.impl.datacenter;
 import java.io.IOException;
 
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
-import com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConfiguration.RequestType;
 import com.rabbitmq.client.Channel;
 
 public class DatacenterRequestConfiguration extends DefaultConfiguration

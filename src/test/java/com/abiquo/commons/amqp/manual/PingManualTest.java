@@ -19,14 +19,14 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo.commons.amqp.mains;
+package com.abiquo.commons.amqp.manual;
 
 import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import com.abiquo.commons.amqp.util.RabbitMQUtils;
 
-public class PingTest
+public class PingManualTest
 {
     @Test(enabled = false)
     public void ping()

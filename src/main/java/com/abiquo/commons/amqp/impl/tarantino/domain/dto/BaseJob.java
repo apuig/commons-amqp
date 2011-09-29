@@ -4,8 +4,10 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeInfo.As;
 import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 
+import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterRequest;
+
 @JsonTypeInfo(use = Id.CLASS, include = As.PROPERTY, property = "@class")
-public class BaseJob
+public class BaseJob extends DatacenterRequest
 {
     public final static int MAX_JOB_LEVEL = 1000;
 

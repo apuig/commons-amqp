@@ -19,11 +19,11 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo.commons.amqp.impl.datacenter.domain;
+package com.abiquo.commons.amqp.impl.tarantino;
 
-import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransaction;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
+import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ApplyVirtualMachineStateJobBuilder;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ConfigureVirtualMachineJobBuilder;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ReconfigureVirtualMachineJobBuilder;
@@ -68,7 +68,7 @@ public class VirtualFactoryTestJobs
         return new ApplyVirtualMachineStateJobBuilder() //
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
             .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
-            .state(StateTransaction.PAUSE)//
+            .state(StateTransition.PAUSE)//
             .buildApplyVirtualMachineStateDto();
     }
 

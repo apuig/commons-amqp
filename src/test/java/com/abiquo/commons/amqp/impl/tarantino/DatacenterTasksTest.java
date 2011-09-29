@@ -1,4 +1,4 @@
-package com.abiquo.commons.amqp.impl.datacenter.domain;
+package com.abiquo.commons.amqp.impl.tarantino;
 
 import org.testng.annotations.Test;
 

@@ -1,4 +1,4 @@
-package com.abiquo.commons.amqp.mains;
+package com.abiquo.commons.amqp.manual;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ import com.abiquo.commons.amqp.impl.bpm.domain.InitiatorRequest;
 import com.abiquo.commons.amqp.impl.bpm.domain.Sender;
 import com.abiquo.commons.amqp.impl.bpm.domain.StatefulDiskRequest;
 
-public class BPMTest
+public class BPMManualTest
 {
     public static void main(String[] args) throws IOException
     {

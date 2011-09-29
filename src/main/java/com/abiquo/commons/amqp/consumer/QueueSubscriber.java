@@ -23,12 +23,12 @@ package com.abiquo.commons.amqp.consumer;
 
 import java.io.IOException;
 
+import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
-import com.rabbitmq.client.AMQP.BasicProperties;
 
-public class QueueSubscriber<T extends BasicConsumer> extends DefaultConsumer
+public class QueueSubscriber<T extends BasicConsumer< ? >> extends DefaultConsumer
 {
     private T consumer;
 
