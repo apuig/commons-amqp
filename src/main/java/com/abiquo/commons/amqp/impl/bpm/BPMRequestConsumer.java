@@ -13,19 +13,19 @@ import com.rabbitmq.client.Envelope;
 
 public class BPMRequestConsumer extends DatacenterRequestConsumer<BPMRequest>
 {
-    public BPMRequestConsumer(String datacenterId)
+    public BPMRequestConsumer(final String datacenterId)
     {
         super(datacenterId, RequestType.BPM);
     }
 
     @Override
-    protected BPMRequest deserializeRequest(Envelope envelope, byte[] body)
+    protected BPMRequest deserializeRequest(final Envelope envelope, final byte[] body)
     {
         return BPMRequest.fromByteArray(body);
     }
 
     @Override
-    protected void consume(BPMRequest request, Set<DatacenterRequestCallback> callbacks)
+    protected void consume(final BPMRequest request, final Set<DatacenterRequestCallback> callbacks)
     {
         if (request instanceof ImageConverterRequest)
         {
@@ -41,7 +41,8 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer<BPMRequest>
         }
     }
 
-    protected void consume(ImageConverterRequest request, Set<DatacenterRequestCallback> callbacks)
+    protected void consume(final ImageConverterRequest request,
+        final Set<DatacenterRequestCallback> callbacks)
     {
         for (DatacenterRequestCallback callback : callbacks)
         {
@@ -50,7 +51,8 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer<BPMRequest>
         }
     }
 
-    protected void consume(StatefulDiskRequest request, Set<DatacenterRequestCallback> callbacks)
+    protected void consume(final StatefulDiskRequest request,
+        final Set<DatacenterRequestCallback> callbacks)
     {
         for (DatacenterRequestCallback callback : callbacks)
         {
@@ -59,17 +61,18 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer<BPMRequest>
             switch (request.getSender())
             {
                 case STATEFUL:
-                    realCallback.dumpVolumeToDisk(request);
+                    realCallback.dumpDiskToVolume(request);
                     break;
 
                 case STATEFUL_BUNDLE:
-                    realCallback.dumpDiskToVolume(request);
+                    realCallback.dumpVolumeToDisk(request);
                     break;
             }
         }
     }
 
-    protected void consume(InitiatorRequest request, Set<DatacenterRequestCallback> callbacks)
+    protected void consume(final InitiatorRequest request,
+        final Set<DatacenterRequestCallback> callbacks)
     {
         for (DatacenterRequestCallback callback : callbacks)
         {
