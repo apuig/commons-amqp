@@ -7,7 +7,7 @@ import com.abiquo.commons.amqp.impl.bpm.domain.BPMResponse;
 import com.abiquo.commons.amqp.impl.datacenter.DatacenterNotificationConsumer;
 import com.abiquo.commons.amqp.impl.datacenter.DatacenterNotificationProducer;
 
-public class DatacenterResponseManualTest
+public class DatacenterNotificationManualTest
 {
     public static void main(String[] args) throws IOException
     {
