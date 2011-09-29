@@ -26,7 +26,7 @@ import java.io.IOException;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
 import com.rabbitmq.client.Channel;
 
-public class DatacenterResponseConfiguration extends DefaultConfiguration
+public class DatacenterNotificationConfiguration extends DefaultConfiguration
 {
     public static final String NOTIFICATIONS_EXCHANGE = "abiquo.notifications.direct";
 

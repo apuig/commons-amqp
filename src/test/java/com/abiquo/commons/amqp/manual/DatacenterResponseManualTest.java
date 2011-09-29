@@ -4,14 +4,14 @@ import java.io.IOException;
 
 import com.abiquo.commons.amqp.impl.bpm.BPMResponseCallback;
 import com.abiquo.commons.amqp.impl.bpm.domain.BPMResponse;
-import com.abiquo.commons.amqp.impl.datacenter.DatacenterResponseConsumer;
-import com.abiquo.commons.amqp.impl.datacenter.DatacenterResponseProducer;
+import com.abiquo.commons.amqp.impl.datacenter.DatacenterNotificationConsumer;
+import com.abiquo.commons.amqp.impl.datacenter.DatacenterNotificationProducer;
 
 public class DatacenterResponseManualTest
 {
     public static void main(String[] args) throws IOException
     {
-        DatacenterResponseConsumer r = new DatacenterResponseConsumer();
+        DatacenterNotificationConsumer r = new DatacenterNotificationConsumer();
 
         r.addCallback(new BPMResponseCallback()
         {
@@ -24,7 +24,7 @@ public class DatacenterResponseManualTest
 
         r.start();
 
-        DatacenterResponseProducer p = new DatacenterResponseProducer();
+        DatacenterNotificationProducer p = new DatacenterNotificationProducer();
 
         p.openChannel();
 
