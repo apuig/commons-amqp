@@ -14,19 +14,20 @@ import com.rabbitmq.client.Envelope;
 
 public class BPMRequestConsumer extends DatacenterRequestConsumer
 {
-    public BPMRequestConsumer(String datacenterId)
+    public BPMRequestConsumer(final String datacenterId)
     {
         super(datacenterId, RequestType.BPM);
     }
 
     @Override
-    protected DatacenterRequest deserializeRequest(Envelope envelope, byte[] body)
+    protected DatacenterRequest deserializeRequest(final Envelope envelope, final byte[] body)
     {
         return BPMRequest.fromByteArray(body);
     }
 
     @Override
-    protected void consume(DatacenterRequest request, Set<RequestBasedCallback> callbacks)
+    protected void consume(final DatacenterRequest request,
+        final Set<RequestBasedCallback> callbacks)
     {
         if (request instanceof ImageConverterRequest)
         {
@@ -42,7 +43,8 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer
         }
     }
 
-    protected void consume(ImageConverterRequest request, Set<RequestBasedCallback> callbacks)
+    protected void consume(final ImageConverterRequest request,
+        final Set<RequestBasedCallback> callbacks)
     {
         for (RequestBasedCallback callback : callbacks)
         {
@@ -51,7 +53,8 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer
         }
     }
 
-    protected void consume(StatefulDiskRequest request, Set<RequestBasedCallback> callbacks)
+    protected void consume(final StatefulDiskRequest request,
+        final Set<RequestBasedCallback> callbacks)
     {
         for (RequestBasedCallback callback : callbacks)
         {
@@ -60,17 +63,17 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer
             switch (request.getSender())
             {
                 case STATEFUL:
-                    realCallback.dumpVolumeToDisk(request);
+                    realCallback.dumpDiskToVolume(request);
                     break;
 
                 case STATEFUL_BUNDLE:
-                    realCallback.dumpDiskToVolume(request);
+                    realCallback.dumpVolumeToDisk(request);
                     break;
             }
         }
     }
 
-    protected void consume(InitiatorRequest request, Set<RequestBasedCallback> callbacks)
+    protected void consume(final InitiatorRequest request, final Set<RequestBasedCallback> callbacks)
     {
         for (RequestBasedCallback callback : callbacks)
         {
