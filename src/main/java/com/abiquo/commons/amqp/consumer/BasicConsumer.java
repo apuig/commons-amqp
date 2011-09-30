@@ -25,22 +25,18 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.abiquo.commons.amqp.config.ConnectionFactory;
+import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
-import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Envelope;
-import com.rabbitmq.client.ShutdownListener;
 import com.rabbitmq.client.ShutdownSignalException;
 
-public abstract class BasicConsumer<T> implements ShutdownListener
+public abstract class BasicConsumer<T> extends ChannelHandler
 {
     protected QueueSubscriber<BasicConsumer<T>> consumer;
 
     protected Set<T> callbacks;
 
     protected DefaultConfiguration configuration;
-
-    protected Channel channel;
 
     protected String queueName;
 
@@ -49,34 +45,25 @@ public abstract class BasicConsumer<T> implements ShutdownListener
         this.callbacks = new HashSet<T>();
         this.configuration = configuration;
         this.queueName = queue;
-        this.channel = null;
         this.consumer = null;
     }
 
     public void start() throws IOException
     {
-        if (channel == null || !channel.isOpen())
-        {
-            channel = ConnectionFactory.getInstance().createChannel();
-            channel.addShutdownListener(this);
-            channel.basicQos(getPrefetchCount());
+        openChannelAndConnection();
+        getChannel().basicQos(getPrefetchCount());
 
-            configuration.declareExchanges(channel);
-            configuration.declareQueues(channel);
+        configuration.declareExchanges(getChannel());
+        configuration.declareQueues(getChannel());
 
-            consumer = new QueueSubscriber<BasicConsumer<T>>(channel, this);
-            channel.basicConsume(queueName, false, consumer);
-        }
+        consumer = new QueueSubscriber<BasicConsumer<T>>(getChannel(), this);
+        getChannel().basicConsume(queueName, false, consumer);
     }
 
     public void stop() throws IOException
     {
-        if (consumer != null && channel != null)
-        {
-            channel.basicCancel(consumer.getConsumerTag());
-            channel.removeShutdownListener(this);
-            channel.close();
-        }
+        getChannel().basicCancel(consumer.getConsumerTag());
+        closeChannelAndConnection();
     }
 
     public void addCallback(T callback)
@@ -92,6 +79,7 @@ public abstract class BasicConsumer<T> implements ShutdownListener
     @Override
     public void shutdownCompleted(ShutdownSignalException cause)
     {
+        // TODO
     }
 
     public abstract void consume(Envelope envelope, byte[] body) throws IOException;

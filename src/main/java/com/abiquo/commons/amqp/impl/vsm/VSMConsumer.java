@@ -49,11 +49,11 @@ public class VSMConsumer extends BasicConsumer<VSMCallback>
                 callback.onEvent(event);
             }
 
-            ackMessage(channel, envelope.getDeliveryTag());
+            ackMessage(getChannel(), envelope.getDeliveryTag());
         }
         else
         {
-            rejectMessage(channel, envelope.getDeliveryTag());
+            rejectMessage(getChannel(), envelope.getDeliveryTag());
         }
     }
 }

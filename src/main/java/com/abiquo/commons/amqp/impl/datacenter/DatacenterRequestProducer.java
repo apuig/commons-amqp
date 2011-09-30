@@ -47,7 +47,7 @@ public abstract class DatacenterRequestProducer extends BasicProducer<Datacenter
     @Override
     public void publish(DatacenterRequest message) throws IOException
     {
-        publishPersistentText(channel, getDatacenterDirectExchange(),
+        publishPersistentText(getChannel(), getDatacenterDirectExchange(),
             buildJobsRoutingKey(datacenterId, type), message.toByteArray());
     }
 }

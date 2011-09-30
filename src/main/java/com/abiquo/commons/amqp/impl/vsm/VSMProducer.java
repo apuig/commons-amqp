@@ -40,6 +40,6 @@ public class VSMProducer extends BasicProducer<VirtualSystemEvent>
     @Override
     public void publish(VirtualSystemEvent message) throws IOException
     {
-        publishPersistentText(channel, VSM_EXCHANGE, VSM_ROUTING_KEY, message.toByteArray());
+        publishPersistentText(getChannel(), VSM_EXCHANGE, VSM_ROUTING_KEY, message.toByteArray());
     }
 }
