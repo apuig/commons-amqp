@@ -47,11 +47,11 @@ public abstract class RequestBasedConsumer<R> extends BasicConsumer<RequestBased
         if (request != null)
         {
             consume(request, callbacksMap.get(request.getClass()));
-            ackMessage(channel, envelope.getDeliveryTag());
+            ackMessage(getChannel(), envelope.getDeliveryTag());
         }
         else
         {
-            rejectMessage(channel, envelope.getDeliveryTag());
+            rejectMessage(getChannel(), envelope.getDeliveryTag());
         }
     }
 

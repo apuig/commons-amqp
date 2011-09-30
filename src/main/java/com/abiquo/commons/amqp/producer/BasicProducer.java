@@ -23,46 +23,35 @@ package com.abiquo.commons.amqp.producer;
 
 import java.io.IOException;
 
-import com.abiquo.commons.amqp.config.ConnectionFactory;
+import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
 import com.abiquo.commons.amqp.domain.Queuable;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.ShutdownListener;
 import com.rabbitmq.client.ShutdownSignalException;
 
-public abstract class BasicProducer<T extends Queuable> implements ShutdownListener
+public abstract class BasicProducer<T extends Queuable> extends ChannelHandler
 {
     protected DefaultConfiguration configuration;
-
-    protected Channel channel;
 
     public BasicProducer(DefaultConfiguration configuration)
     {
         this.configuration = configuration;
-        channel = null;
     }
 
     public void openChannel() throws IOException
     {
-        if (channel == null || !channel.isOpen())
-        {
-            channel = ConnectionFactory.getInstance().createChannel();
-            channel.addShutdownListener(this);
-
-            configuration.declareExchanges(channel);
-        }
+        openChannelAndConnection();
+        configuration.declareExchanges(getChannel());
     }
 
     public void closeChannel() throws IOException
     {
-        channel.removeShutdownListener(this);
-        channel.close();
+        closeChannelAndConnection();
     }
 
     @Override
     public void shutdownCompleted(ShutdownSignalException cause)
     {
-        // Intentionally empty
+        // TODO
     }
 
     public abstract void publish(final T message) throws IOException;

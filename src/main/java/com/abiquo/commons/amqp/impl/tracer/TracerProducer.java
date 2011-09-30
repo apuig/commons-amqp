@@ -40,6 +40,7 @@ public class TracerProducer extends BasicProducer<Trace>
     @Override
     public void publish(Trace message) throws IOException
     {
-        publishPersistentText(channel, TRACER_EXCHANGE, TRACER_ROUTING_KEY, message.toByteArray());
+        publishPersistentText(getChannel(), TRACER_EXCHANGE, TRACER_ROUTING_KEY,
+            message.toByteArray());
     }
 }

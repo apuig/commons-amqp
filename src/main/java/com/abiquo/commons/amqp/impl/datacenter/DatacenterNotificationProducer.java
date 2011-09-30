@@ -40,7 +40,7 @@ public class DatacenterNotificationProducer extends BasicProducer<DatacenterNoti
     @Override
     public void publish(DatacenterNotification message) throws IOException
     {
-        publishPersistentText(channel, NOTIFICATIONS_EXCHANGE, NOTIFICATIONS_ROUTING_KEY,
+        publishPersistentText(getChannel(), NOTIFICATIONS_EXCHANGE, NOTIFICATIONS_ROUTING_KEY,
             message.toByteArray());
     }
 }

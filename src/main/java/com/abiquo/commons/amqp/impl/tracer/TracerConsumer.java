@@ -50,11 +50,11 @@ public class TracerConsumer extends BasicConsumer<TracerCallback>
                 callback.onTrace(trace);
             }
 
-            ackMessage(channel, envelope.getDeliveryTag());
+            ackMessage(getChannel(), envelope.getDeliveryTag());
         }
         else
         {
-            rejectMessage(channel, envelope.getDeliveryTag());
+            rejectMessage(getChannel(), envelope.getDeliveryTag());
         }
     }
 }

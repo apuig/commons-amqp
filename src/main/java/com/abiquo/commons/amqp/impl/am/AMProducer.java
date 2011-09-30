@@ -40,6 +40,6 @@ public class AMProducer extends BasicProducer<OVFPackageInstanceStatusEvent>
     @Override
     public void publish(OVFPackageInstanceStatusEvent message) throws IOException
     {
-        publishPersistentText(channel, AM_EXCHANGE, AM_ROUTING_KEY, message.toByteArray());
+        publishPersistentText(getChannel(), AM_EXCHANGE, AM_ROUTING_KEY, message.toByteArray());
     }
 }
