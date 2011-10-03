@@ -19,40 +19,57 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo.commons.amqp.producer;
+package com.abiquo.commons.amqp.impl.ha.domain;
 
-import java.io.IOException;
-
-import com.abiquo.commons.amqp.config.ChannelHandler;
-import com.abiquo.commons.amqp.config.DefaultConfiguration;
 import com.abiquo.commons.amqp.domain.Queuable;
-import com.rabbitmq.client.ShutdownSignalException;
+import com.abiquo.commons.amqp.util.JSONUtils;
 
-public abstract class BasicProducer<T extends Queuable> extends ChannelHandler
+public class HATask implements Queuable
 {
-    protected DefaultConfiguration configuration;
+    protected int datacenterId;
 
-    public BasicProducer(DefaultConfiguration configuration)
+    protected int machineId;
+
+    protected int rackId;
+
+    public int getDatacenterId()
     {
-        this.configuration = configuration;
+        return datacenterId;
     }
 
-    public void openChannel() throws IOException
+    public void setDatacenterId(int datacenterId)
     {
-        openChannelAndConnection();
-        configuration.declareExchanges(getChannel());
+        this.datacenterId = datacenterId;
     }
 
-    public void closeChannel() throws IOException
+    public int getMachineId()
     {
-        closeChannelAndConnection();
+        return machineId;
+    }
+
+    public void setMachineId(int machineId)
+    {
+        this.machineId = machineId;
+    }
+
+    public int getRackId()
+    {
+        return rackId;
+    }
+
+    public void setRackId(int rackId)
+    {
+        this.rackId = rackId;
     }
 
     @Override
-    public void shutdownCompleted(ShutdownSignalException cause)
+    public byte[] toByteArray()
     {
-        // Empty
+        return JSONUtils.serialize(this);
     }
 
-    public abstract void publish(final T message) throws IOException;
+    public static HATask fromByteArray(final byte[] bytes)
+    {
+        return JSONUtils.deserialize(bytes, HATask.class);
+    }
 }

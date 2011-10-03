@@ -19,40 +19,27 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo.commons.amqp.producer;
+package com.abiquo.commons.amqp.impl.ha;
+
+import static com.abiquo.commons.amqp.impl.ha.HAConfiguration.HA_EXCHANGE;
+import static com.abiquo.commons.amqp.impl.ha.HAConfiguration.HA_ROUTING_KEY;
+import static com.abiquo.commons.amqp.util.ProducerUtils.publishPersistentText;
 
 import java.io.IOException;
 
-import com.abiquo.commons.amqp.config.ChannelHandler;
-import com.abiquo.commons.amqp.config.DefaultConfiguration;
-import com.abiquo.commons.amqp.domain.Queuable;
-import com.rabbitmq.client.ShutdownSignalException;
+import com.abiquo.commons.amqp.impl.ha.domain.HATask;
+import com.abiquo.commons.amqp.producer.BasicProducer;
 
-public abstract class BasicProducer<T extends Queuable> extends ChannelHandler
+public class HAProducer extends BasicProducer<HATask>
 {
-    protected DefaultConfiguration configuration;
-
-    public BasicProducer(DefaultConfiguration configuration)
+    public HAProducer()
     {
-        this.configuration = configuration;
-    }
-
-    public void openChannel() throws IOException
-    {
-        openChannelAndConnection();
-        configuration.declareExchanges(getChannel());
-    }
-
-    public void closeChannel() throws IOException
-    {
-        closeChannelAndConnection();
+        super(new HAConfiguration());
     }
 
     @Override
-    public void shutdownCompleted(ShutdownSignalException cause)
+    public void publish(HATask message) throws IOException
     {
-        // Empty
+        publishPersistentText(getChannel(), HA_EXCHANGE, HA_ROUTING_KEY, message.toByteArray());
     }
-
-    public abstract void publish(final T message) throws IOException;
 }

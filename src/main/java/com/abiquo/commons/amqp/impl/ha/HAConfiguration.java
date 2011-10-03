@@ -19,40 +19,31 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo.commons.amqp.producer;
+package com.abiquo.commons.amqp.impl.ha;
 
 import java.io.IOException;
 
-import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
-import com.abiquo.commons.amqp.domain.Queuable;
-import com.rabbitmq.client.ShutdownSignalException;
+import com.rabbitmq.client.Channel;
 
-public abstract class BasicProducer<T extends Queuable> extends ChannelHandler
+public class HAConfiguration extends DefaultConfiguration
 {
-    protected DefaultConfiguration configuration;
+    public static final String HA_EXCHANGE = "abiquo.ha";
 
-    public BasicProducer(DefaultConfiguration configuration)
-    {
-        this.configuration = configuration;
-    }
+    public static final String HA_ROUTING_KEY = "abiquo.ha.tasks";
 
-    public void openChannel() throws IOException
-    {
-        openChannelAndConnection();
-        configuration.declareExchanges(getChannel());
-    }
+    public static final String HA_QUEUE = HA_ROUTING_KEY;
 
-    public void closeChannel() throws IOException
+    @Override
+    public void declareExchanges(Channel channel) throws IOException
     {
-        closeChannelAndConnection();
+        channel.exchangeDeclare(HA_EXCHANGE, FanoutExchange, Durable);
     }
 
     @Override
-    public void shutdownCompleted(ShutdownSignalException cause)
+    public void declareQueues(Channel channel) throws IOException
     {
-        // Empty
+        channel.queueDeclare(HA_QUEUE, Durable, NonExclusive, NonAutodelete, null);
+        channel.queueBind(HA_QUEUE, HA_EXCHANGE, HA_ROUTING_KEY);
     }
-
-    public abstract void publish(final T message) throws IOException;
 }
