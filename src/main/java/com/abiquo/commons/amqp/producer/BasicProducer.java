@@ -51,7 +51,7 @@ public abstract class BasicProducer<T extends Queuable> extends ChannelHandler
     @Override
     public void shutdownCompleted(ShutdownSignalException cause)
     {
-        // TODO
+        // Empty
     }
 
     public abstract void publish(final T message) throws IOException;
