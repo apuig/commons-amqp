@@ -27,6 +27,7 @@ import java.util.Set;
 
 import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
+import com.abiquo.commons.amqp.consumer.retry.AlwaysRetryStrategy;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
 
@@ -40,12 +41,23 @@ public abstract class BasicConsumer<T> extends ChannelHandler
 
     protected String queueName;
 
+    protected RetryStrategy retryStrategy;
+
     public BasicConsumer(DefaultConfiguration configuration, String queue)
     {
         this.callbacks = new HashSet<T>();
         this.configuration = configuration;
         this.queueName = queue;
-        this.consumer = null;
+        this.retryStrategy = new AlwaysRetryStrategy();
+    }
+
+    public BasicConsumer(DefaultConfiguration configuration, String queue,
+        RetryStrategy retryStrategy)
+    {
+        this.callbacks = new HashSet<T>();
+        this.configuration = configuration;
+        this.queueName = queue;
+        this.retryStrategy = retryStrategy;
     }
 
     public void start() throws IOException
@@ -79,7 +91,19 @@ public abstract class BasicConsumer<T> extends ChannelHandler
     @Override
     public void shutdownCompleted(ShutdownSignalException cause)
     {
-        // TODO
+        while (retryStrategy.shouldRetry())
+        {
+            try
+            {
+                openChannelAndConnection();
+                start();
+                return;
+            }
+            catch (Exception e)
+            {
+                continue;
+            }
+        }
     }
 
     public abstract void consume(Envelope envelope, byte[] body) throws IOException;
