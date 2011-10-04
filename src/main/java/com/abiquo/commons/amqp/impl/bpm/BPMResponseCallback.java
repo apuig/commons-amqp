@@ -8,7 +8,7 @@ public abstract class BPMResponseCallback implements RequestBasedCallback
     public abstract void processResponse(BPMResponse response);
 
     @Override
-    public Class<BPMResponse> getRequestClass()
+    public Class< ? > getRequestClass()
     {
         return BPMResponse.class;
     }
