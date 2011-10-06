@@ -290,4 +290,63 @@ public class AddressingUtils
         return m.group(part);
     }
 
+    /** Used to split the SSM response to obtain the target IQN and the visible LUN. */
+    private final static String LUN_SEPARATOR = "-lun-";
+
+    /**
+     * Gets the IQN fragment of the SSM response.
+     * 
+     * @param mapping, the the response of the SSM including the volume IQN and the LUN where the
+     *            initiator can reach the volume.
+     * @return the IQN part of the mapping
+     */
+    public static String getIqnFromSSMMappingResponse(final String mapping)
+    {
+        final Integer lunSeparator = mapping.indexOf(LUN_SEPARATOR);
+
+        if (lunSeparator == -1)
+        {
+            final String cause =
+                String.format("Malformed initiator mapping (expected {iqn}-lun-{lunid}) [%s]",
+                    mapping);
+            throw new IllegalArgumentException(cause);
+        }
+
+        final String iqn = mapping.substring(0, lunSeparator);
+        return iqn;
+    }
+
+    /**
+     * Gets the LUN fragment of the SSM response.
+     * 
+     * @param mapping, the the response of the SSM including the volume IQN and the LUN where the
+     *            initiator can reach the volume.
+     * @return the LUN part of the mapping
+     */
+    public static Integer getLunFromSSMMappingResponse(final String mapping)
+    {
+
+        final Integer lunSeparator = mapping.indexOf(LUN_SEPARATOR);
+
+        if (lunSeparator == -1)
+        {
+            final String cause =
+                String.format("Malformed initiator mapping (expected {iqn}-lun-{lunid}) [%s]",
+                    mapping);
+            throw new IllegalArgumentException(cause);
+        }
+
+        String lun = mapping.substring(lunSeparator + LUN_SEPARATOR.length());
+
+        try
+        {
+            return Integer.parseInt(lun);
+        }
+        catch (Exception e)
+        {
+            final String cause =
+                String.format("Malformed initiator mapping LUN (expected Integer lunid) [%s]", lun);
+            throw new IllegalArgumentException(cause);
+        }
+    }
 }
