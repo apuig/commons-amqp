@@ -43,7 +43,7 @@ public class DatacenterRequestConfiguration extends DefaultConfiguration
         TARANTINO, BPM
     };
 
-    public static String getDatacenterDirectExchange()
+    public static String getDatacenterExchange()
     {
         return DATACENTER_EXCHANGE;
     }
@@ -67,7 +67,7 @@ public class DatacenterRequestConfiguration extends DefaultConfiguration
     @Override
     public void declareExchanges(Channel channel) throws IOException
     {
-        channel.exchangeDeclare(getDatacenterDirectExchange(), TopicExchange, Durable);
+        channel.exchangeDeclare(getDatacenterExchange(), TopicExchange, Durable);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class DatacenterRequestConfiguration extends DefaultConfiguration
     {
         channel.queueDeclare(buildJobsQueue(datacenterId, type), Durable, NonExclusive,
             NonAutodelete, null);
-        channel.queueBind(buildJobsQueue(datacenterId, type), getDatacenterDirectExchange(),
+        channel.queueBind(buildJobsQueue(datacenterId, type), getDatacenterExchange(),
             buildJobsRoutingKey(datacenterId, type));
     }
 }

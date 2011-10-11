@@ -22,7 +22,7 @@
 package com.abiquo.commons.amqp.impl.datacenter;
 
 import static com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConfiguration.buildJobsRoutingKey;
-import static com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConfiguration.getDatacenterDirectExchange;
+import static com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConfiguration.getDatacenterExchange;
 import static com.abiquo.commons.amqp.util.ProducerUtils.publishPersistentText;
 
 import java.io.IOException;
@@ -47,7 +47,7 @@ public abstract class DatacenterRequestProducer extends BasicProducer<Datacenter
     @Override
     public void publish(DatacenterRequest message) throws IOException
     {
-        publishPersistentText(getChannel(), getDatacenterDirectExchange(),
+        publishPersistentText(getChannel(), getDatacenterExchange(),
             buildJobsRoutingKey(datacenterId, type), message.toByteArray());
     }
 }
