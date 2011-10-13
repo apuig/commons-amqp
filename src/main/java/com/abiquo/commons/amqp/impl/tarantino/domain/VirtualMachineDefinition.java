@@ -22,11 +22,9 @@
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
-
 
 public class VirtualMachineDefinition
 {
@@ -293,30 +291,37 @@ public class VirtualMachineDefinition
         }
     }
 
-    public static class SecondaryDisks implements Iterable<AuxiliaryDisk>
+    public static class SecondaryDisks
     {
-        protected List<AuxiliaryDisk> auxiliaryDisks;
+        protected List<SecondaryDiskStateful> statefulDisks;
 
-        public List<AuxiliaryDisk> getAuxiliaryDisks()
+        protected List<SecondaryDiskStandard> standardDisks;
+
+        public List<SecondaryDiskStateful> getStatefulDisks()
         {
-            if (auxiliaryDisks == null)
+            if (statefulDisks == null)
             {
-                auxiliaryDisks = new ArrayList<AuxiliaryDisk>();
+                statefulDisks = new ArrayList<SecondaryDiskStateful>();
             }
 
-            return this.auxiliaryDisks;
+            return this.statefulDisks;
+        }
+
+        public List<SecondaryDiskStandard> getStandardDisks()
+        {
+            if (standardDisks == null)
+            {
+                standardDisks = new ArrayList<SecondaryDiskStandard>();
+            }
+
+            return this.standardDisks;
         }
 
         @JsonIgnore
         public boolean isEmpty()
         {
-            return getAuxiliaryDisks().isEmpty();
+            return getStatefulDisks().isEmpty();
         }
 
-        @Override
-        public Iterator<AuxiliaryDisk> iterator()
-        {
-            return getAuxiliaryDisks().iterator();
-        }
     }
 }
