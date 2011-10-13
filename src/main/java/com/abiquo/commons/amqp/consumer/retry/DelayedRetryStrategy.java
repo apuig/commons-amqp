@@ -20,10 +20,15 @@
  */
 package com.abiquo.commons.amqp.consumer.retry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.abiquo.commons.amqp.consumer.RetryStrategy;
 
 public class DelayedRetryStrategy extends RetryStrategy
 {
+    private final static Logger LOGGER = LoggerFactory.getLogger(DelayedRetryStrategy.class);
+
     protected int retriesLeft;
 
     protected long msToSleep;
@@ -66,11 +71,14 @@ public class DelayedRetryStrategy extends RetryStrategy
         {
             try
             {
+                LOGGER.debug(String.format(
+                    "Sleeping for %d ms, %d retries left, infinite retries %b", msToSleep,
+                    retriesLeft, infiteRetries));
                 Thread.sleep(msToSleep);
             }
             catch (InterruptedException e)
             {
-                // TODO log it
+                LOGGER.debug("Interrupted on thread sleep");
             }
         }
 

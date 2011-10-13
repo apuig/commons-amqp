@@ -25,6 +25,9 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
 import com.abiquo.commons.amqp.consumer.retry.DelayedRetryStrategy;
@@ -33,6 +36,8 @@ import com.rabbitmq.client.ShutdownSignalException;
 
 public abstract class BasicConsumer<T> extends ChannelHandler
 {
+    private final static Logger LOGGER = LoggerFactory.getLogger(BasicConsumer.class);
+
     protected QueueSubscriber<BasicConsumer<T>> consumer;
 
     protected Set<T> callbacks;
@@ -91,16 +96,23 @@ public abstract class BasicConsumer<T> extends ChannelHandler
     @Override
     public void shutdownCompleted(ShutdownSignalException cause)
     {
+        LOGGER.debug(String.format("Connection lost to %s", DefaultConfiguration.getHost()));
+
         try
         {
             RetryStrategy strategy = strategyClass.newInstance();
 
             while (strategy.shouldRetry())
             {
+                LOGGER
+                    .debug(String.format("Try to reconnect to %s", DefaultConfiguration.getHost()));
+
                 try
                 {
                     openChannelAndConnection();
                     start();
+
+                    LOGGER.debug("And we are back!");
                     return;
                 }
                 catch (Exception e)
@@ -111,8 +123,10 @@ public abstract class BasicConsumer<T> extends ChannelHandler
         }
         catch (Exception e)
         {
-            // TODO log it
+            LOGGER.debug("Unable to intance new retry strategy");
         }
+
+        LOGGER.debug(String.format("Unable to reconnect to %s", DefaultConfiguration.getHost()));
     }
 
     public abstract void consume(Envelope envelope, byte[] body) throws IOException;
