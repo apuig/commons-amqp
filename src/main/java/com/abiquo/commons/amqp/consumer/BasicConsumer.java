@@ -27,7 +27,7 @@ import java.util.Set;
 
 import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
-import com.abiquo.commons.amqp.consumer.retry.AlwaysRetryStrategy;
+import com.abiquo.commons.amqp.consumer.retry.DelayedRetryStrategy;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
 
@@ -48,7 +48,7 @@ public abstract class BasicConsumer<T> extends ChannelHandler
         this.callbacks = new HashSet<T>();
         this.configuration = configuration;
         this.queueName = queue;
-        this.strategyClass = AlwaysRetryStrategy.class;
+        this.strategyClass = DelayedRetryStrategy.class;
     }
 
     public BasicConsumer(DefaultConfiguration configuration, String queue,
