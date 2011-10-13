@@ -41,23 +41,23 @@ public abstract class BasicConsumer<T> extends ChannelHandler
 
     protected String queueName;
 
-    protected RetryStrategy retryStrategy;
+    protected Class< ? extends RetryStrategy> strategyClass;
 
     public BasicConsumer(DefaultConfiguration configuration, String queue)
     {
         this.callbacks = new HashSet<T>();
         this.configuration = configuration;
         this.queueName = queue;
-        this.retryStrategy = new AlwaysRetryStrategy();
+        this.strategyClass = AlwaysRetryStrategy.class;
     }
 
     public BasicConsumer(DefaultConfiguration configuration, String queue,
-        RetryStrategy retryStrategy)
+        Class< ? extends RetryStrategy> retryStrategy)
     {
         this.callbacks = new HashSet<T>();
         this.configuration = configuration;
         this.queueName = queue;
-        this.retryStrategy = retryStrategy;
+        this.strategyClass = retryStrategy;
     }
 
     public void start() throws IOException
@@ -91,18 +91,27 @@ public abstract class BasicConsumer<T> extends ChannelHandler
     @Override
     public void shutdownCompleted(ShutdownSignalException cause)
     {
-        while (retryStrategy.shouldRetry())
+        try
         {
-            try
+            RetryStrategy strategy = strategyClass.newInstance();
+
+            while (strategy.shouldRetry())
             {
-                openChannelAndConnection();
-                start();
-                return;
+                try
+                {
+                    openChannelAndConnection();
+                    start();
+                    return;
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
             }
-            catch (Exception e)
-            {
-                continue;
-            }
+        }
+        catch (Exception e)
+        {
+            // TODO log it
         }
     }
 
