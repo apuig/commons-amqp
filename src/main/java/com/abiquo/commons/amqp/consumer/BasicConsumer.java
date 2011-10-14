@@ -25,14 +25,19 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
-import com.abiquo.commons.amqp.consumer.retry.AlwaysRetryStrategy;
+import com.abiquo.commons.amqp.consumer.retry.DelayedRetryStrategy;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
 
 public abstract class BasicConsumer<T> extends ChannelHandler
 {
+    private final static Logger LOGGER = LoggerFactory.getLogger(BasicConsumer.class);
+
     protected QueueSubscriber<BasicConsumer<T>> consumer;
 
     protected Set<T> callbacks;
@@ -41,23 +46,23 @@ public abstract class BasicConsumer<T> extends ChannelHandler
 
     protected String queueName;
 
-    protected RetryStrategy retryStrategy;
+    protected Class< ? extends RetryStrategy> strategyClass;
 
     public BasicConsumer(DefaultConfiguration configuration, String queue)
     {
         this.callbacks = new HashSet<T>();
         this.configuration = configuration;
         this.queueName = queue;
-        this.retryStrategy = new AlwaysRetryStrategy();
+        this.strategyClass = DelayedRetryStrategy.class;
     }
 
     public BasicConsumer(DefaultConfiguration configuration, String queue,
-        RetryStrategy retryStrategy)
+        Class< ? extends RetryStrategy> retryStrategy)
     {
         this.callbacks = new HashSet<T>();
         this.configuration = configuration;
         this.queueName = queue;
-        this.retryStrategy = retryStrategy;
+        this.strategyClass = retryStrategy;
     }
 
     public void start() throws IOException
@@ -91,19 +96,38 @@ public abstract class BasicConsumer<T> extends ChannelHandler
     @Override
     public void shutdownCompleted(ShutdownSignalException cause)
     {
-        while (retryStrategy.shouldRetry())
+        String rabbitmqHost = DefaultConfiguration.getHost();
+
+        LOGGER.debug(String.format("Connection lost to %s", rabbitmqHost));
+
+        try
         {
-            try
+            RetryStrategy strategy = strategyClass.newInstance();
+
+            while (strategy.shouldRetry())
             {
-                openChannelAndConnection();
-                start();
-                return;
-            }
-            catch (Exception e)
-            {
-                continue;
+                LOGGER.debug(String.format("Try to reconnect to %s", rabbitmqHost));
+
+                try
+                {
+                    openChannelAndConnection();
+                    start();
+
+                    LOGGER.debug("And we are back!");
+                    return;
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
             }
         }
+        catch (Exception e)
+        {
+            LOGGER.debug("Unable to instance new retry strategy");
+        }
+
+        LOGGER.debug(String.format("Unable to reconnect to %s", rabbitmqHost));
     }
 
     public abstract void consume(Envelope envelope, byte[] body) throws IOException;

@@ -20,7 +20,17 @@
  */
 package com.abiquo.commons.amqp.consumer;
 
+/**
+ * {@link BasicConsumer} uses this to automate the retry strategy when RabbitMQ goes down.
+ * 
+ * @author eruiz
+ */
 public abstract class RetryStrategy
 {
+    /**
+     * Should retry to connect
+     * 
+     * @return True if should retry. Otherwise false.
+     */
     public abstract boolean shouldRetry();
 }
