@@ -21,7 +21,6 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
-
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import com.abiquo.commons.amqp.util.AddressingUtils;
@@ -96,5 +95,11 @@ public class DiskStateful extends DiskDescription
     public void setName(final String name)
     {
         this.name = name;
+    }
+
+    @Override
+    public DiskFormatType getFormat()
+    {
+        return DiskFormatType.RAW;
     }
 }
