@@ -25,6 +25,11 @@ import org.slf4j.LoggerFactory;
 
 import com.abiquo.commons.amqp.consumer.RetryStrategy;
 
+/**
+ * Retry strategy that adds a timeout between retry attempts.
+ * 
+ * @author eruiz
+ */
 public class DelayedRetryStrategy extends RetryStrategy
 {
     private final static Logger LOGGER = LoggerFactory.getLogger(DelayedRetryStrategy.class);

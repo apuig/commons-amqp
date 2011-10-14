@@ -96,7 +96,9 @@ public abstract class BasicConsumer<T> extends ChannelHandler
     @Override
     public void shutdownCompleted(ShutdownSignalException cause)
     {
-        LOGGER.debug(String.format("Connection lost to %s", DefaultConfiguration.getHost()));
+        String rabbitmqHost = DefaultConfiguration.getHost();
+
+        LOGGER.debug(String.format("Connection lost to %s", rabbitmqHost));
 
         try
         {
@@ -104,8 +106,7 @@ public abstract class BasicConsumer<T> extends ChannelHandler
 
             while (strategy.shouldRetry())
             {
-                LOGGER
-                    .debug(String.format("Try to reconnect to %s", DefaultConfiguration.getHost()));
+                LOGGER.debug(String.format("Try to reconnect to %s", rabbitmqHost));
 
                 try
                 {
@@ -123,10 +124,10 @@ public abstract class BasicConsumer<T> extends ChannelHandler
         }
         catch (Exception e)
         {
-            LOGGER.debug("Unable to intance new retry strategy");
+            LOGGER.debug("Unable to instance new retry strategy");
         }
 
-        LOGGER.debug(String.format("Unable to reconnect to %s", DefaultConfiguration.getHost()));
+        LOGGER.debug(String.format("Unable to reconnect to %s", rabbitmqHost));
     }
 
     public abstract void consume(Envelope envelope, byte[] body) throws IOException;
