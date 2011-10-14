@@ -27,7 +27,6 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-
 public class VirtualMachineDefinition
 {
     protected String machineUUID;
