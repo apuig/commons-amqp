@@ -37,7 +37,7 @@ public class HAConfiguration extends DefaultConfiguration
     @Override
     public void declareExchanges(Channel channel) throws IOException
     {
-        channel.exchangeDeclare(HA_EXCHANGE, FanoutExchange, Durable);
+        channel.exchangeDeclare(HA_EXCHANGE, DirectExchange, Durable);
     }
 
     @Override

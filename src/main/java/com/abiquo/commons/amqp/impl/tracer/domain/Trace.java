@@ -33,6 +33,9 @@ import com.abiquo.commons.amqp.util.JSONUtils;
  */
 public class Trace implements Queuable
 {
+    /** The trace message. */
+    private String message;
+
     /** The name of the user who performs the action. */
     private String username;
 
