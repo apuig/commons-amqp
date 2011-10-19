@@ -21,7 +21,7 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain.builder;
 
-import com.abiquo.commons.amqp.impl.tarantino.domain.AuxiliaryDisk;
+import com.abiquo.commons.amqp.impl.tarantino.domain.SecondaryDiskStateful;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStandard;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStateful;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
@@ -139,13 +139,13 @@ public class VirtualMachineDescriptionBuilder
             secondaryDisks = new SecondaryDisks();
         }
 
-        AuxiliaryDisk auxDisk = new AuxiliaryDisk();
+        SecondaryDiskStateful auxDisk = new SecondaryDiskStateful();
         auxDisk.setFormat(format);
         auxDisk.setCapacityInBytes(capacityInBytes);
         auxDisk.setLocation(iqn);
         auxDisk.setDestinationDatastore(destinationDatastore);
 
-        secondaryDisks.getAuxiliaryDisks().add(auxDisk);
+        secondaryDisks.getStatefulDisks().add(auxDisk);
 
         return this;
     }

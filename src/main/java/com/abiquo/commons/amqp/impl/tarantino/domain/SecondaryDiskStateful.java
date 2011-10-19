@@ -21,8 +21,7 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
-
-public class AuxiliaryDisk extends DiskStateful
+public class SecondaryDiskStateful extends DiskStateful
 {
     protected int sequence;
 
@@ -31,7 +30,7 @@ public class AuxiliaryDisk extends DiskStateful
         return sequence;
     }
 
-    public void setSequence(int value)
+    public void setSequence(final int value)
     {
         this.sequence = value;
     }
