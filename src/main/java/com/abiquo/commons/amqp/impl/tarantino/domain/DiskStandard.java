@@ -21,7 +21,6 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
-
 public class DiskStandard extends DiskDescription
 {
     /**
