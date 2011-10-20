@@ -153,6 +153,16 @@ public class Trace implements Queuable
         this.hierarchyData = hierarchyData;
     }
 
+    public String getMessage()
+    {
+        return message;
+    }
+
+    public void setMessage(final String message)
+    {
+        this.message = message;
+    }
+
     @Override
     public String toString()
     {
@@ -164,6 +174,7 @@ public class Trace implements Queuable
         builder.append(" Hierarchy: ").append(getHierarchy());
         builder.append(" Performed by ").append(getUsername());
         builder.append(" from enterprise ").append(getEnterpriseName());
+        builder.append(" Message: ").append(getMessage());
 
         return builder.toString();
     }
