@@ -21,16 +21,16 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain.builder;
 
-import com.abiquo.commons.amqp.impl.tarantino.domain.SecondaryDiskStateful;
+import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStandard;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStateful;
+import com.abiquo.commons.amqp.impl.tarantino.domain.SecondaryDiskStateful;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
-import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualNIC;
-import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.HardwareConfiguration;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.NetworkConfiguration;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.PrimaryDisk;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.SecondaryDisks;
+import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualNIC;
 
 public class VirtualMachineDescriptionBuilder
 {
@@ -144,6 +144,7 @@ public class VirtualMachineDescriptionBuilder
         auxDisk.setCapacityInBytes(capacityInBytes);
         auxDisk.setLocation(iqn);
         auxDisk.setDestinationDatastore(destinationDatastore);
+        auxDisk.setSequence(sequence);
 
         secondaryDisks.getStatefulDisks().add(auxDisk);
 
