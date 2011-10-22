@@ -32,7 +32,7 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMachineStateOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ConfigureVirtualMachineOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.DatacenterJob;
-import com.abiquo.commons.amqp.util.JSONUtils;
+import com.abiquo.commons.amqp.serialization.JSONUtils;
 
 /**
  * Dependent or independent BaseJob collection

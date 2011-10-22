@@ -23,15 +23,12 @@ package com.abiquo.commons.amqp.impl.tracer.domain;
 
 import java.util.Map;
 
-import com.abiquo.commons.amqp.domain.Queuable;
-import com.abiquo.commons.amqp.util.JSONUtils;
-
 /**
  * Transport object for tracing system.
  * 
  * @author eruiz@abiquo.com
  */
-public class Trace implements Queuable
+public class Trace
 {
     /** The trace message. */
     private String message;
@@ -177,16 +174,5 @@ public class Trace implements Queuable
         builder.append(" Message: ").append(getMessage());
 
         return builder.toString();
-    }
-
-    @Override
-    public byte[] toByteArray()
-    {
-        return JSONUtils.serialize(this);
-    }
-
-    public static Trace fromByteArray(final byte[] bytes)
-    {
-        return JSONUtils.deserialize(bytes, Trace.class);
     }
 }

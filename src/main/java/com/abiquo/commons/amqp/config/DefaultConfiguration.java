@@ -62,6 +62,12 @@ public abstract class DefaultConfiguration
 
     public abstract void declareQueues(Channel channel) throws IOException;
 
+    public abstract String getExchange();
+
+    public abstract String getRoutingKey();
+
+    public abstract String getQueue();
+
     public static String getHost()
     {
         return System.getProperty("abiquo.rabbitmq.host", "localhost");

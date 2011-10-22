@@ -21,25 +21,14 @@
 
 package com.abiquo.commons.amqp.impl.ha;
 
-import static com.abiquo.commons.amqp.impl.ha.HAConfiguration.HA_EXCHANGE;
-import static com.abiquo.commons.amqp.impl.ha.HAConfiguration.HA_ROUTING_KEY;
-import static com.abiquo.commons.amqp.util.ProducerUtils.publishPersistentText;
-
-import java.io.IOException;
-
 import com.abiquo.commons.amqp.impl.ha.domain.HATask;
 import com.abiquo.commons.amqp.producer.BasicProducer;
+import com.abiquo.commons.amqp.serialization.JSONSerializer;
 
 public class HAProducer extends BasicProducer<HATask>
 {
     public HAProducer()
     {
-        super(new HAConfiguration());
-    }
-
-    @Override
-    public void publish(HATask message) throws IOException
-    {
-        publishPersistentText(getChannel(), HA_EXCHANGE, HA_ROUTING_KEY, message.toByteArray());
+        super(new HAConfiguration(), new JSONSerializer<HATask>(HATask.class));
     }
 }

@@ -20,7 +20,7 @@
  */
 package com.abiquo.commons.amqp.impl.bpm.domain;
 
-import com.abiquo.commons.amqp.util.JSONUtils;
+import com.abiquo.commons.amqp.serialization.JSONUtils;
 
 public class StatefulDiskRequest extends BPMRequest
 {

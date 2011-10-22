@@ -21,10 +21,7 @@
 
 package com.abiquo.commons.amqp.impl.vsm.domain;
 
-import com.abiquo.commons.amqp.domain.Queuable;
-import com.abiquo.commons.amqp.util.JSONUtils;
-
-public class VirtualSystemEvent implements Queuable
+public class VirtualSystemEvent
 {
     protected String virtualSystemId;
 
@@ -86,16 +83,5 @@ public class VirtualSystemEvent implements Queuable
     public void setEventType(String eventType)
     {
         this.eventType = eventType;
-    }
-
-    @Override
-    public byte[] toByteArray()
-    {
-        return JSONUtils.serialize(this);
-    }
-
-    public static VirtualSystemEvent fromByteArray(byte[] bytes)
-    {
-        return JSONUtils.deserialize(bytes, VirtualSystemEvent.class);
     }
 }

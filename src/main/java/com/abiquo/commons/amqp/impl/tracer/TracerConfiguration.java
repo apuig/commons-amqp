@@ -33,22 +33,40 @@ import com.rabbitmq.client.Channel;
  */
 public class TracerConfiguration extends DefaultConfiguration
 {
-    public static final String TRACER_EXCHANGE = "abiquo.tracer";
+    protected static final String TRACER_EXCHANGE = "abiquo.tracer";
 
-    public static final String TRACER_ROUTING_KEY = "abiquo.tracer.traces";
+    protected static final String TRACER_ROUTING_KEY = "abiquo.tracer.traces";
 
-    public static final String TRACER_QUEUE = TRACER_ROUTING_KEY;
+    protected static final String TRACER_QUEUE = TRACER_ROUTING_KEY;
 
     @Override
     public void declareExchanges(Channel channel) throws IOException
     {
-        channel.exchangeDeclare(TRACER_EXCHANGE, DirectExchange, Durable);
+        channel.exchangeDeclare(getExchange(), DirectExchange, Durable);
     }
 
     @Override
     public void declareQueues(Channel channel) throws IOException
     {
-        channel.queueDeclare(TRACER_QUEUE, Durable, NonExclusive, NonAutodelete, null);
-        channel.queueBind(TRACER_QUEUE, TRACER_EXCHANGE, TRACER_ROUTING_KEY);
+        channel.queueDeclare(getQueue(), Durable, NonExclusive, NonAutodelete, null);
+        channel.queueBind(getQueue(), getExchange(), getRoutingKey());
+    }
+
+    @Override
+    public String getExchange()
+    {
+        return TRACER_EXCHANGE;
+    }
+
+    @Override
+    public String getRoutingKey()
+    {
+        return TRACER_ROUTING_KEY;
+    }
+
+    @Override
+    public String getQueue()
+    {
+        return TRACER_QUEUE;
     }
 }

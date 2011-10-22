@@ -32,75 +32,18 @@ import com.abiquo.commons.amqp.impl.bpm.domain.ImageConverterRequest;
 import com.abiquo.commons.amqp.impl.bpm.domain.InitiatorRequest;
 import com.abiquo.commons.amqp.impl.bpm.domain.Sender;
 import com.abiquo.commons.amqp.impl.bpm.domain.StatefulDiskRequest;
+import com.abiquo.commons.amqp.impl.tracer.TracerProducer;
+import com.abiquo.commons.amqp.impl.tracer.domain.Trace;
 
 public class BPMManualTest
 {
     public static void main(String[] args) throws IOException
     {
-        BPMRequestConsumer bpmZero = new BPMRequestConsumer("0");
+    	System.setProperty("abiquo.rabbitmq.host", "10.60.1.225");
+    	TracerProducer p = new TracerProducer();
 
-        bpmZero.addCallback(new ImageConverterRequestCallback()
-        {
-            @Override
-            public void convertDisk(ImageConverterRequest request)
-            {
-                System.out.println(request.getClass());
-            }
-        });
-
-        bpmZero.addCallback(new StatefulDiskRequestCallback()
-        {
-            @Override
-            public void dumpVolumeToDisk(StatefulDiskRequest request)
-            {
-                System.out.println("volume -> disk " + request.getClass());
-            }
-
-            @Override
-            public void dumpDiskToVolume(StatefulDiskRequest request)
-            {
-                System.out.println("disk -> volume " + request.getClass());
-            }
-        });
-
-        bpmZero.addCallback(new InitiatorRequestCallback()
-        {
-            @Override
-            public void getInitiatorIQN(InitiatorRequest request)
-            {
-                System.out.println(request.getClass());
-            }
-        });
-
-        bpmZero.start();
-
-        BPMRequestProducer p = new BPMRequestProducer("0");
-        p.openChannel();
-
-        for (int i = 0; i < 10; i++)
-        {
-            BPMRequest request = new ImageConverterRequest("klj", "lk", "asd", "asd", 2, 0);
-            request.setSender(Sender.AM_DOWNLOAD);
-
-            p.publish(request);
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            BPMRequest request = new StatefulDiskRequest();
-            request.setSender(Sender.STATEFUL);
-
-            p.publish(request);
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            BPMRequest request = new InitiatorRequest();
-            request.setSender(Sender.INITIATOR);
-
-            p.publish(request);
-        }
-
-        p.closeChannel();
+    	p.openChannel();
+    	p.publish(new Trace());
+    	p.closeChannel();
     }
 }

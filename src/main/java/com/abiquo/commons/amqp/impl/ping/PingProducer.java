@@ -21,21 +21,26 @@
 
 package com.abiquo.commons.amqp.impl.ping;
 
-import java.io.IOException;
-
-import com.abiquo.commons.amqp.domain.QueuableString;
 import com.abiquo.commons.amqp.producer.BasicProducer;
+import com.abiquo.commons.amqp.serialization.Serializer;
 
-public class PingProducer extends BasicProducer<QueuableString>
+public class PingProducer extends BasicProducer<String>
 {
     public PingProducer()
     {
-        super(new PingConfiguration());
-    }
+        super(new PingConfiguration(), new Serializer<String>()
+        {
+            @Override
+            public byte[] toByteArray(String object)
+            {
+                return object.getBytes();
+            }
 
-    @Override
-    public void publish(QueuableString message) throws IOException
-    {
-        // Intentionally empty
+            @Override
+            public String fromByteArray(byte[] bytes)
+            {
+                return new String(bytes);
+            }
+        });
     }
 }

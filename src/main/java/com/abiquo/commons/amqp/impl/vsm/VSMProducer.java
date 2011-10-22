@@ -21,25 +21,15 @@
 
 package com.abiquo.commons.amqp.impl.vsm;
 
-import static com.abiquo.commons.amqp.impl.vsm.VSMConfiguration.VSM_EXCHANGE;
-import static com.abiquo.commons.amqp.impl.vsm.VSMConfiguration.VSM_ROUTING_KEY;
-import static com.abiquo.commons.amqp.util.ProducerUtils.publishPersistentText;
-
-import java.io.IOException;
-
 import com.abiquo.commons.amqp.impl.vsm.domain.VirtualSystemEvent;
 import com.abiquo.commons.amqp.producer.BasicProducer;
+import com.abiquo.commons.amqp.serialization.JSONSerializer;
 
 public class VSMProducer extends BasicProducer<VirtualSystemEvent>
 {
     public VSMProducer()
     {
-        super(new VSMConfiguration());
-    }
-
-    @Override
-    public void publish(VirtualSystemEvent message) throws IOException
-    {
-        publishPersistentText(getChannel(), VSM_EXCHANGE, VSM_ROUTING_KEY, message.toByteArray());
+        super(new VSMConfiguration(),
+            new JSONSerializer<VirtualSystemEvent>(VirtualSystemEvent.class));
     }
 }

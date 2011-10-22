@@ -21,7 +21,7 @@
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
-import com.abiquo.commons.amqp.util.JSONUtils;
+import com.abiquo.commons.amqp.serialization.JSONUtils;
 
 public class TarantinoResponse extends DatacenterNotification
 {

@@ -31,37 +31,38 @@ import org.slf4j.LoggerFactory;
 import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
 import com.abiquo.commons.amqp.consumer.retry.DelayedRetryStrategy;
+import com.abiquo.commons.amqp.serialization.Serializer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
 
-public abstract class BasicConsumer<T> extends ChannelHandler
+public abstract class BasicConsumer<T, C> extends ChannelHandler
 {
     private final static Logger LOGGER = LoggerFactory.getLogger(BasicConsumer.class);
 
-    protected QueueSubscriber<BasicConsumer<T>> consumer;
+    protected QueueSubscriber<BasicConsumer<T, C>> consumer;
 
-    protected Set<T> callbacks;
+    protected Set<C> callbacks;
 
     protected DefaultConfiguration configuration;
 
-    protected String queueName;
-
     protected Class< ? extends RetryStrategy> strategyClass;
 
-    public BasicConsumer(DefaultConfiguration configuration, String queue)
+    protected Serializer<T> serializer;
+
+    public BasicConsumer(DefaultConfiguration configuration, Serializer<T> serializer)
     {
-        this.callbacks = new HashSet<T>();
+        this.callbacks = new HashSet<C>();
         this.configuration = configuration;
-        this.queueName = queue;
         this.strategyClass = DelayedRetryStrategy.class;
+        this.serializer = serializer;
     }
 
-    public BasicConsumer(DefaultConfiguration configuration, String queue,
+    public BasicConsumer(DefaultConfiguration configuration, Serializer<T> serializer,
         Class< ? extends RetryStrategy> retryStrategy)
     {
-        this.callbacks = new HashSet<T>();
+        this.callbacks = new HashSet<C>();
         this.configuration = configuration;
-        this.queueName = queue;
+        this.serializer = serializer;
         this.strategyClass = retryStrategy;
     }
 
@@ -73,8 +74,8 @@ public abstract class BasicConsumer<T> extends ChannelHandler
         configuration.declareExchanges(getChannel());
         configuration.declareQueues(getChannel());
 
-        consumer = new QueueSubscriber<BasicConsumer<T>>(getChannel(), this);
-        getChannel().basicConsume(queueName, false, consumer);
+        consumer = new QueueSubscriber<BasicConsumer<T, C>>(getChannel(), this);
+        getChannel().basicConsume(configuration.getQueue(), false, consumer);
     }
 
     public void stop() throws IOException
@@ -83,7 +84,7 @@ public abstract class BasicConsumer<T> extends ChannelHandler
         closeChannelAndConnection();
     }
 
-    public void addCallback(T callback)
+    public void addCallback(C callback)
     {
         callbacks.add(callback);
     }
@@ -130,5 +131,11 @@ public abstract class BasicConsumer<T> extends ChannelHandler
         LOGGER.debug(String.format("Unable to reconnect to %s", rabbitmqHost));
     }
 
-    public abstract void consume(Envelope envelope, byte[] body) throws IOException;
+    public void consume(Envelope envelope, byte[] body) throws IOException
+    {
+        T message = serializer.fromByteArray(body);
+        consume(envelope, message);
+    }
+
+    public abstract void consume(Envelope envelope, T message) throws IOException;
 }

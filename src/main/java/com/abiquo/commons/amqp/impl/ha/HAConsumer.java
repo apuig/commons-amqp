@@ -29,6 +29,7 @@ import java.io.IOException;
 
 import com.abiquo.commons.amqp.consumer.BasicConsumer;
 import com.abiquo.commons.amqp.impl.ha.domain.HATask;
+import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Envelope;
 
 public class HAConsumer extends BasicConsumer<HACallback>
@@ -41,7 +42,8 @@ public class HAConsumer extends BasicConsumer<HACallback>
     @Override
     public void consume(Envelope envelope, byte[] body) throws IOException
     {
-        HATask task = HATask.fromByteArray(body);
+        JSONSerializer<HATask> serializer = new JSONSerializer<HATask>(HATask.class);
+        HATask task = serializer.fromByteArray(body);
 
         if (task != null)
         {
