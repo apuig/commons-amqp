@@ -27,19 +27,15 @@ import java.io.IOException;
 
 import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
-import com.abiquo.commons.amqp.serialization.Serializer;
 import com.rabbitmq.client.ShutdownSignalException;
 
 public abstract class BasicProducer<T> extends ChannelHandler
 {
-    protected DefaultConfiguration configuration;
+    protected DefaultConfiguration<T> configuration;
 
-    protected Serializer<T> serializer;
-
-    public BasicProducer(DefaultConfiguration configuration, Serializer<T> serializer)
+    public BasicProducer(DefaultConfiguration<T> configuration)
     {
         this.configuration = configuration;
-        this.serializer = serializer;
     }
 
     public void openChannel() throws IOException
@@ -62,6 +58,6 @@ public abstract class BasicProducer<T> extends ChannelHandler
     public void publish(final T message) throws IOException
     {
         publishPersistentText(getChannel(), configuration.getExchange(), configuration.getQueue(),
-            serializer.toByteArray(message));
+            configuration.getSerializer().toByteArray(message));
     }
 }

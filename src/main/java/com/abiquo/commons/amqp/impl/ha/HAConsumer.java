@@ -21,7 +21,6 @@
 
 package com.abiquo.commons.amqp.impl.ha;
 
-import static com.abiquo.commons.amqp.impl.ha.HAConfiguration.HA_QUEUE;
 import static com.abiquo.commons.amqp.util.ConsumerUtils.ackMessage;
 import static com.abiquo.commons.amqp.util.ConsumerUtils.rejectMessage;
 
@@ -32,11 +31,11 @@ import com.abiquo.commons.amqp.impl.ha.domain.HATask;
 import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Envelope;
 
-public class HAConsumer extends BasicConsumer<HACallback>
+public class HAConsumer extends BasicConsumer<HATask, HACallback>
 {
     public HAConsumer()
     {
-        super(new HAConfiguration(), HA_QUEUE);
+        super(new HAConfiguration());
     }
 
     @Override
@@ -45,11 +44,16 @@ public class HAConsumer extends BasicConsumer<HACallback>
         JSONSerializer<HATask> serializer = new JSONSerializer<HATask>(HATask.class);
         HATask task = serializer.fromByteArray(body);
 
-        if (task != null)
+    }
+
+    @Override
+    public void consume(Envelope envelope, HATask message) throws IOException
+    {
+        if (message != null)
         {
             for (HACallback callback : callbacks)
             {
-                callback.executeHighAvailabilityTask(task);
+                callback.executeHighAvailabilityTask(message);
             }
 
             ackMessage(getChannel(), envelope.getDeliveryTag());

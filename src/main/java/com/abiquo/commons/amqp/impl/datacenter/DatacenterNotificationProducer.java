@@ -21,12 +21,6 @@
 
 package com.abiquo.commons.amqp.impl.datacenter;
 
-import static com.abiquo.commons.amqp.impl.datacenter.DatacenterNotificationConfiguration.NOTIFICATIONS_EXCHANGE;
-import static com.abiquo.commons.amqp.impl.datacenter.DatacenterNotificationConfiguration.NOTIFICATIONS_ROUTING_KEY;
-import static com.abiquo.commons.amqp.util.ProducerUtils.publishPersistentText;
-
-import java.io.IOException;
-
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
 import com.abiquo.commons.amqp.producer.BasicProducer;
 
@@ -35,12 +29,5 @@ public class DatacenterNotificationProducer extends BasicProducer<DatacenterNoti
     public DatacenterNotificationProducer()
     {
         super(new DatacenterNotificationConfiguration());
-    }
-
-    @Override
-    public void publish(DatacenterNotification message) throws IOException
-    {
-        publishPersistentText(getChannel(), NOTIFICATIONS_EXCHANGE, NOTIFICATIONS_ROUTING_KEY,
-            message.toByteArray());
     }
 }

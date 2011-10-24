@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 import com.abiquo.commons.amqp.config.ChannelHandler;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
 import com.abiquo.commons.amqp.consumer.retry.DelayedRetryStrategy;
-import com.abiquo.commons.amqp.serialization.Serializer;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.ShutdownSignalException;
 
@@ -43,26 +42,22 @@ public abstract class BasicConsumer<T, C> extends ChannelHandler
 
     protected Set<C> callbacks;
 
-    protected DefaultConfiguration configuration;
+    protected DefaultConfiguration<T> configuration;
 
     protected Class< ? extends RetryStrategy> strategyClass;
 
-    protected Serializer<T> serializer;
-
-    public BasicConsumer(DefaultConfiguration configuration, Serializer<T> serializer)
+    public BasicConsumer(DefaultConfiguration<T> configuration)
     {
         this.callbacks = new HashSet<C>();
         this.configuration = configuration;
         this.strategyClass = DelayedRetryStrategy.class;
-        this.serializer = serializer;
     }
 
-    public BasicConsumer(DefaultConfiguration configuration, Serializer<T> serializer,
+    public BasicConsumer(DefaultConfiguration<T> configuration,
         Class< ? extends RetryStrategy> retryStrategy)
     {
         this.callbacks = new HashSet<C>();
         this.configuration = configuration;
-        this.serializer = serializer;
         this.strategyClass = retryStrategy;
     }
 
@@ -133,7 +128,7 @@ public abstract class BasicConsumer<T, C> extends ChannelHandler
 
     public void consume(Envelope envelope, byte[] body) throws IOException
     {
-        T message = serializer.fromByteArray(body);
+        T message = configuration.getSerializer().fromByteArray(body);
         consume(envelope, message);
     }
 

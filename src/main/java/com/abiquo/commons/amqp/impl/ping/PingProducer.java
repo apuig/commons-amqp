@@ -22,25 +22,11 @@
 package com.abiquo.commons.amqp.impl.ping;
 
 import com.abiquo.commons.amqp.producer.BasicProducer;
-import com.abiquo.commons.amqp.serialization.Serializer;
 
 public class PingProducer extends BasicProducer<String>
 {
     public PingProducer()
     {
-        super(new PingConfiguration(), new Serializer<String>()
-        {
-            @Override
-            public byte[] toByteArray(String object)
-            {
-                return object.getBytes();
-            }
-
-            @Override
-            public String fromByteArray(byte[] bytes)
-            {
-                return new String(bytes);
-            }
-        });
+        super(new PingConfiguration());
     }
 }

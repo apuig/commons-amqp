@@ -21,14 +21,6 @@
 
 package com.abiquo.commons.amqp.impl.datacenter.domain;
 
-import com.abiquo.commons.amqp.domain.Queuable;
-import com.abiquo.commons.amqp.serialization.JSONUtils;
-
-public abstract class DatacenterRequest implements Queuable
+public abstract class DatacenterRequest
 {
-    @Override
-    public byte[] toByteArray()
-    {
-        return JSONUtils.serialize(this);
-    }
 }

@@ -23,12 +23,11 @@ package com.abiquo.commons.amqp.impl.ha;
 
 import com.abiquo.commons.amqp.impl.ha.domain.HATask;
 import com.abiquo.commons.amqp.producer.BasicProducer;
-import com.abiquo.commons.amqp.serialization.JSONSerializer;
 
 public class HAProducer extends BasicProducer<HATask>
 {
     public HAProducer()
     {
-        super(new HAConfiguration(), new JSONSerializer<HATask>(HATask.class));
+        super(new HAConfiguration());
     }
 }

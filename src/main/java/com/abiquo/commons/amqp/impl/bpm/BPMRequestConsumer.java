@@ -23,26 +23,18 @@ package com.abiquo.commons.amqp.impl.bpm;
 import java.util.Set;
 
 import com.abiquo.commons.amqp.consumer.RequestBasedCallback;
-import com.abiquo.commons.amqp.impl.bpm.domain.BPMRequest;
 import com.abiquo.commons.amqp.impl.bpm.domain.ImageConverterRequest;
 import com.abiquo.commons.amqp.impl.bpm.domain.InitiatorRequest;
 import com.abiquo.commons.amqp.impl.bpm.domain.StatefulDiskRequest;
 import com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConfiguration.RequestType;
 import com.abiquo.commons.amqp.impl.datacenter.DatacenterRequestConsumer;
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterRequest;
-import com.rabbitmq.client.Envelope;
 
 public class BPMRequestConsumer extends DatacenterRequestConsumer
 {
     public BPMRequestConsumer(final String datacenterId)
     {
         super(datacenterId, RequestType.BPM);
-    }
-
-    @Override
-    protected DatacenterRequest deserializeRequest(final Envelope envelope, final byte[] body)
-    {
-        return BPMRequest.fromByteArray(body);
     }
 
     @Override

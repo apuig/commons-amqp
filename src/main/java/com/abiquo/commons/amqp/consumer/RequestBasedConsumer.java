@@ -32,13 +32,13 @@ import java.util.Set;
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
 import com.rabbitmq.client.Envelope;
 
-public abstract class RequestBasedConsumer<R> extends BasicConsumer<RequestBasedCallback>
+public abstract class RequestBasedConsumer<R> extends BasicConsumer<R, RequestBasedCallback>
 {
     protected Map<Class<R>, Set<RequestBasedCallback>> callbacksMap;
 
-    public RequestBasedConsumer(DefaultConfiguration configuration, String queue)
+    public RequestBasedConsumer(DefaultConfiguration<R> configuration)
     {
-        super(configuration, queue);
+        super(configuration);
         callbacksMap = new HashMap<Class<R>, Set<RequestBasedCallback>>();
     }
 
@@ -60,13 +60,11 @@ public abstract class RequestBasedConsumer<R> extends BasicConsumer<RequestBased
     }
 
     @Override
-    public void consume(Envelope envelope, byte[] body) throws IOException
+    public void consume(Envelope envelope, R message) throws IOException
     {
-        R request = deserializeRequest(envelope, body);
-
-        if (request != null)
+        if (message != null)
         {
-            consume(request, callbacksMap.get(request.getClass()));
+            consume(message, callbacksMap.get(message.getClass()));
             ackMessage(getChannel(), envelope.getDeliveryTag());
         }
         else
@@ -74,8 +72,6 @@ public abstract class RequestBasedConsumer<R> extends BasicConsumer<RequestBased
             rejectMessage(getChannel(), envelope.getDeliveryTag());
         }
     }
-
-    protected abstract R deserializeRequest(Envelope envelope, byte[] body);
 
     protected abstract void consume(R request, Set<RequestBasedCallback> callbacks);
 }

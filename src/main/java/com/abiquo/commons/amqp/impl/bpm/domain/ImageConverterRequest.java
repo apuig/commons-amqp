@@ -20,7 +20,6 @@
  */
 package com.abiquo.commons.amqp.impl.bpm.domain;
 
-import com.abiquo.commons.amqp.serialization.JSONUtils;
 
 public class ImageConverterRequest extends BPMRequest
 {
@@ -110,10 +109,5 @@ public class ImageConverterRequest extends BPMRequest
     public void setEnterpriseId(final Integer enterpriseId)
     {
         this.enterpriseId = enterpriseId;
-    }
-
-    public static ImageConverterRequest fromByteArray(final byte[] bytes)
-    {
-        return JSONUtils.deserialize(bytes, ImageConverterRequest.class);
     }
 }

@@ -24,6 +24,8 @@ package com.abiquo.commons.amqp.impl.vsm;
 import java.io.IOException;
 
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
+import com.abiquo.commons.amqp.impl.vsm.domain.VirtualSystemEvent;
+import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Channel;
 
 /**
@@ -31,24 +33,47 @@ import com.rabbitmq.client.Channel;
  * 
  * @author eruiz@abiquo.com
  */
-public class VSMConfiguration extends DefaultConfiguration
+public class VSMConfiguration extends DefaultConfiguration<VirtualSystemEvent>
 {
-    public static final String VSM_EXCHANGE = "abq.vsm";
+    protected static final String VSM_EXCHANGE = "abq.vsm";
 
-    public static final String EVENT_SYNK_QUEUE = "abq.event_synk";
+    protected static final String EVENT_SYNK_QUEUE = "abq.event_synk";
 
-    public static final String VSM_ROUTING_KEY = "";
+    protected static final String VSM_ROUTING_KEY = "";
+
+    public VSMConfiguration()
+    {
+        super(new JSONSerializer<VirtualSystemEvent>(VirtualSystemEvent.class));
+    }
 
     @Override
     public void declareExchanges(Channel channel) throws IOException
     {
-        channel.exchangeDeclare(VSM_EXCHANGE, FanoutExchange, Durable);
+        channel.exchangeDeclare(getExchange(), FanoutExchange, Durable);
     }
 
     @Override
     public void declareQueues(Channel channel) throws IOException
     {
-        channel.queueDeclare(EVENT_SYNK_QUEUE, Durable, NonExclusive, NonAutodelete, null);
-        channel.queueBind(EVENT_SYNK_QUEUE, VSM_EXCHANGE, VSM_ROUTING_KEY);
+        channel.queueDeclare(getQueue(), Durable, NonExclusive, NonAutodelete, null);
+        channel.queueBind(getQueue(), getExchange(), getRoutingKey());
+    }
+
+    @Override
+    public String getExchange()
+    {
+        return VSM_EXCHANGE;
+    }
+
+    @Override
+    public String getRoutingKey()
+    {
+        return VSM_ROUTING_KEY;
+    }
+
+    @Override
+    public String getQueue()
+    {
+        return EVENT_SYNK_QUEUE;
     }
 }

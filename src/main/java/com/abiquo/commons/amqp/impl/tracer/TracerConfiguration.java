@@ -24,6 +24,8 @@ package com.abiquo.commons.amqp.impl.tracer;
 import java.io.IOException;
 
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
+import com.abiquo.commons.amqp.impl.tracer.domain.Trace;
+import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Channel;
 
 /**
@@ -31,13 +33,18 @@ import com.rabbitmq.client.Channel;
  * 
  * @author eruiz@abiquo.com
  */
-public class TracerConfiguration extends DefaultConfiguration
+public class TracerConfiguration extends DefaultConfiguration<Trace>
 {
     protected static final String TRACER_EXCHANGE = "abiquo.tracer";
 
     protected static final String TRACER_ROUTING_KEY = "abiquo.tracer.traces";
 
     protected static final String TRACER_QUEUE = TRACER_ROUTING_KEY;
+
+    public TracerConfiguration()
+    {
+        super(new JSONSerializer<Trace>(Trace.class));
+    }
 
     @Override
     public void declareExchanges(Channel channel) throws IOException

@@ -21,8 +21,6 @@
 
 package com.abiquo.commons.amqp.impl.datacenter;
 
-import static com.abiquo.commons.amqp.impl.datacenter.DatacenterNotificationConfiguration.NOTIFICATIONS_QUEUE;
-
 import java.util.Set;
 
 import com.abiquo.commons.amqp.consumer.RequestBasedCallback;
@@ -30,19 +28,12 @@ import com.abiquo.commons.amqp.consumer.RequestBasedConsumer;
 import com.abiquo.commons.amqp.impl.bpm.BPMResponseCallback;
 import com.abiquo.commons.amqp.impl.bpm.domain.BPMResponse;
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
-import com.rabbitmq.client.Envelope;
 
 public class DatacenterNotificationConsumer extends RequestBasedConsumer<DatacenterNotification>
 {
     public DatacenterNotificationConsumer()
     {
-        super(new DatacenterNotificationConfiguration(), NOTIFICATIONS_QUEUE);
-    }
-
-    @Override
-    protected DatacenterNotification deserializeRequest(Envelope envelope, byte[] body)
-    {
-        return DatacenterNotification.fromByteArray(body);
+        super(new DatacenterNotificationConfiguration());
     }
 
     @Override

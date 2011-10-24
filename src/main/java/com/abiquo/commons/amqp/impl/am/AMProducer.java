@@ -21,12 +21,6 @@
 
 package com.abiquo.commons.amqp.impl.am;
 
-import static com.abiquo.commons.amqp.impl.am.AMConfiguration.AM_EXCHANGE;
-import static com.abiquo.commons.amqp.impl.am.AMConfiguration.AM_ROUTING_KEY;
-import static com.abiquo.commons.amqp.util.ProducerUtils.publishPersistentText;
-
-import java.io.IOException;
-
 import com.abiquo.commons.amqp.impl.am.domain.OVFPackageInstanceStatusEvent;
 import com.abiquo.commons.amqp.producer.BasicProducer;
 
@@ -35,11 +29,5 @@ public class AMProducer extends BasicProducer<OVFPackageInstanceStatusEvent>
     public AMProducer()
     {
         super(new AMConfiguration());
-    }
-
-    @Override
-    public void publish(OVFPackageInstanceStatusEvent message) throws IOException
-    {
-        publishPersistentText(getChannel(), AM_EXCHANGE, AM_ROUTING_KEY, message.toByteArray());
     }
 }

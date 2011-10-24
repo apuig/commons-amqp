@@ -28,14 +28,13 @@ import java.io.IOException;
 
 import com.abiquo.commons.amqp.consumer.BasicConsumer;
 import com.abiquo.commons.amqp.impl.tracer.domain.Trace;
-import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Envelope;
 
 public class TracerConsumer extends BasicConsumer<Trace, TracerCallback>
 {
     public TracerConsumer()
     {
-        super(new TracerConfiguration(), new JSONSerializer<Trace>(Trace.class));
+        super(new TracerConfiguration());
     }
 
     @Override

@@ -21,7 +21,6 @@
 
 package com.abiquo.commons.amqp.impl.am;
 
-import static com.abiquo.commons.amqp.impl.am.AMConfiguration.AM_QUEUE;
 import static com.abiquo.commons.amqp.util.ConsumerUtils.ackMessage;
 import static com.abiquo.commons.amqp.util.ConsumerUtils.rejectMessage;
 
@@ -31,43 +30,42 @@ import com.abiquo.commons.amqp.consumer.BasicConsumer;
 import com.abiquo.commons.amqp.impl.am.domain.OVFPackageInstanceStatusEvent;
 import com.rabbitmq.client.Envelope;
 
-public class AMConsumer extends BasicConsumer<AMCallback>
+public class AMConsumer extends BasicConsumer<OVFPackageInstanceStatusEvent, AMCallback>
 {
     public AMConsumer()
     {
-        super(new AMConfiguration(), AM_QUEUE);
+        super(new AMConfiguration());
     }
 
     @Override
-    public void consume(Envelope envelope, byte[] body) throws IOException
+    public void consume(Envelope envelope, OVFPackageInstanceStatusEvent message)
+        throws IOException
     {
-        OVFPackageInstanceStatusEvent event = OVFPackageInstanceStatusEvent.fromByteArray(body);
-
-        if (event != null)
+        if (message != null)
         {
             for (AMCallback callback : callbacks)
             {
 
-                if (event.getStatus().equalsIgnoreCase("DOWNLOADING"))
+                if (message.getStatus().equalsIgnoreCase("DOWNLOADING"))
                 {
-                    callback.onDownloading(event);
+                    callback.onDownloading(message);
                 }
-                else if (event.getStatus().equalsIgnoreCase("DOWNLOAD"))
+                else if (message.getStatus().equalsIgnoreCase("DOWNLOAD"))
                 {
-                    callback.onDownload(event);
+                    callback.onDownload(message);
                 }
-                else if (event.getStatus().equalsIgnoreCase("ERROR"))
+                else if (message.getStatus().equalsIgnoreCase("ERROR"))
                 {
-                    callback.onError(event);
+                    callback.onError(message);
                 }
-                else if (event.getStatus().equalsIgnoreCase("NOT_DOWNLOAD"))
+                else if (message.getStatus().equalsIgnoreCase("NOT_DOWNLOAD"))
                 {
-                    callback.onNotDownload(event);
+                    callback.onNotDownload(message);
                 }
                 else
                 {
                     throw new IOException("Unexpected OVF Package Instance status : "
-                        + event.getStatus());
+                        + message.getStatus());
                 }
             }
 

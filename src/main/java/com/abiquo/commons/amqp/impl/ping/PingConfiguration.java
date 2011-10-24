@@ -24,10 +24,29 @@ package com.abiquo.commons.amqp.impl.ping;
 import java.io.IOException;
 
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
+import com.abiquo.commons.amqp.serialization.Serializer;
 import com.rabbitmq.client.Channel;
 
-public class PingConfiguration extends DefaultConfiguration
+public class PingConfiguration extends DefaultConfiguration<String>
 {
+    public PingConfiguration()
+    {
+        super(new Serializer<String>()
+        {
+            @Override
+            public byte[] toByteArray(String object)
+            {
+                return object.getBytes();
+            }
+
+            @Override
+            public String fromByteArray(byte[] bytes)
+            {
+                return new String(bytes);
+            }
+        });
+    }
+
     @Override
     public void declareExchanges(Channel channel) throws IOException
     {
@@ -38,5 +57,23 @@ public class PingConfiguration extends DefaultConfiguration
     public void declareQueues(Channel channel) throws IOException
     {
         // Intentionally empty
+    }
+
+    @Override
+    public String getExchange()
+    {
+        return null;
+    }
+
+    @Override
+    public String getRoutingKey()
+    {
+        return null;
+    }
+
+    @Override
+    public String getQueue()
+    {
+        return null;
     }
 }

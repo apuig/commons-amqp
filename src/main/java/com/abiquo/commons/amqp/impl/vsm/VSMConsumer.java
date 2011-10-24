@@ -28,10 +28,9 @@ import java.io.IOException;
 
 import com.abiquo.commons.amqp.consumer.BasicConsumer;
 import com.abiquo.commons.amqp.impl.vsm.domain.VirtualSystemEvent;
-import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Envelope;
 
-public class VSMConsumer extends BasicConsumer<VSMCallback>
+public class VSMConsumer extends BasicConsumer<VirtualSystemEvent, VSMCallback>
 {
     public VSMConsumer(String queue)
     {
@@ -39,17 +38,13 @@ public class VSMConsumer extends BasicConsumer<VSMCallback>
     }
 
     @Override
-    public void consume(Envelope envelope, byte[] body) throws IOException
+    public void consume(Envelope envelope, VirtualSystemEvent message) throws IOException
     {
-        JSONSerializer<VirtualSystemEvent> serializer =
-            new JSONSerializer<VirtualSystemEvent>(VirtualSystemEvent.class);
-        VirtualSystemEvent event = serializer.fromByteArray(body);
-
-        if (event != null)
+        if (message != null)
         {
             for (VSMCallback callback : callbacks)
             {
-                callback.onEvent(event);
+                callback.onEvent(message);
             }
 
             ackMessage(getChannel(), envelope.getDeliveryTag());

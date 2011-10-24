@@ -23,13 +23,11 @@ package com.abiquo.commons.amqp.impl.vsm;
 
 import com.abiquo.commons.amqp.impl.vsm.domain.VirtualSystemEvent;
 import com.abiquo.commons.amqp.producer.BasicProducer;
-import com.abiquo.commons.amqp.serialization.JSONSerializer;
 
 public class VSMProducer extends BasicProducer<VirtualSystemEvent>
 {
     public VSMProducer()
     {
-        super(new VSMConfiguration(),
-            new JSONSerializer<VirtualSystemEvent>(VirtualSystemEvent.class));
+        super(new VSMConfiguration());
     }
 }

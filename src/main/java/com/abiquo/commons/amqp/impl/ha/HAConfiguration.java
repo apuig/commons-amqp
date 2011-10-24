@@ -24,26 +24,51 @@ package com.abiquo.commons.amqp.impl.ha;
 import java.io.IOException;
 
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
+import com.abiquo.commons.amqp.impl.ha.domain.HATask;
+import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Channel;
 
-public class HAConfiguration extends DefaultConfiguration
+public class HAConfiguration extends DefaultConfiguration<HATask>
 {
-    public static final String HA_EXCHANGE = "abiquo.ha";
+    protected static final String HA_EXCHANGE = "abiquo.ha";
 
-    public static final String HA_ROUTING_KEY = "abiquo.ha.tasks";
+    protected static final String HA_ROUTING_KEY = "abiquo.ha.tasks";
 
-    public static final String HA_QUEUE = HA_ROUTING_KEY;
+    protected static final String HA_QUEUE = HA_ROUTING_KEY;
+
+    public HAConfiguration()
+    {
+        super(new JSONSerializer<HATask>(HATask.class));
+    }
 
     @Override
     public void declareExchanges(Channel channel) throws IOException
     {
-        channel.exchangeDeclare(HA_EXCHANGE, DirectExchange, Durable);
+        channel.exchangeDeclare(getExchange(), DirectExchange, Durable);
     }
 
     @Override
     public void declareQueues(Channel channel) throws IOException
     {
-        channel.queueDeclare(HA_QUEUE, Durable, NonExclusive, NonAutodelete, null);
-        channel.queueBind(HA_QUEUE, HA_EXCHANGE, HA_ROUTING_KEY);
+        channel.queueDeclare(getQueue(), Durable, NonExclusive, NonAutodelete, null);
+        channel.queueBind(getQueue(), getExchange(), getRoutingKey());
+    }
+
+    @Override
+    public String getExchange()
+    {
+        return HA_EXCHANGE;
+    }
+
+    @Override
+    public String getRoutingKey()
+    {
+        return HA_ROUTING_KEY;
+    }
+
+    @Override
+    public String getQueue()
+    {
+        return HA_QUEUE;
     }
 }

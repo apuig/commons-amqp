@@ -24,9 +24,11 @@ package com.abiquo.commons.amqp.impl.datacenter;
 import java.io.IOException;
 
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
+import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterRequest;
+import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Channel;
 
-public class DatacenterRequestConfiguration extends DefaultConfiguration
+public class DatacenterRequestConfiguration extends DefaultConfiguration<DatacenterRequest>
 {
     private String datacenterId;
 
@@ -60,6 +62,7 @@ public class DatacenterRequestConfiguration extends DefaultConfiguration
 
     public DatacenterRequestConfiguration(final String datacenterId, final RequestType type)
     {
+        super(new JSONSerializer<DatacenterRequest>(DatacenterRequest.class));
         this.datacenterId = datacenterId;
         this.type = type;
     }
@@ -67,15 +70,31 @@ public class DatacenterRequestConfiguration extends DefaultConfiguration
     @Override
     public void declareExchanges(Channel channel) throws IOException
     {
-        channel.exchangeDeclare(getDatacenterExchange(), TopicExchange, Durable);
+        channel.exchangeDeclare(getExchange(), TopicExchange, Durable);
     }
 
     @Override
     public void declareQueues(Channel channel) throws IOException
     {
-        channel.queueDeclare(buildJobsQueue(datacenterId, type), Durable, NonExclusive,
-            NonAutodelete, null);
-        channel.queueBind(buildJobsQueue(datacenterId, type), getDatacenterExchange(),
-            buildJobsRoutingKey(datacenterId, type));
+        channel.queueDeclare(getQueue(), Durable, NonExclusive, NonAutodelete, null);
+        channel.queueBind(getQueue(), getDatacenterExchange(), getRoutingKey());
+    }
+
+    @Override
+    public String getExchange()
+    {
+        return getDatacenterExchange();
+    }
+
+    @Override
+    public String getRoutingKey()
+    {
+        return buildJobsRoutingKey(datacenterId, type);
+    }
+
+    @Override
+    public String getQueue()
+    {
+        return buildJobsQueue(datacenterId, type);
     }
 }

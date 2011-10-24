@@ -20,7 +20,6 @@
  */
 package com.abiquo.commons.amqp.impl.bpm.domain;
 
-import com.abiquo.commons.amqp.serialization.JSONUtils;
 
 public class StatefulDiskRequest extends BPMRequest
 {
@@ -96,10 +95,5 @@ public class StatefulDiskRequest extends BPMRequest
     public void setEnterpriseId(final Integer enterpriseId)
     {
         this.enterpriseId = enterpriseId;
-    }
-
-    public static StatefulDiskRequest fromByteArray(final byte[] bytes)
-    {
-        return JSONUtils.deserialize(bytes, StatefulDiskRequest.class);
     }
 }

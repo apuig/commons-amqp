@@ -21,10 +21,8 @@
 
 package com.abiquo.commons.amqp.impl.am.domain;
 
-import com.abiquo.commons.amqp.domain.Queuable;
-import com.abiquo.commons.amqp.serialization.JSONUtils;
 
-public class OVFPackageInstanceStatusEvent implements Queuable
+public class OVFPackageInstanceStatusEvent
 {
     protected String ovfId;
 
@@ -96,16 +94,5 @@ public class OVFPackageInstanceStatusEvent implements Queuable
     public void setRepositoryLocation(String repositoryLocation)
     {
         this.repositoryLocation = repositoryLocation;
-    }
-
-    @Override
-    public byte[] toByteArray()
-    {
-        return JSONUtils.serialize(this);
-    }
-
-    public static OVFPackageInstanceStatusEvent fromByteArray(final byte[] bytes)
-    {
-        return JSONUtils.deserialize(bytes, OVFPackageInstanceStatusEvent.class);
     }
 }

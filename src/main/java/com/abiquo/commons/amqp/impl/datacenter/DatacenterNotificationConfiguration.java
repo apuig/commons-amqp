@@ -24,26 +24,52 @@ package com.abiquo.commons.amqp.impl.datacenter;
 import java.io.IOException;
 
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
+import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
+import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Channel;
 
-public class DatacenterNotificationConfiguration extends DefaultConfiguration
+public class DatacenterNotificationConfiguration extends
+    DefaultConfiguration<DatacenterNotification>
 {
-    public static final String NOTIFICATIONS_EXCHANGE = "abiquo.notifications.direct";
+    protected static final String NOTIFICATIONS_EXCHANGE = "abiquo.notifications.direct";
 
-    public static final String NOTIFICATIONS_ROUTING_KEY = "abiquo.notifications";
+    protected static final String NOTIFICATIONS_ROUTING_KEY = "abiquo.notifications";
 
-    public static final String NOTIFICATIONS_QUEUE = NOTIFICATIONS_ROUTING_KEY;
+    protected static final String NOTIFICATIONS_QUEUE = NOTIFICATIONS_ROUTING_KEY;
+
+    public DatacenterNotificationConfiguration()
+    {
+        super(new JSONSerializer<DatacenterNotification>(DatacenterNotification.class));
+    }
 
     @Override
     public void declareExchanges(Channel channel) throws IOException
     {
-        channel.exchangeDeclare(NOTIFICATIONS_EXCHANGE, DirectExchange, Durable);
+        channel.exchangeDeclare(getExchange(), DirectExchange, Durable);
     }
 
     @Override
     public void declareQueues(Channel channel) throws IOException
     {
-        channel.queueDeclare(NOTIFICATIONS_QUEUE, Durable, NonExclusive, NonAutodelete, null);
-        channel.queueBind(NOTIFICATIONS_QUEUE, NOTIFICATIONS_EXCHANGE, NOTIFICATIONS_ROUTING_KEY);
+        channel.queueDeclare(getQueue(), Durable, NonExclusive, NonAutodelete, null);
+        channel.queueBind(getQueue(), getExchange(), getRoutingKey());
+    }
+
+    @Override
+    public String getExchange()
+    {
+        return NOTIFICATIONS_EXCHANGE;
+    }
+
+    @Override
+    public String getRoutingKey()
+    {
+        return NOTIFICATIONS_ROUTING_KEY;
+    }
+
+    @Override
+    public String getQueue()
+    {
+        return NOTIFICATIONS_QUEUE;
     }
 }

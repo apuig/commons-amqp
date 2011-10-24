@@ -21,7 +21,6 @@
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
-import com.abiquo.commons.amqp.serialization.JSONUtils;
 
 public class TarantinoResponse extends DatacenterNotification
 {
@@ -47,10 +46,5 @@ public class TarantinoResponse extends DatacenterNotification
     public void setResult(String result)
     {
         this.result = result;
-    }
-
-    public static TarantinoResponse fromByteArray(final byte[] bytes)
-    {
-        return JSONUtils.deserialize(bytes, TarantinoResponse.class);
     }
 }

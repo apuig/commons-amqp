@@ -25,20 +25,7 @@ import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeInfo.As;
 import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 
-import com.abiquo.commons.amqp.domain.Queuable;
-import com.abiquo.commons.amqp.serialization.JSONUtils;
-
 @JsonTypeInfo(use = Id.CLASS, include = As.PROPERTY, property = "@class")
-public abstract class DatacenterNotification implements Queuable
+public abstract class DatacenterNotification
 {
-    @Override
-    public byte[] toByteArray()
-    {
-        return JSONUtils.serialize(this);
-    }
-
-    public static DatacenterNotification fromByteArray(final byte[] bytes)
-    {
-        return JSONUtils.deserialize(bytes, DatacenterNotification.class);
-    }
 }

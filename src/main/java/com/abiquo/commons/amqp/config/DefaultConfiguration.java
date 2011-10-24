@@ -26,6 +26,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.abiquo.commons.amqp.serialization.Serializer;
 import com.rabbitmq.client.Channel;
 
 /**
@@ -34,7 +35,7 @@ import com.rabbitmq.client.Channel;
  * 
  * @author eruiz@abiquo.com
  */
-public abstract class DefaultConfiguration
+public abstract class DefaultConfiguration<T>
 {
     /** Logger **/
     private final static Logger LOGGER = LoggerFactory.getLogger(DefaultConfiguration.class);
@@ -58,6 +59,8 @@ public abstract class DefaultConfiguration
 
     protected final boolean NonAutodelete = false;
 
+    protected final Serializer<T> serializer;
+
     public abstract void declareExchanges(Channel channel) throws IOException;
 
     public abstract void declareQueues(Channel channel) throws IOException;
@@ -67,6 +70,16 @@ public abstract class DefaultConfiguration
     public abstract String getRoutingKey();
 
     public abstract String getQueue();
+
+    public DefaultConfiguration(Serializer<T> serializer)
+    {
+        this.serializer = serializer;
+    }
+
+    public Serializer<T> getSerializer()
+    {
+        return serializer;
+    }
 
     public static String getHost()
     {
@@ -91,11 +104,5 @@ public abstract class DefaultConfiguration
     public static String getVirtualHost()
     {
         return System.getProperty("abiquo.rabbitmq.virtualHost", "/");
-    }
-
-    protected DefaultConfiguration()
-    {
-        LOGGER.debug(String.format("RabbitMQ configuration. Host: %s, port: %d, username: %s",
-            getHost(), getPort(), getUserName()));
     }
 }

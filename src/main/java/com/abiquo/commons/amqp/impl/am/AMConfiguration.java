@@ -24,26 +24,52 @@ package com.abiquo.commons.amqp.impl.am;
 import java.io.IOException;
 
 import com.abiquo.commons.amqp.config.DefaultConfiguration;
+import com.abiquo.commons.amqp.impl.am.domain.OVFPackageInstanceStatusEvent;
+import com.abiquo.commons.amqp.serialization.JSONSerializer;
 import com.rabbitmq.client.Channel;
 
-public class AMConfiguration extends DefaultConfiguration
+public class AMConfiguration extends DefaultConfiguration<OVFPackageInstanceStatusEvent>
 {
-    public static final String AM_EXCHANGE = "abq.am";
+    protected static final String AM_EXCHANGE = "abq.am";
 
-    public static final String AM_ROUTING_KEY = "abq.am.dowloads";
+    protected static final String AM_ROUTING_KEY = "abq.am.dowloads";
 
-    public static final String AM_QUEUE = AM_ROUTING_KEY;
+    protected static final String AM_QUEUE = AM_ROUTING_KEY;
+
+    public AMConfiguration()
+    {
+        super(
+            new JSONSerializer<OVFPackageInstanceStatusEvent>(OVFPackageInstanceStatusEvent.class));
+    }
 
     @Override
     public void declareExchanges(Channel channel) throws IOException
     {
-        channel.exchangeDeclare(AM_EXCHANGE, DirectExchange, Durable);
+        channel.exchangeDeclare(getExchange(), DirectExchange, Durable);
     }
 
     @Override
     public void declareQueues(Channel channel) throws IOException
     {
-        channel.queueDeclare(AM_QUEUE, Durable, NonExclusive, NonAutodelete, null);
-        channel.queueBind(AM_QUEUE, AM_EXCHANGE, AM_ROUTING_KEY);
+        channel.queueDeclare(getQueue(), Durable, NonExclusive, NonAutodelete, null);
+        channel.queueBind(getQueue(), getExchange(), getRoutingKey());
+    }
+
+    @Override
+    public String getExchange()
+    {
+        return AM_EXCHANGE;
+    }
+
+    @Override
+    public String getRoutingKey()
+    {
+        return AM_ROUTING_KEY;
+    }
+
+    @Override
+    public String getQueue()
+    {
+        return AM_QUEUE;
     }
 }
