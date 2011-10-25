@@ -24,6 +24,7 @@ package com.abiquo.commons.amqp.impl.tarantino.domain.builder;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStandard;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStateful;
+import com.abiquo.commons.amqp.impl.tarantino.domain.SecondaryDiskStandard;
 import com.abiquo.commons.amqp.impl.tarantino.domain.SecondaryDiskStateful;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.HardwareConfiguration;
@@ -130,7 +131,7 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
-    public VirtualMachineDescriptionBuilder addAuxDisk(final DiskFormatType format,
+    public VirtualMachineDescriptionBuilder addSecondaryScsiDisk(final DiskFormatType format,
         final long capacityInBytes, final String iqn, final String destinationDatastore,
         final int sequence)
     {
@@ -147,6 +148,29 @@ public class VirtualMachineDescriptionBuilder
         auxDisk.setSequence(sequence);
 
         secondaryDisks.getStatefulDisks().add(auxDisk);
+
+        return this;
+    }
+
+    public VirtualMachineDescriptionBuilder addSecondaryHardDisk(final long capacityInBytes,
+        final int sequence)
+    {
+        if (secondaryDisks == null)
+        {
+            secondaryDisks = new SecondaryDisks();
+        }
+
+        SecondaryDiskStandard hdDisk = new SecondaryDiskStandard();
+        hdDisk.setCapacityInBytes(capacityInBytes);
+        hdDisk.setDestinationDatastore(null);
+        hdDisk.setDiskFileSizeInBytes(0l);
+        hdDisk.setFormat(null);
+        hdDisk.setPath(null);
+        hdDisk.setRepository(null);
+        hdDisk.setRepositoryManagerAddress(null);
+        hdDisk.setSequence(sequence);
+
+        secondaryDisks.getStandardDisks().add(hdDisk);
 
         return this;
     }
