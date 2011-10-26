@@ -30,6 +30,8 @@ import com.abiquo.commons.amqp.consumer.RequestBasedConsumer;
 import com.abiquo.commons.amqp.impl.bpm.BPMResponseCallback;
 import com.abiquo.commons.amqp.impl.bpm.domain.BPMResponse;
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
+import com.abiquo.commons.amqp.impl.tarantino.TarantinoResponseCallback;
+import com.abiquo.commons.amqp.impl.tarantino.domain.TarantinoResponse;
 import com.rabbitmq.client.Envelope;
 
 public class DatacenterNotificationConsumer extends RequestBasedConsumer<DatacenterNotification>
@@ -52,6 +54,10 @@ public class DatacenterNotificationConsumer extends RequestBasedConsumer<Datacen
         {
             consume((BPMResponse) request, callbacks);
         }
+        else if (request instanceof TarantinoResponse)
+        {
+            consume((TarantinoResponse) request, callbacks);
+        }
     }
 
     protected void consume(BPMResponse request, Set<RequestBasedCallback> callbacks)
@@ -59,6 +65,15 @@ public class DatacenterNotificationConsumer extends RequestBasedConsumer<Datacen
         for (RequestBasedCallback callback : callbacks)
         {
             BPMResponseCallback realCallback = (BPMResponseCallback) callback;
+            realCallback.processResponse(request);
+        }
+    }
+
+    protected void consume(TarantinoResponse request, Set<RequestBasedCallback> callbacks)
+    {
+        for (RequestBasedCallback callback : callbacks)
+        {
+            TarantinoResponseCallback realCallback = (TarantinoResponseCallback) callback;
             realCallback.processResponse(request);
         }
     }
