@@ -152,8 +152,8 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
-    public VirtualMachineDescriptionBuilder addSecondaryHardDisk(final long capacityInBytes,
-        final int sequence)
+    public VirtualMachineDescriptionBuilder addSecondaryHardDisk(final long diskFileSizeInBytes,
+        final int sequence, final String datastorePath)
     {
         if (secondaryDisks == null)
         {
@@ -161,9 +161,9 @@ public class VirtualMachineDescriptionBuilder
         }
 
         SecondaryDiskStandard hdDisk = new SecondaryDiskStandard();
-        hdDisk.setCapacityInBytes(capacityInBytes);
-        hdDisk.setDestinationDatastore(null);
-        hdDisk.setDiskFileSizeInBytes(0l);
+        hdDisk.setCapacityInBytes(0l);
+        hdDisk.setDestinationDatastore(datastorePath);
+        hdDisk.setDiskFileSizeInBytes(diskFileSizeInBytes);
         hdDisk.setFormat(null);
         hdDisk.setPath(null);
         hdDisk.setRepository(null);
