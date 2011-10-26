@@ -28,7 +28,7 @@ import com.rabbitmq.client.Channel;
 
 public class DatacenterNotificationConfiguration extends DefaultConfiguration
 {
-    public static final String NOTIFICATIONS_EXCHANGE = "abiquo.notifications.direct";
+    public static final String NOTIFICATIONS_EXCHANGE = "abiquo.notifications";
 
     public static final String NOTIFICATIONS_ROUTING_KEY = "abiquo.notifications";
 
