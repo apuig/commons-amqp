@@ -41,12 +41,16 @@ public class DHCPRule
 
     protected boolean configureGateway;
 
+    protected String bootstrapConfigURI;
+
+    protected String bootstrapAuth;
+
     public String getGateway()
     {
         return gateway;
     }
 
-    public void setGateway(String value)
+    public void setGateway(final String value)
     {
         this.gateway = value;
     }
@@ -56,7 +60,7 @@ public class DHCPRule
         return ip;
     }
 
-    public void setIp(String ip)
+    public void setIp(final String ip)
     {
         // TODO validate
         this.ip = ip;
@@ -67,7 +71,7 @@ public class DHCPRule
         return macAddress;
     }
 
-    public void setMacAddress(String macAddress)
+    public void setMacAddress(final String macAddress)
     {
         // TODO validate
         this.macAddress = macAddress;
@@ -78,7 +82,7 @@ public class DHCPRule
         return leaseName;
     }
 
-    public void setLeaseName(String leaseName)
+    public void setLeaseName(final String leaseName)
     {
         this.leaseName = leaseName;
     }
@@ -88,7 +92,7 @@ public class DHCPRule
         return configureGateway;
     }
 
-    public void setConfigureGateway(boolean configureGateway)
+    public void setConfigureGateway(final boolean configureGateway)
     {
         this.configureGateway = configureGateway;
     }
@@ -98,7 +102,7 @@ public class DHCPRule
         return mask;
     }
 
-    public void setMask(String value)
+    public void setMask(final String value)
     {
         this.mask = value;
     }
@@ -108,7 +112,7 @@ public class DHCPRule
         return primaryDNS;
     }
 
-    public void setPrimaryDNS(String value)
+    public void setPrimaryDNS(final String value)
     {
         this.primaryDNS = value;
     }
@@ -118,7 +122,7 @@ public class DHCPRule
         return secondaryDNS;
     }
 
-    public void setSecondaryDNS(String value)
+    public void setSecondaryDNS(final String value)
     {
         this.secondaryDNS = value;
     }
@@ -128,8 +132,28 @@ public class DHCPRule
         return sufixDNS;
     }
 
-    public void setSufixDNS(String value)
+    public void setSufixDNS(final String value)
     {
         this.sufixDNS = value;
+    }
+
+    public String getBootstrapConfigURI()
+    {
+        return bootstrapConfigURI;
+    }
+
+    public void setBootstrapConfigURI(final String bootstrapConfigURI)
+    {
+        this.bootstrapConfigURI = bootstrapConfigURI;
+    }
+
+    public String getBootstrapAuth()
+    {
+        return bootstrapAuth;
+    }
+
+    public void setBootstrapAuth(final String bootstrapAuth)
+    {
+        this.bootstrapAuth = bootstrapAuth;
     }
 }
