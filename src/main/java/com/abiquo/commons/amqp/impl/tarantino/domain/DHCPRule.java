@@ -41,10 +41,6 @@ public class DHCPRule
 
     protected boolean configureGateway;
 
-    protected String bootstrapConfigURI;
-
-    protected String bootstrapAuth;
-
     public String getGateway()
     {
         return gateway;
@@ -135,25 +131,5 @@ public class DHCPRule
     public void setSufixDNS(final String value)
     {
         this.sufixDNS = value;
-    }
-
-    public String getBootstrapConfigURI()
-    {
-        return bootstrapConfigURI;
-    }
-
-    public void setBootstrapConfigURI(final String bootstrapConfigURI)
-    {
-        this.bootstrapConfigURI = bootstrapConfigURI;
-    }
-
-    public String getBootstrapAuth()
-    {
-        return bootstrapAuth;
-    }
-
-    public void setBootstrapAuth(final String bootstrapAuth)
-    {
-        this.bootstrapAuth = bootstrapAuth;
     }
 }

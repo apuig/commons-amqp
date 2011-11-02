@@ -40,6 +40,8 @@ public class VirtualMachineDefinition
 
     protected SecondaryDisks secondaryDisks;
 
+    protected BootstrapConfiguration bootstrap;
+
     public String getMachineUUID()
     {
         return machineUUID;
@@ -103,6 +105,16 @@ public class VirtualMachineDefinition
     public void setSecondaryDisks(final SecondaryDisks secondaryDisks)
     {
         this.secondaryDisks = secondaryDisks;
+    }
+
+    public BootstrapConfiguration getBootstrap()
+    {
+        return bootstrap;
+    }
+
+    public void setBootstrap(final BootstrapConfiguration bootstrap)
+    {
+        this.bootstrap = bootstrap;
     }
 
     public static class HardwareConfiguration
@@ -217,6 +229,33 @@ public class VirtualMachineDefinition
             }
 
             return this.virtualNICs;
+        }
+    }
+
+    public static class BootstrapConfiguration
+    {
+        protected String uri;
+
+        protected String auth;
+
+        public String getUri()
+        {
+            return uri;
+        }
+
+        public void setUri(final String uri)
+        {
+            this.uri = uri;
+        }
+
+        public String getAuth()
+        {
+            return auth;
+        }
+
+        public void setAuth(final String auth)
+        {
+            this.auth = auth;
         }
     }
 

@@ -27,6 +27,7 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStateful;
 import com.abiquo.commons.amqp.impl.tarantino.domain.SecondaryDiskStandard;
 import com.abiquo.commons.amqp.impl.tarantino.domain.SecondaryDiskStateful;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
+import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.BootstrapConfiguration;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.HardwareConfiguration;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.NetworkConfiguration;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.PrimaryDisk;
@@ -42,6 +43,8 @@ public class VirtualMachineDescriptionBuilder
     private PrimaryDisk primaryDisk;
 
     private SecondaryDisks secondaryDisks;
+
+    private BootstrapConfiguration bootstrapConf;
 
     public VirtualMachineDescriptionBuilder hardware(final int virtualCpu, final int ramInMb)
     {
@@ -93,6 +96,15 @@ public class VirtualMachineDescriptionBuilder
         nic.setSufixDNS(sufixDNS);
 
         netConf.getVirtualNICList().add(nic);
+
+        return this;
+    }
+
+    public VirtualMachineDescriptionBuilder bootstrap(final String uri, final String auth)
+    {
+        bootstrapConf = new BootstrapConfiguration();
+        bootstrapConf.setUri(uri);
+        bootstrapConf.setAuth(auth);
 
         return this;
     }
@@ -183,6 +195,7 @@ public class VirtualMachineDescriptionBuilder
         virtualMachine.setMachineName("ABQ_" + uuid);
         virtualMachine.setHardwareConfiguration(hardConf);
         virtualMachine.setNetworkConfiguration(netConf);
+        virtualMachine.setBootstrap(bootstrapConf);
 
         virtualMachine.setPrimaryDisk(primaryDisk);
         virtualMachine.setSecondaryDisks(secondaryDisks);
