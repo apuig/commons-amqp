@@ -40,6 +40,6 @@ Configuration properties
 
 The following properties are used when the connection with RabbitMQ has been lost
 
-* **abiquo.retry.retries** number of retries to perform (0 for infinite), by default *0* 
-* **abiquo.retry.mstosleep** number of milliseconds to sleep beetwen retry attempts, by default *10000*
+* **abiquo.rabbitmq.retry.retries** number of retries to perform (0 for infinite), by default *0* 
+* **abiquo.rabbitmq.retry.mstosleep** number of milliseconds to sleep beetwen retry attempts, by default *10000*
 
