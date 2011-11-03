@@ -54,7 +54,7 @@ public class DelayedRetryStrategy extends RetryStrategy
      */
     protected int getNumberOfRetries()
     {
-        return Integer.parseInt(System.getProperty("abiquo.retry.retries", "0"));
+        return Integer.parseInt(System.getProperty("abiquo.rabbitmq.retry.retries", "0"));
     }
 
     /**
@@ -64,7 +64,7 @@ public class DelayedRetryStrategy extends RetryStrategy
      */
     protected long getMsToSleep()
     {
-        return Integer.parseInt(System.getProperty("abiquo.retry.mstosleep", "10000"));
+        return Integer.parseInt(System.getProperty("abiquo.rabbitmq.retry.mstosleep", "10000"));
     }
 
     @Override
