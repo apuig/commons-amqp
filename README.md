@@ -3,6 +3,32 @@ Abiquo Commons AMQP
 
 One library to use RabbitMQ in an unified way between Abiquo's modules. It includes producers, consumers and exchange/binding/queue configurations for each module.
 
+How do I use it?
+----------------
+
+Add abiquo's maven repo
+
+```xml
+<repositories>
+    <repository>
+        <id>abiquo-repo</id>
+        <name>Abiquo Maven Repository</name>
+        <url>http://repo.community.abiquo.com/repo</url>
+    </repository>
+</repositories>
+```
+
+Add maven dependency
+
+```xml
+<dependency>
+    <groupId>com.abiquo</groupId>
+    <artifactId>commons-amqp</artifactId>
+    <version>2.0-tarantino-SNAPSHOT</version>
+    </dependency>
+</dependency>
+```
+
 Configuration properties
 ------------------------
 
