@@ -48,7 +48,6 @@ public class VirtualFactoryTestJobs
             .primaryDisk(DiskFormatType.RAW, 1024l, "nfs-devel:/opt/vm_repo",
                 "1/rs.bcn/m0n0/m0n0.iso", "datastore1", "http://localhost/am") //
             .addSecondaryScsiDisk(DiskFormatType.RAW, 1024l, "iqn....", "sdasd", 1);
-
     }
 
     public static ConfigureVirtualMachineOp testConfigureVirtualMachine(
@@ -59,7 +58,6 @@ public class VirtualFactoryTestJobs
             .connection(HypervisorType.TEST, "localhost", "root", "root") //
             .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
             .buildConfigureVirtualMachineDto();
-
     }
 
     public static ApplyVirtualMachineStateOp testApplyVirtualMachineState(
@@ -69,6 +67,16 @@ public class VirtualFactoryTestJobs
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
             .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
             .state(StateTransition.PAUSE)//
+            .buildApplyVirtualMachineStateDto();
+    }
+
+    public static ApplyVirtualMachineStateOp testApplyVirtualMachineState(
+        final VirtualMachineDescriptionBuilder vmbuilder, StateTransition state)
+    {
+        return new ApplyVirtualMachineStateJobBuilder() //
+            .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
+            .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
+            .state(state)//
             .buildApplyVirtualMachineStateDto();
     }
 

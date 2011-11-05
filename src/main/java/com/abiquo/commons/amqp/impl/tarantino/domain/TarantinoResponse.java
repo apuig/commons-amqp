@@ -25,9 +25,16 @@ import com.abiquo.commons.amqp.util.JSONUtils;
 
 public class TarantinoResponse extends DatacenterNotification
 {
+    public enum JobStateType
+    {
+        INIT, START, DONE, ERROR, ABORTED, ROLLBACK_INIT, ROLLBACK_START, ROLLBACK_DONE, ROLLBACK_ERROR, ROLLBACK_ABORTED, NEEDED
+    };
+
+    // error == needed ???
+
     protected String jobId;
 
-    protected String result;
+    protected JobStateType state;
 
     public String getJobId()
     {
@@ -39,14 +46,14 @@ public class TarantinoResponse extends DatacenterNotification
         this.jobId = jobId;
     }
 
-    public String getResult()
+    public JobStateType getState()
     {
-        return result;
+        return state;
     }
 
-    public void setResult(String result)
+    public void setState(JobStateType state)
     {
-        this.result = result;
+        this.state = state;
     }
 
     public static TarantinoResponse fromByteArray(final byte[] bytes)
