@@ -25,12 +25,10 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatT
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ApplyVirtualMachineStateJobBuilder;
-import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ConfigureVirtualMachineJobBuilder;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ReconfigureVirtualMachineJobBuilder;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.SnapshotVirtualMachineJobBuilder;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.VirtualMachineDescriptionBuilder;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMachineStateOp;
-import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ConfigureVirtualMachineOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ReconfigureVirtualMachineOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.SnapshotVirtualMachineOp;
 
@@ -50,14 +48,14 @@ public class VirtualFactoryTestJobs
             .addSecondaryScsiDisk(DiskFormatType.RAW, 1024l, "iqn....", "sdasd", 1);
     }
 
-    public static ConfigureVirtualMachineOp testConfigureVirtualMachine(
+    public static ApplyVirtualMachineStateOp testConfigureVirtualMachine(
         final VirtualMachineDescriptionBuilder vmbuilder)
     {
-
-        return new ConfigureVirtualMachineJobBuilder() //
+        return new ApplyVirtualMachineStateJobBuilder() //
             .connection(HypervisorType.TEST, "localhost", "root", "root") //
             .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
-            .buildConfigureVirtualMachineDto();
+            .state(StateTransition.CONFIGURE) //
+            .buildApplyVirtualMachineStateDto();
     }
 
     public static ApplyVirtualMachineStateOp testApplyVirtualMachineState(

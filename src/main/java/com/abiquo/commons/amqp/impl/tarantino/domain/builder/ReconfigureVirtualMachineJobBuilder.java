@@ -25,7 +25,7 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ReconfigureVirtualMachineOp;
 
-public class ReconfigureVirtualMachineJobBuilder extends ConfigureVirtualMachineJobBuilder
+public class ReconfigureVirtualMachineJobBuilder extends VirtualFactoryJobBuilder
 {
     VirtualMachineDefinition newVmachineDefinition;
 

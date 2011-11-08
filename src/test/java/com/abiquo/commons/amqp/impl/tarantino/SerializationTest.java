@@ -22,7 +22,6 @@
 package com.abiquo.commons.amqp.impl.tarantino;
 
 import static com.abiquo.commons.amqp.impl.tarantino.VirtualFactoryTestJobs.testApplyVirtualMachineState;
-import static com.abiquo.commons.amqp.impl.tarantino.VirtualFactoryTestJobs.testConfigureVirtualMachine;
 import static com.abiquo.commons.amqp.impl.tarantino.VirtualFactoryTestJobs.testReconfigureVirtualMachine;
 import static com.abiquo.commons.amqp.impl.tarantino.VirtualFactoryTestJobs.testSnapshotVirtualMachine;
 import static com.abiquo.commons.amqp.impl.tarantino.VirtualFactoryTestJobs.testVirtualMachine;
@@ -33,26 +32,11 @@ import org.testng.annotations.Test;
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterRequest;
 import com.abiquo.commons.amqp.impl.tarantino.domain.dto.DatacenterTasks;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMachineStateOp;
-import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ConfigureVirtualMachineOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ReconfigureVirtualMachineOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.SnapshotVirtualMachineOp;
 
 public class SerializationTest
 {
-    @Test
-    public void test_ConfigureVirtualMachineOpSerialization()
-    {
-        DatacenterTasks tlist = new DatacenterTasks();
-        ConfigureVirtualMachineOp operation = buildConfigureOp();
-        operation.setId("some tasks.job");
-        tlist.getJobs().add(operation);
-        tlist.setDependent(false);
-        tlist.setId("some tasks");
-
-        String serialization = new String(tlist.toByteArray());
-        DatacenterRequest deserialization = DatacenterTasks.fromByteArray(serialization.getBytes());
-        assertNotNull(deserialization);
-    }
 
     @Test
     public void test_ApplyVirtualMachineStateOpSerialization()
@@ -97,11 +81,6 @@ public class SerializationTest
         String serialization = new String(tlist.toByteArray());
         DatacenterRequest deserialization = DatacenterTasks.fromByteArray(serialization.getBytes());
         assertNotNull(deserialization);
-    }
-
-    private ConfigureVirtualMachineOp buildConfigureOp()
-    {
-        return testConfigureVirtualMachine(testVirtualMachine());
     }
 
     private ApplyVirtualMachineStateOp buildApplyVirtualMachineStateOp()

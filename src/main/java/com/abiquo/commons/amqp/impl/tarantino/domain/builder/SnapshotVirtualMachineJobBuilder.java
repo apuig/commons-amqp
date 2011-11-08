@@ -27,7 +27,7 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatT
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.SnapshotVirtualMachineOp;
 
-public class SnapshotVirtualMachineJobBuilder extends ConfigureVirtualMachineJobBuilder
+public class SnapshotVirtualMachineJobBuilder extends VirtualFactoryJobBuilder
 {
     private DiskSnapshot destination;
 

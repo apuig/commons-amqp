@@ -22,12 +22,23 @@
 package com.abiquo.commons.amqp.impl.tarantino.domain.builder;
 
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection;
+import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
 
 public class VirtualFactoryJobBuilder
 {
 
     protected HypervisorConnection connection;
+
+    protected VirtualMachineDefinition vmachineDefinition;
+
+    public VirtualFactoryJobBuilder setVirtualMachineDefinition(
+        VirtualMachineDescriptionBuilder vmBuilder, String virtualMachineId)
+    {
+        vmachineDefinition = vmBuilder.build(virtualMachineId);
+
+        return this;
+    }
 
     public VirtualFactoryJobBuilder connection(HypervisorType hypervisortype, String ip,
         String loginUser, String loginPassword)

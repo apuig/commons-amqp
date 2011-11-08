@@ -30,7 +30,6 @@ import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 
 import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMachineStateOp;
-import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ConfigureVirtualMachineOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.DatacenterJob;
 import com.abiquo.commons.amqp.util.JSONUtils;
 
@@ -149,19 +148,7 @@ public class DatacenterTasks extends BaseJob
     private static DatacenterJob rollback(DatacenterJob j)
     {
 
-        if (j instanceof ConfigureVirtualMachineOp)
-        {
-            ApplyVirtualMachineStateOp jj = new ApplyVirtualMachineStateOp();
-
-            jj.setTransaction(StateTransition.DECONFIGURE);
-            jj.setHypervisorConnection(j.getHypervisorConnection());
-            jj.setVirtualMachine(j.getVirtualMachine());
-            jj.setIsRollback(true);
-            jj.setId(j.id);
-
-            return jj;
-        }
-        else if (j instanceof ApplyVirtualMachineStateOp)
+        if (j instanceof ApplyVirtualMachineStateOp)
         {
             ApplyVirtualMachineStateOp jj = new ApplyVirtualMachineStateOp();
 
