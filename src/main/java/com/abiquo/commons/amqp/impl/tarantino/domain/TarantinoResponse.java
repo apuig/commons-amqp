@@ -25,23 +25,25 @@ import com.abiquo.commons.amqp.util.JSONUtils;
 
 public class TarantinoResponse extends DatacenterNotification
 {
+    // TODO deprecated not notified states (INIT, ROLLBACK_INIT, NEEDED)
     public enum JobStateType
     {
         INIT, START, DONE, ERROR, ABORTED, ROLLBACK_INIT, ROLLBACK_START, ROLLBACK_DONE, ROLLBACK_ERROR, ROLLBACK_ABORTED, NEEDED
     };
 
-    // error == needed ???
-
     protected String jobId;
 
     protected JobStateType state;
+
+    /** for ERROR and ROLLBACK_ERROR adds the cause. TODO use VirtualFactoryException. */
+    protected String error;
 
     public String getJobId()
     {
         return jobId;
     }
 
-    public void setJobId(String jobId)
+    public void setJobId(final String jobId)
     {
         this.jobId = jobId;
     }
@@ -51,9 +53,19 @@ public class TarantinoResponse extends DatacenterNotification
         return state;
     }
 
-    public void setState(JobStateType state)
+    public void setState(final JobStateType state)
     {
         this.state = state;
+    }
+
+    public String getError()
+    {
+        return error;
+    }
+
+    public void setError(final String error)
+    {
+        this.error = error;
     }
 
     public static TarantinoResponse fromByteArray(final byte[] bytes)
