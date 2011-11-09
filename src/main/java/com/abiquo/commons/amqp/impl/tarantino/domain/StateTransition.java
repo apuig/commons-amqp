@@ -89,6 +89,7 @@ public enum StateTransition
         return StateTransition.valueOf(value.toUpperCase());
     }
 
+    /** Inverse Transition */
     public static StateTransition rollback(StateTransition s)
     {
         switch (s)
@@ -101,6 +102,7 @@ public enum StateTransition
 
             case POWEROFF:
                 return POWERON;
+
             case POWERON:
                 return POWEROFF;
 
@@ -110,7 +112,7 @@ public enum StateTransition
             case RESUME:
                 return PAUSE;
 
-            default: // reset reconfigure snapshot
+            default: // RESET, RECONFIGURE and SNPASHOT (starts and ends in the same state)
                 return s;
         }
     }

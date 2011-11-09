@@ -23,6 +23,9 @@ package com.abiquo.commons.amqp.impl.tarantino.domain.operations;
 
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
 
+/**
+ * Updates a {@link VirtualMachineDefinition}
+ */
 public class ReconfigureVirtualMachineOp extends DatacenterJob
 {
     protected VirtualMachineDefinition newVirtualMachine;

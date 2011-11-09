@@ -22,12 +22,15 @@
 package com.abiquo.commons.amqp.impl.tarantino.domain.operations;
 
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskSnapshot;
-import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStandard;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
+import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.PrimaryDisk;
 
-// Used by exist operation
+/**
+ * Moves the {@link VirtualMachineDefinition} {@link PrimaryDisk} to the datacenter repository.
+ */
 public class SnapshotVirtualMachineOp extends DatacenterJob
 {
+    /** Target Disk (in the repository) */
     protected DiskSnapshot diskSnapshot;
 
     public DiskSnapshot getDiskSnapshot()

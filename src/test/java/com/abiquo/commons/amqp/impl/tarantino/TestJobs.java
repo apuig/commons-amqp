@@ -32,7 +32,7 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMach
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ReconfigureVirtualMachineOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.SnapshotVirtualMachineOp;
 
-public class VirtualFactoryTestJobs
+public class TestJobs
 {
 
     public static VirtualMachineDescriptionBuilder testVirtualMachine()

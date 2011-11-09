@@ -39,7 +39,7 @@ import com.abiquo.commons.amqp.util.JSONUtils;
 @JsonTypeInfo(use = Id.CLASS, include = As.PROPERTY, property = "@class")
 public class DatacenterTasks extends BaseJob
 {
-    // TODO will be better have a map <jobid, BaseJob>
+    // XXX consider using a map <jobid, BaseJob>
     private List<BaseJob> jobs;
 
     private Boolean dependent;
@@ -97,7 +97,6 @@ public class DatacenterTasks extends BaseJob
         else
         {
             final String thisparent = getParentAt(jobId, level(id) + 1);
-
             return ((DatacenterTasks) getJobInCurrentLevel(thisparent)).getJob(jobId);
         }
     }
@@ -113,59 +112,6 @@ public class DatacenterTasks extends BaseJob
         }
 
         return null;
-    }
-
-    public static DatacenterTasks rollback(DatacenterTasks t)
-    {
-        DatacenterTasks tt = new DatacenterTasks();
-
-        tt.setDependent(t.dependent);
-        tt.setId(t.id);
-        tt.setIsRollback(true);
-
-        List<BaseJob> rjobs = new LinkedList<BaseJob>();
-
-        for (BaseJob bj : t.getJobs())
-        {
-            if (bj instanceof DatacenterTasks)
-            {
-                rjobs.add(rollback((DatacenterTasks) bj));
-            }
-            else
-            // DatacenterJob
-            {
-                rjobs.add(rollback((DatacenterJob) bj));
-            }
-        }
-
-        Collections.reverse(rjobs);
-
-        tt.getJobs().addAll(rjobs);
-
-        return tt;
-    }
-
-    private static DatacenterJob rollback(DatacenterJob j)
-    {
-
-        if (j instanceof ApplyVirtualMachineStateOp)
-        {
-            ApplyVirtualMachineStateOp jj = new ApplyVirtualMachineStateOp();
-
-            jj.setTransaction(StateTransition.rollback(((ApplyVirtualMachineStateOp) j)
-                .getTransaction()));
-            jj.setHypervisorConnection(j.getHypervisorConnection());
-            jj.setVirtualMachine(j.getVirtualMachine());
-            jj.setIsRollback(true);
-            jj.setId(j.id);
-
-            return jj;
-        }
-        else
-        {
-            // TODO reconfigure, snapshot
-            throw new RuntimeException("Rollback not implemented for " + j.getClass().getName());
-        }
     }
 
     public static DatacenterTasks fromByteArray(final byte[] bytes)

@@ -29,13 +29,19 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.dto.BaseJob;
 
+/**
+ * Carry common attributes to all the virtual machine operations.
+ */
 @JsonTypeInfo(use = Id.CLASS, include = As.PROPERTY, property = "@class")
-public class DatacenterJob extends BaseJob
+public abstract class DatacenterJob extends BaseJob
 {
+    /** Hypervisor connection attributes. */
     protected HypervisorConnection hypervisorConnection;
 
+    /** Operation target virtual machine */
     protected VirtualMachineDefinition virtualMachine;
 
+    /** Retries performed by the supervisor (connection exception). */
     protected Integer retry = 0;
 
     public VirtualMachineDefinition getVirtualMachine()

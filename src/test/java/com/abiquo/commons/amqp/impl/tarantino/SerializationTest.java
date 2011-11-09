@@ -21,10 +21,10 @@
 
 package com.abiquo.commons.amqp.impl.tarantino;
 
-import static com.abiquo.commons.amqp.impl.tarantino.VirtualFactoryTestJobs.testApplyVirtualMachineState;
-import static com.abiquo.commons.amqp.impl.tarantino.VirtualFactoryTestJobs.testReconfigureVirtualMachine;
-import static com.abiquo.commons.amqp.impl.tarantino.VirtualFactoryTestJobs.testSnapshotVirtualMachine;
-import static com.abiquo.commons.amqp.impl.tarantino.VirtualFactoryTestJobs.testVirtualMachine;
+import static com.abiquo.commons.amqp.impl.tarantino.TestJobs.testApplyVirtualMachineState;
+import static com.abiquo.commons.amqp.impl.tarantino.TestJobs.testReconfigureVirtualMachine;
+import static com.abiquo.commons.amqp.impl.tarantino.TestJobs.testSnapshotVirtualMachine;
+import static com.abiquo.commons.amqp.impl.tarantino.TestJobs.testVirtualMachine;
 import static org.testng.Assert.assertNotNull;
 
 import org.testng.annotations.Test;

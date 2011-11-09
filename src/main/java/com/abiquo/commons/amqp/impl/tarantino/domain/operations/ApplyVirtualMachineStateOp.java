@@ -23,6 +23,9 @@ package com.abiquo.commons.amqp.impl.tarantino.domain.operations;
 
 import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
 
+/**
+ * Change the virtual machine state. @see {@link StateTransition}
+ */
 public class ApplyVirtualMachineStateOp extends DatacenterJob
 {
     protected StateTransition transaction;
