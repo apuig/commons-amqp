@@ -21,24 +21,26 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain.builder;
 
-import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
+import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ReconfigureVirtualMachineOp;
 
 public class ReconfigureVirtualMachineJobBuilder extends VirtualFactoryJobBuilder
 {
     VirtualMachineDefinition newVmachineDefinition;
 
-    public ReconfigureVirtualMachineJobBuilder connection(HypervisorType hypervisortype, String ip,
-        String loginUser, String loginPassword)
+    @Override
+    public ReconfigureVirtualMachineJobBuilder connection(final HypervisorType hypervisortype,
+        final String ip, final String loginUser, final String loginPassword)
     {
         super.connection(hypervisortype, ip, loginUser, loginPassword);
 
         return this;
     }
 
+    @Override
     public ReconfigureVirtualMachineJobBuilder setVirtualMachineDefinition(
-        VirtualMachineDescriptionBuilder vmBuilder, String virtualMachineId)
+        final VirtualMachineDescriptionBuilder vmBuilder, final String virtualMachineId)
     {
         super.setVirtualMachineDefinition(vmBuilder, virtualMachineId);
 
@@ -46,9 +48,9 @@ public class ReconfigureVirtualMachineJobBuilder extends VirtualFactoryJobBuilde
     }
 
     public ReconfigureVirtualMachineJobBuilder setNewVirtualMachineDefinition(
-        VirtualMachineDescriptionBuilder newVmBuilder, String virtualMachineId)
+        final VirtualMachineDefinition newVmBuilder)
     {
-        newVmachineDefinition = newVmBuilder.build(virtualMachineId);
+        newVmachineDefinition = newVmBuilder;
 
         return this;
     }

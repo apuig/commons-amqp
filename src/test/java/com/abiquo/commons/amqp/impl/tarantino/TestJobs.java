@@ -24,6 +24,8 @@ package com.abiquo.commons.amqp.impl.tarantino;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
+import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
+import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.HardwareConfiguration;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ApplyVirtualMachineStateJobBuilder;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.ReconfigureVirtualMachineJobBuilder;
 import com.abiquo.commons.amqp.impl.tarantino.domain.builder.SnapshotVirtualMachineJobBuilder;
@@ -69,7 +71,7 @@ public class TestJobs
     }
 
     public static ApplyVirtualMachineStateOp testApplyVirtualMachineState(
-        final VirtualMachineDescriptionBuilder vmbuilder, StateTransition state)
+        final VirtualMachineDescriptionBuilder vmbuilder, final StateTransition state)
     {
         return new ApplyVirtualMachineStateJobBuilder() //
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
@@ -92,12 +94,35 @@ public class TestJobs
     public static ReconfigureVirtualMachineOp testReconfigureVirtualMachine(
         final VirtualMachineDescriptionBuilder vmbuilder)
     {
+        HardwareConfiguration hwConf = new HardwareConfiguration();
+        hwConf.setNumVirtualCpus(4);
+        hwConf.setRamInMb(1000);
+
+        VirtualMachineDefinition newVmDef = vmbuilder.build("virtualMachineID");
+        newVmDef.setHardwareConfiguration(hwConf);
+
         return new ReconfigureVirtualMachineJobBuilder()//
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
             .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
-            .setNewVirtualMachineDefinition(vmbuilder.hardware(4, 512), "virtualMachineID") //
+            .setNewVirtualMachineDefinition(newVmDef) //
             .buildReconfigureVirtualMachineDto();
-
     }
 
+    /** A ram = 0 in the DummyHypervisor will raise an error during ROLLBACK (try ROLLBACK_ERROR) */
+    public static ReconfigureVirtualMachineOp testReconfigureInvalidVirtualMachine(
+        final VirtualMachineDescriptionBuilder vmbuilder)
+    {
+        HardwareConfiguration hwConf = new HardwareConfiguration();
+        hwConf.setNumVirtualCpus(0);
+        hwConf.setRamInMb(0);
+
+        VirtualMachineDefinition newVmDef = vmbuilder.build("virtualMachineID");
+        newVmDef.setHardwareConfiguration(hwConf);
+
+        return new ReconfigureVirtualMachineJobBuilder()//
+            .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
+            .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
+            .setNewVirtualMachineDefinition(newVmDef) //
+            .buildReconfigureVirtualMachineDto();
+    }
 }
