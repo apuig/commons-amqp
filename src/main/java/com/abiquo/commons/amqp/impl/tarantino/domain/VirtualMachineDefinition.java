@@ -26,6 +26,9 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskControllerType;
+import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
+
 public class VirtualMachineDefinition
 {
     protected String machineUUID;
@@ -317,6 +320,27 @@ public class VirtualMachineDefinition
         public boolean isStandard()
         {
             return getDiskStandard() != null;
+        }
+
+        /**
+         * Checks if the {@link DiskControllerType} or {@link DiskStateful} have the
+         * {@link DiskFormatType} set.
+         */
+        @JsonIgnore
+        public boolean isDiskControllerTypeSet()
+        {
+            return isStateful() ? getDiskStateful().isDiskControllerTypeSet() : getDiskStandard()
+                .isDiskControllerTypeSet();
+        }
+
+        /**
+         * Gets the {@link DiskControllerType} from the {@link DiskStandard} or {@link DiskStateful}
+         */
+        @JsonIgnore
+        public DiskControllerType getDiskControllerType()
+        {
+            return isStateful() ? getDiskStateful().getDiskControllerType() : getDiskStandard()
+                .getDiskControllerType();
         }
 
         /**

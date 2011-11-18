@@ -21,8 +21,18 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
+@JsonSerialize(include = Inclusion.NON_NULL)
 public class DiskDescription
 {
+    public enum DiskControllerType
+    {
+        SCSI, IDE
+    }
+
     protected DiskFormatType format;
 
     protected long capacityInBytes;
@@ -32,6 +42,8 @@ public class DiskDescription
      * added to build the complete destination path. Ex: /var/lib/virt
      */
     protected String destinationDatastore;
+
+    protected DiskControllerType diskControllerType;
 
     public DiskFormatType getFormat()
     {
@@ -65,7 +77,24 @@ public class DiskDescription
         this.destinationDatastore = destinationDatastore;
     }
 
-    // TODO duplicated
+    public DiskControllerType getDiskControllerType()
+    {
+        return diskControllerType;
+    }
+
+    public void setDiskControllerType(final DiskControllerType diskControllerType)
+    {
+        this.diskControllerType = diskControllerType;
+    }
+
+    @JsonIgnore
+    public boolean isDiskControllerTypeSet()
+    {
+        return this.diskControllerType != null;
+    }
+
+    /** ######## DiskFomratType already in the *model* project TODO duplicated ######## **/
+
     public enum DiskFormatType
     {
         UNKNOWN("raw"),
