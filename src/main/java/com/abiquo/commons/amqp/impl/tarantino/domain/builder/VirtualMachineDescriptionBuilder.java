@@ -21,6 +21,7 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain.builder;
 
+import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskControllerType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStandard;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStateful;
@@ -111,7 +112,8 @@ public class VirtualMachineDescriptionBuilder
 
     public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
         final long capacityInBytes, final String repository, final String sourcePath,
-        final String destinationDatastore, final String repositoryManagerAddress)
+        final String destinationDatastore, final String repositoryManagerAddress,
+        final DiskControllerType controllerType)
     {
 
         DiskStandard disk = new DiskStandard();
@@ -121,6 +123,7 @@ public class VirtualMachineDescriptionBuilder
         disk.setPath(sourcePath);
         disk.setDestinationDatastore(destinationDatastore);
         disk.setRepositoryManagerAddress(repositoryManagerAddress);
+        disk.setDiskControllerType(controllerType);
 
         primaryDisk = new PrimaryDisk();
         primaryDisk.setDiskStandard(disk);
@@ -130,13 +133,15 @@ public class VirtualMachineDescriptionBuilder
     }
 
     public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
-        final long capacityInBytes, final String iqn, final String destinationDatastore)
+        final long capacityInBytes, final String iqn, final String destinationDatastore,
+        final DiskControllerType controllerType)
     {
         DiskStateful disk = new DiskStateful();
         disk.setFormat(format);
         disk.setCapacityInBytes(capacityInBytes);
         disk.setLocation(iqn);
         disk.setDestinationDatastore(destinationDatastore);
+        disk.setDiskControllerType(controllerType);
 
         primaryDisk = new PrimaryDisk();
         primaryDisk.setDiskStateful(disk);
@@ -145,7 +150,7 @@ public class VirtualMachineDescriptionBuilder
 
     public VirtualMachineDescriptionBuilder addSecondaryScsiDisk(final DiskFormatType format,
         final long capacityInBytes, final String iqn, final String destinationDatastore,
-        final int sequence)
+        final int sequence, final DiskControllerType controllerType)
     {
         if (secondaryDisks == null)
         {
@@ -158,6 +163,7 @@ public class VirtualMachineDescriptionBuilder
         auxDisk.setLocation(iqn);
         auxDisk.setDestinationDatastore(destinationDatastore);
         auxDisk.setSequence(sequence);
+        auxDisk.setDiskControllerType(controllerType);
 
         secondaryDisks.getStatefulDisks().add(auxDisk);
 
@@ -165,7 +171,7 @@ public class VirtualMachineDescriptionBuilder
     }
 
     public VirtualMachineDescriptionBuilder addSecondaryHardDisk(final long diskFileSizeInBytes,
-        final int sequence, final String datastorePath)
+        final int sequence, final String datastorePath, final DiskControllerType controllerType)
     {
         if (secondaryDisks == null)
         {
@@ -181,6 +187,7 @@ public class VirtualMachineDescriptionBuilder
         hdDisk.setRepository(null);
         hdDisk.setRepositoryManagerAddress(null);
         hdDisk.setSequence(sequence);
+        hdDisk.setDiskControllerType(controllerType);
 
         secondaryDisks.getStandardDisks().add(hdDisk);
 
