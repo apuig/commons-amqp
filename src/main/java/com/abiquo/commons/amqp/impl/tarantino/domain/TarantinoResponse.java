@@ -28,7 +28,7 @@ public class TarantinoResponse extends DatacenterNotification
 {
     public enum JobStateType
     {
-        START, DONE, ERROR, ROLLBACK_START, ROLLBACK_DONE, ROLLBACK_ERROR, ROLLBACK_ABORTED
+        START, DONE, ERROR, ABORTED, ROLLBACK_START, ROLLBACK_DONE, ROLLBACK_ERROR, ROLLBACK_ABORTED
     };
 
     protected String jobId;
