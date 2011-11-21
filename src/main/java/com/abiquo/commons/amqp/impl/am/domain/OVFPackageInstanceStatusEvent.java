@@ -32,18 +32,19 @@ public class OVFPackageInstanceStatusEvent implements Queuable
 
     protected Double progress;
 
-    protected String errorCause;
-
     protected String enterpriseId;
 
     protected String repositoryLocation;
+
+    /** only for ERROR events */
+    protected String errorCause;
 
     public String getOvfId()
     {
         return ovfId;
     }
 
-    public void setOvfId(String ovfId)
+    public void setOvfId(final String ovfId)
     {
         this.ovfId = ovfId;
     }
@@ -53,7 +54,7 @@ public class OVFPackageInstanceStatusEvent implements Queuable
         return status;
     }
 
-    public void setStatus(String status)
+    public void setStatus(final String status)
     {
         this.status = status;
     }
@@ -63,7 +64,7 @@ public class OVFPackageInstanceStatusEvent implements Queuable
         return progress;
     }
 
-    public void setProgress(Double progress)
+    public void setProgress(final Double progress)
     {
         this.progress = progress;
     }
@@ -73,7 +74,7 @@ public class OVFPackageInstanceStatusEvent implements Queuable
         return errorCause;
     }
 
-    public void setErrorCause(String errorCause)
+    public void setErrorCause(final String errorCause)
     {
         this.errorCause = errorCause;
     }
@@ -83,7 +84,7 @@ public class OVFPackageInstanceStatusEvent implements Queuable
         return enterpriseId;
     }
 
-    public void setEnterpriseId(String enterpriseId)
+    public void setEnterpriseId(final String enterpriseId)
     {
         this.enterpriseId = enterpriseId;
     }
@@ -93,7 +94,7 @@ public class OVFPackageInstanceStatusEvent implements Queuable
         return repositoryLocation;
     }
 
-    public void setRepositoryLocation(String repositoryLocation)
+    public void setRepositoryLocation(final String repositoryLocation)
     {
         this.repositoryLocation = repositoryLocation;
     }
