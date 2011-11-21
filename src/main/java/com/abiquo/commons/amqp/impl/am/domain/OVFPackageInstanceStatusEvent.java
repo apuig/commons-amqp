@@ -39,9 +39,6 @@ public class OVFPackageInstanceStatusEvent implements Queuable
     /** only for ERROR events */
     protected String errorCause;
 
-    /** only for DOWNLOAD events */
-    protected String ovfInstanceDtoJson;
-
     public String getOvfId()
     {
         return ovfId;
@@ -100,16 +97,6 @@ public class OVFPackageInstanceStatusEvent implements Queuable
     public void setRepositoryLocation(final String repositoryLocation)
     {
         this.repositoryLocation = repositoryLocation;
-    }
-
-    public String getOvfInstanceDtoJson()
-    {
-        return ovfInstanceDtoJson;
-    }
-
-    public void setOvfInstanceDtoJson(final String ovfInstanceDtoJson)
-    {
-        this.ovfInstanceDtoJson = ovfInstanceDtoJson;
     }
 
     @Override
