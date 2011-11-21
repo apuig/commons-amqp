@@ -21,14 +21,14 @@
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
+import com.abiquo.commons.amqp.impl.tarantino.domain.dto.BaseJob;
 import com.abiquo.commons.amqp.util.JSONUtils;
 
 public class TarantinoResponse extends DatacenterNotification
 {
-    // TODO deprecated not notified states (INIT, ROLLBACK_INIT, NEEDED)
     public enum JobStateType
     {
-        INIT, START, DONE, ERROR, ABORTED, ROLLBACK_INIT, ROLLBACK_START, ROLLBACK_DONE, ROLLBACK_ERROR, ROLLBACK_ABORTED, NEEDED
+        START, DONE, ERROR, ROLLBACK_START, ROLLBACK_DONE, ROLLBACK_ERROR, ROLLBACK_ABORTED
     };
 
     protected String jobId;
@@ -66,6 +66,11 @@ public class TarantinoResponse extends DatacenterNotification
     public void setError(final String error)
     {
         this.error = error;
+    }
+
+    public boolean isTask()
+    {
+        return BaseJob.isRoot(this.jobId);
     }
 
     public static TarantinoResponse fromByteArray(final byte[] bytes)
