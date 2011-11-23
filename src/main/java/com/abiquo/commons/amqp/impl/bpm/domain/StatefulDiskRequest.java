@@ -39,13 +39,14 @@ public class StatefulDiskRequest extends BPMRequest
     }
 
     public StatefulDiskRequest(final String storagePoolTarget, final String diskPath,
-        final int nodeId, final Long volumeSize, final int enterpriseId)
+        final int nodeId, final Long volumeSize, final int enterpriseId, final Sender sender)
     {
         this.storagePoolTarget = storagePoolTarget;
         this.diskPath = diskPath;
-        this.setNodeId(nodeId);
+        this.nodeId = nodeId;
         this.volumeSize = volumeSize;
         this.enterpriseId = enterpriseId;
+        this.sender = sender;
     }
 
     public String getStoragePoolTarget()

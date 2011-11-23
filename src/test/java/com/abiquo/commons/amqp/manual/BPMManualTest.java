@@ -35,14 +35,14 @@ import com.abiquo.commons.amqp.impl.bpm.domain.StatefulDiskRequest;
 
 public class BPMManualTest
 {
-    public static void main(String[] args) throws IOException
+    public static void main(final String[] args) throws IOException
     {
         BPMRequestConsumer bpmZero = new BPMRequestConsumer("0");
 
         bpmZero.addCallback(new ImageConverterRequestCallback()
         {
             @Override
-            public void convertDisk(ImageConverterRequest request)
+            public void convertDisk(final ImageConverterRequest request)
             {
                 System.out.println(request.getClass());
             }
@@ -51,13 +51,13 @@ public class BPMManualTest
         bpmZero.addCallback(new StatefulDiskRequestCallback()
         {
             @Override
-            public void dumpVolumeToDisk(StatefulDiskRequest request)
+            public void dumpVolumeToDisk(final StatefulDiskRequest request)
             {
                 System.out.println("volume -> disk " + request.getClass());
             }
 
             @Override
-            public void dumpDiskToVolume(StatefulDiskRequest request)
+            public void dumpDiskToVolume(final StatefulDiskRequest request)
             {
                 System.out.println("disk -> volume " + request.getClass());
             }
@@ -66,7 +66,7 @@ public class BPMManualTest
         bpmZero.addCallback(new InitiatorRequestCallback()
         {
             @Override
-            public void getInitiatorIQN(InitiatorRequest request)
+            public void getInitiatorIQN(final InitiatorRequest request)
             {
                 System.out.println(request.getClass());
             }
@@ -79,7 +79,8 @@ public class BPMManualTest
 
         for (int i = 0; i < 10; i++)
         {
-            BPMRequest request = new ImageConverterRequest("klj", "lk", "asd", "asd", 2, 0);
+            BPMRequest request =
+                new ImageConverterRequest("klj", "lk", "asd", "asd", 2, 0, Sender.AM_DOWNLOAD);
             request.setSender(Sender.AM_DOWNLOAD);
 
             p.publish(request);

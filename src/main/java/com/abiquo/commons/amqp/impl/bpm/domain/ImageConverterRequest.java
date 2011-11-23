@@ -42,7 +42,8 @@ public class ImageConverterRequest extends BPMRequest
     }
 
     public ImageConverterRequest(final String sourcePath, final String destPath,
-        final String source, final String dest, final Integer enterpriseId, final int conversionId)
+        final String source, final String dest, final Integer enterpriseId, final int conversionId,
+        final Sender sender)
     {
         this.imagePathSource = sourcePath;
         this.imagePathDest = destPath;
@@ -50,6 +51,7 @@ public class ImageConverterRequest extends BPMRequest
         this.destFormat = dest;
         this.conversionId = conversionId;
         this.enterpriseId = enterpriseId;
+        this.sender = sender;
     }
 
     public String getImagePathSource()

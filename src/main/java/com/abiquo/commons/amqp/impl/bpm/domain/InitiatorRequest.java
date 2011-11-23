@@ -22,6 +22,16 @@ package com.abiquo.commons.amqp.impl.bpm.domain;
 
 public class InitiatorRequest extends BPMRequest
 {
+    public InitiatorRequest()
+    {
+    }
+
+    public InitiatorRequest(final Integer enterpriseId, final Integer conversionId)
+    {
+        this.enterpriseId = enterpriseId;
+        this.conversionId = conversionId;
+        this.sender = Sender.INITIATOR;
+    }
 
     private Integer enterpriseId;
 
