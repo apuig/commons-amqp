@@ -20,6 +20,8 @@
  */
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
 import com.abiquo.commons.amqp.impl.tarantino.domain.dto.BaseJob;
 import com.abiquo.commons.amqp.util.JSONUtils;
@@ -68,6 +70,7 @@ public class TarantinoResponse extends DatacenterNotification
         this.error = error;
     }
 
+    @JsonIgnore
     public boolean isTask()
     {
         return BaseJob.isRoot(this.jobId);
