@@ -101,6 +101,19 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
+    public VirtualMachineDescriptionBuilder dhcp(final String dhcpAddress, final Integer dhcpPort)
+    {
+        if (netConf == null)
+        {
+            netConf = new NetworkConfiguration();
+        }
+
+        netConf.setDhcpAddress(dhcpAddress);
+        netConf.setDhcpPort(dhcpPort);
+
+        return this;
+    }
+
     public VirtualMachineDescriptionBuilder bootstrap(final String uri, final String auth)
     {
         bootstrapConf = new BootstrapConfiguration();
