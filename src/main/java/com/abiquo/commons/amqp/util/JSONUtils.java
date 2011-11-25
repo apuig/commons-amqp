@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * "" A collection of helper methods to wrap the use of Jackson.
+ * A collection of helper methods to wrap the use of Jackson.
  * 
  * @author eruiz@abiquo.com
  */
