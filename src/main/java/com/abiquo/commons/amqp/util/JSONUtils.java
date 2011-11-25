@@ -22,19 +22,23 @@
 package com.abiquo.commons.amqp.util;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * A collection of helper methods to wrap the use of Jackson.
+ * "" A collection of helper methods to wrap the use of Jackson.
  * 
  * @author eruiz@abiquo.com
  */
 public class JSONUtils
 {
+    private final static Logger LOGGER = LoggerFactory.getLogger(JSONUtils.class);
+
     /**
      * Serializes the given Object to JSON and returns the result in array of bytes.
      * 
      * @param value The object to serialize.
-     * @return A byte array representing the JSON serialization of the object. A null value if the
+     * @return A "" array representing the JSON serialization of the object. A null value if the
      *         serialization fails.
      */
     public static byte[] serialize(Object value)
@@ -47,6 +51,8 @@ public class JSONUtils
         }
         catch (Exception e)
         {
+            LOGGER.error(String.format("Can not serialize %s to byte array.", value.getClass()
+                .getSimpleName()), e);
             return null;
         }
     }
@@ -69,6 +75,8 @@ public class JSONUtils
         }
         catch (Exception e)
         {
+            LOGGER.error(
+                String.format("Can not deserialize %s from byte array.", type.getSimpleName()), e);
             return null;
         }
     }
