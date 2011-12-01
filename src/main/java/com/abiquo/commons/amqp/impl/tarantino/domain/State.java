@@ -21,20 +21,19 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
-
 /**
  * The states that a virtual machine can have.
  */
 public enum State
 {
-    ON, OFF, PAUSED, UNDEPLOYED, CONFIGURED, UNKNOWN;
+    ON, OFF, PAUSED, ALLOCATED, CONFIGURED, UNKNOWN, NOT_ALLOCATED, LOCKED;
 
-    public static State fromValue(String value)
+    public static State fromValue(final String value)
     {
         return State.valueOf(value.toUpperCase());
     }
 
-    public State travel(StateTransition transaction)
+    public State travel(final StateTransition transaction)
     {
         if (!transaction.isValidOrigin(this))
         {

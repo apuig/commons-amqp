@@ -43,10 +43,11 @@ public class StateTest
         states.add(State.OFF);
         states.add(State.ON);
         states.add(State.PAUSED);
-        states.add(State.UNDEPLOYED);
+        states.add(State.ALLOCATED);
         states.add(State.UNKNOWN);
-
-        assertEquals(State.values().length, 6);
+        states.add(State.LOCKED);
+        states.add(State.NOT_ALLOCATED);
+        assertEquals(State.values().length, 8);
 
         for (State state : State.values())
         {
@@ -63,7 +64,7 @@ public class StateTest
     @Test
     public void test_configureTravel()
     {
-        assertEquals(State.UNDEPLOYED.travel(StateTransition.CONFIGURE), State.CONFIGURED);
+        assertEquals(State.ALLOCATED.travel(StateTransition.CONFIGURE), State.CONFIGURED);
     }
 
     @Test
@@ -75,7 +76,7 @@ public class StateTest
     @Test
     public void test_deconfigureTravel()
     {
-        assertEquals(State.CONFIGURED.travel(StateTransition.DECONFIGURE), State.UNDEPLOYED);
+        assertEquals(State.CONFIGURED.travel(StateTransition.DECONFIGURE), State.ALLOCATED);
     }
 
     @Test

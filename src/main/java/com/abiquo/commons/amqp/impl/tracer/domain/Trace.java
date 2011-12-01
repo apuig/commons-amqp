@@ -33,8 +33,6 @@ import com.abiquo.commons.amqp.util.JSONUtils;
  */
 public class Trace implements Queuable
 {
-    /** The trace message. */
-    private String message;
 
     /** The name of the user who performs the action. */
     private String username;
@@ -62,6 +60,9 @@ public class Trace implements Queuable
 
     /** The hierarchy data. */
     private Map<String, String> hierarchyData;
+
+    /** The actual message that eventually is shown to the user. */
+    private String message;
 
     public String getUsername()
     {

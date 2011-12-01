@@ -21,11 +21,12 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
+import static com.abiquo.commons.amqp.impl.tarantino.domain.State.ALLOCATED;
 import static com.abiquo.commons.amqp.impl.tarantino.domain.State.CONFIGURED;
+import static com.abiquo.commons.amqp.impl.tarantino.domain.State.NOT_ALLOCATED;
 import static com.abiquo.commons.amqp.impl.tarantino.domain.State.OFF;
 import static com.abiquo.commons.amqp.impl.tarantino.domain.State.ON;
 import static com.abiquo.commons.amqp.impl.tarantino.domain.State.PAUSED;
-import static com.abiquo.commons.amqp.impl.tarantino.domain.State.UNDEPLOYED;
 import static java.util.Collections.singleton;
 
 import java.util.Arrays;
@@ -38,13 +39,13 @@ import java.util.Set;
 public enum StateTransition
 {
     // Configure transition
-    CONFIGURE(singleton(UNDEPLOYED), CONFIGURED),
+    CONFIGURE(singleton(ALLOCATED), CONFIGURED),
 
     // Reconfigure transition
     RECONFIGURE(singleton(OFF), CONFIGURED),
 
     // Deconfigure transition
-    DECONFIGURE(singleton(CONFIGURED), UNDEPLOYED),
+    DECONFIGURE(singleton(CONFIGURED), ALLOCATED),
 
     // PowerOn transition
     POWERON(new HashSet<State>(Arrays.asList(CONFIGURED, OFF)), ON),
@@ -62,13 +63,19 @@ public enum StateTransition
     RESUME(singleton(PAUSED), ON),
 
     // Snapshot transition
-    SNAPSHOT(singleton(OFF), OFF);
+    SNAPSHOT(singleton(OFF), OFF),
+
+    // Not allocated yet
+    ALLOCATE(singleton(NOT_ALLOCATED), ALLOCATED),
+
+    // Exists the machine in Abiquo, and has hypervisor assigned, but does not exists in hypervisor
+    DEALLOCATE(singleton(ALLOCATED), NOT_ALLOCATED);
 
     private Set<State> origins;
 
     private State end;
 
-    private StateTransition(Set<State> origins, State end)
+    private StateTransition(final Set<State> origins, final State end)
     {
         this.origins = origins;
         this.end = end;
@@ -79,18 +86,18 @@ public enum StateTransition
         return this.end;
     }
 
-    public boolean isValidOrigin(State origin)
+    public boolean isValidOrigin(final State origin)
     {
         return this.origins.contains(origin);
     }
 
-    public static StateTransition fromValue(String value)
+    public static StateTransition fromValue(final String value)
     {
         return StateTransition.valueOf(value.toUpperCase());
     }
 
     /** Inverse Transition */
-    public static StateTransition rollback(StateTransition s)
+    public static StateTransition rollback(final StateTransition s)
     {
         switch (s)
         {

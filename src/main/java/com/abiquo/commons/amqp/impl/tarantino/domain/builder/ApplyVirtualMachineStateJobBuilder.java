@@ -29,22 +29,24 @@ public class ApplyVirtualMachineStateJobBuilder extends VirtualFactoryJobBuilder
 {
     private StateTransition transaction;
 
-    public ApplyVirtualMachineStateJobBuilder connection(HypervisorType hypervisortype, String ip,
-        String loginUser, String loginPassword)
+    @Override
+    public ApplyVirtualMachineStateJobBuilder connection(final HypervisorType hypervisortype,
+        final String ip, final String loginUser, final String loginPassword)
     {
         super.connection(hypervisortype, ip, loginUser, loginPassword);
         return this;
     }
 
+    @Override
     public ApplyVirtualMachineStateJobBuilder setVirtualMachineDefinition(
-        VirtualMachineDescriptionBuilder vmBuilder, String virtualMachineId)
+        final VirtualMachineDescriptionBuilder vmBuilder, final String virtualMachineUuid)
     {
-        super.setVirtualMachineDefinition(vmBuilder, virtualMachineId);
+        super.setVirtualMachineDefinition(vmBuilder, virtualMachineUuid);
 
         return this;
     }
 
-    public ApplyVirtualMachineStateJobBuilder state(StateTransition transition)
+    public ApplyVirtualMachineStateJobBuilder state(final StateTransition transition)
     {
         this.transaction = transition;
 
