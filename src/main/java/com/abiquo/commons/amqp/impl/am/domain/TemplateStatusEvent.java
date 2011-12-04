@@ -24,7 +24,7 @@ package com.abiquo.commons.amqp.impl.am.domain;
 import com.abiquo.commons.amqp.domain.Queuable;
 import com.abiquo.commons.amqp.util.JSONUtils;
 
-public class OVFPackageInstanceStatusEvent implements Queuable
+public class TemplateStatusEvent implements Queuable
 {
     protected String ovfId;
 
@@ -105,8 +105,8 @@ public class OVFPackageInstanceStatusEvent implements Queuable
         return JSONUtils.serialize(this);
     }
 
-    public static OVFPackageInstanceStatusEvent fromByteArray(final byte[] bytes)
+    public static TemplateStatusEvent fromByteArray(final byte[] bytes)
     {
-        return JSONUtils.deserialize(bytes, OVFPackageInstanceStatusEvent.class);
+        return JSONUtils.deserialize(bytes, TemplateStatusEvent.class);
     }
 }

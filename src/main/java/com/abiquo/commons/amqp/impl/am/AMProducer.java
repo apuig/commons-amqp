@@ -27,10 +27,10 @@ import static com.abiquo.commons.amqp.util.ProducerUtils.publishPersistentText;
 
 import java.io.IOException;
 
-import com.abiquo.commons.amqp.impl.am.domain.OVFPackageInstanceStatusEvent;
+import com.abiquo.commons.amqp.impl.am.domain.TemplateStatusEvent;
 import com.abiquo.commons.amqp.producer.BasicProducer;
 
-public class AMProducer extends BasicProducer<OVFPackageInstanceStatusEvent>
+public class AMProducer extends BasicProducer<TemplateStatusEvent>
 {
     public AMProducer()
     {
@@ -38,7 +38,7 @@ public class AMProducer extends BasicProducer<OVFPackageInstanceStatusEvent>
     }
 
     @Override
-    public void publish(OVFPackageInstanceStatusEvent message) throws IOException
+    public void publish(TemplateStatusEvent message) throws IOException
     {
         publishPersistentText(getChannel(), AM_EXCHANGE, AM_ROUTING_KEY, message.toByteArray());
     }
