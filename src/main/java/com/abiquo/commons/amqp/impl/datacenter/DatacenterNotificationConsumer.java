@@ -27,7 +27,7 @@ import java.util.Set;
 
 import com.abiquo.commons.amqp.consumer.RequestBasedCallback;
 import com.abiquo.commons.amqp.consumer.RequestBasedConsumer;
-import com.abiquo.commons.amqp.impl.bpm.BPMResponseCallback;
+import com.abiquo.commons.amqp.consumer.ResponseProcessor;
 import com.abiquo.commons.amqp.impl.bpm.domain.BPMResponse;
 import com.abiquo.commons.amqp.impl.datacenter.domain.DatacenterNotification;
 import com.abiquo.commons.amqp.impl.tarantino.TarantinoResponseCallback;
@@ -42,13 +42,14 @@ public class DatacenterNotificationConsumer extends RequestBasedConsumer<Datacen
     }
 
     @Override
-    protected DatacenterNotification deserializeRequest(Envelope envelope, byte[] body)
+    protected DatacenterNotification deserializeRequest(final Envelope envelope, final byte[] body)
     {
         return DatacenterNotification.fromByteArray(body);
     }
 
     @Override
-    protected void consume(DatacenterNotification request, Set<RequestBasedCallback> callbacks)
+    protected void consume(final DatacenterNotification request,
+        final Set<RequestBasedCallback> callbacks)
     {
         if (request instanceof BPMResponse)
         {
@@ -60,16 +61,18 @@ public class DatacenterNotificationConsumer extends RequestBasedConsumer<Datacen
         }
     }
 
-    protected void consume(BPMResponse request, Set<RequestBasedCallback> callbacks)
+    @SuppressWarnings("unchecked")
+    protected void consume(final BPMResponse request, final Set<RequestBasedCallback> callbacks)
     {
         for (RequestBasedCallback callback : callbacks)
         {
-            BPMResponseCallback realCallback = (BPMResponseCallback) callback;
+            ResponseProcessor<BPMResponse> realCallback = (ResponseProcessor<BPMResponse>) callback;
             realCallback.processResponse(request);
         }
     }
 
-    protected void consume(TarantinoResponse request, Set<RequestBasedCallback> callbacks)
+    protected void consume(final TarantinoResponse request,
+        final Set<RequestBasedCallback> callbacks)
     {
         for (RequestBasedCallback callback : callbacks)
         {

@@ -21,11 +21,12 @@
 package com.abiquo.commons.amqp.impl.tarantino;
 
 import com.abiquo.commons.amqp.consumer.RequestBasedCallback;
+import com.abiquo.commons.amqp.consumer.ResponseProcessor;
 import com.abiquo.commons.amqp.impl.tarantino.domain.TarantinoResponse;
 
-public abstract class TarantinoResponseCallback implements RequestBasedCallback
+public abstract class TarantinoResponseCallback implements RequestBasedCallback,
+    ResponseProcessor<TarantinoResponse>
 {
-    public abstract void processResponse(TarantinoResponse response);
 
     @Override
     public Class<TarantinoResponse> getRequestClass()
