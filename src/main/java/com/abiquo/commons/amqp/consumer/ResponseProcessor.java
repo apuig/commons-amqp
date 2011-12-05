@@ -18,19 +18,10 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
-package com.abiquo.commons.amqp.impl.bpm;
+package com.abiquo.commons.amqp.consumer;
 
-import com.abiquo.commons.amqp.consumer.RequestBasedCallback;
-import com.abiquo.commons.amqp.consumer.ResponseProcessor;
-import com.abiquo.commons.amqp.impl.bpm.domain.BPMResponse;
 
-public abstract class BPMResponseCallback implements RequestBasedCallback,
-    ResponseProcessor<BPMResponse>
+public interface ResponseProcessor<T>
 {
-
-    @Override
-    public Class< ? > getRequestClass()
-    {
-        return BPMResponse.class;
-    }
+    public void processResponse(T response);
 }
