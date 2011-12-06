@@ -21,15 +21,15 @@
 
 package com.abiquo.commons.amqp.impl.am;
 
-import com.abiquo.commons.amqp.impl.am.domain.OVFPackageInstanceStatusEvent;
+import com.abiquo.commons.amqp.impl.am.domain.TemplateStatusEvent;
 
 public interface AMCallback
 {
-    public void onDownload(OVFPackageInstanceStatusEvent event);
+    public void onDownload(TemplateStatusEvent event);
 
-    public void onNotDownload(OVFPackageInstanceStatusEvent event);
+    public void onNotDownload(TemplateStatusEvent event);
 
-    public void onError(OVFPackageInstanceStatusEvent event);
+    public void onError(TemplateStatusEvent event);
 
-    public void onDownloading(OVFPackageInstanceStatusEvent event);
+    public void onDownloading(TemplateStatusEvent event);
 }
