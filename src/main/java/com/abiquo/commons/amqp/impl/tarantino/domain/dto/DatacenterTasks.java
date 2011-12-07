@@ -20,16 +20,14 @@
  */
 package com.abiquo.commons.amqp.impl.tarantino.domain.dto;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import org.codehaus.jackson.annotate.JsonTypeInfo;
 import org.codehaus.jackson.annotate.JsonTypeInfo.As;
 import org.codehaus.jackson.annotate.JsonTypeInfo.Id;
 
-import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
-import com.abiquo.commons.amqp.impl.tarantino.domain.operations.ApplyVirtualMachineStateOp;
 import com.abiquo.commons.amqp.impl.tarantino.domain.operations.DatacenterJob;
 import com.abiquo.commons.amqp.util.JSONUtils;
 
@@ -43,6 +41,11 @@ public class DatacenterTasks extends BaseJob
     private List<BaseJob> jobs;
 
     private Boolean dependent;
+
+    public DatacenterTasks()
+    {
+        this.setId(UUID.randomUUID().toString());
+    }
 
     public boolean isDependent()
     {
@@ -117,5 +120,16 @@ public class DatacenterTasks extends BaseJob
     public static DatacenterTasks fromByteArray(final byte[] bytes)
     {
         return JSONUtils.deserialize(bytes, DatacenterTasks.class);
+    }
+
+    /**
+     * Only supports DatacenterJob
+     * 
+     * @param job
+     */
+    public void addDatacenterJob(DatacenterJob job)
+    {
+        job.setId(getId().concat(".").concat(UUID.randomUUID().toString()));
+        getJobs().add(job);
     }
 }
