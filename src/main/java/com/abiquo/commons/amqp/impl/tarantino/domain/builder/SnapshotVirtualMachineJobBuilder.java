@@ -55,7 +55,7 @@ public class SnapshotVirtualMachineJobBuilder extends VirtualFactoryJobBuilder
         destination.setCapacityInBytes(capacityInBytes);
         destination.setRepository(repository);
         destination.setPath(path);
-        destination.setSnapshotName(snapshot);
+        destination.setSnapshotFilename(snapshot);
 
         return this;
     }

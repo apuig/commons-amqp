@@ -21,18 +21,29 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
-
 public class DiskSnapshot extends DiskStandard
 {
-    protected String snapshotName;
+    protected String snapshotFilename;
 
-    public String getSnapshotName()
+    protected String name;
+
+    public String getSnapshotFilename()
     {
-        return snapshotName;
+        return snapshotFilename;
     }
 
-    public void setSnapshotName(String snapshotName)
+    public void setSnapshotFilename(String filename)
     {
-        this.snapshotName = snapshotName;
+        this.snapshotFilename = filename;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 }
