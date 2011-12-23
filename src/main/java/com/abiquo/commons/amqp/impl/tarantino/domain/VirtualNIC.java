@@ -21,6 +21,7 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 
@@ -103,6 +104,12 @@ public class VirtualNIC extends DHCPRule
     public void setNetAddress(String value)
     {
         this.netAddress = value;
+    }
+
+    @Override
+    public boolean equals(final Object obj)
+    {
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 
     public int getSequence()
