@@ -40,6 +40,7 @@ public class TestJobs
     public static VirtualMachineDescriptionBuilder testVirtualMachine()
     {
         return new VirtualMachineDescriptionBuilder() //
+            .setBasics("virtualMachineID", "ABQ_virtualMachineID")
             .hardware(1, 256) //
             .addNetwork("mac:mac:mac", "127.0.0.1", "vSwitchName", "networkName", 1, "leaseName",
                 "forwardMode", "netAddress", "gateway", "mask", "primaryDNS", "secondaryDNS",
@@ -55,7 +56,7 @@ public class TestJobs
     {
         return new ApplyVirtualMachineStateJobBuilder() //
             .connection(HypervisorType.TEST, "localhost", "root", "root") //
-            .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
+            .setVirtualMachineDefinition(vmbuilder) //
             .state(StateTransition.CONFIGURE) //
             .buildApplyVirtualMachineStateDto();
     }
@@ -65,7 +66,7 @@ public class TestJobs
     {
         return new ApplyVirtualMachineStateJobBuilder() //
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
-            .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
+            .setVirtualMachineDefinition(vmbuilder) //
             .state(StateTransition.PAUSE)//
             .buildApplyVirtualMachineStateDto();
     }
@@ -75,7 +76,7 @@ public class TestJobs
     {
         return new ApplyVirtualMachineStateJobBuilder() //
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
-            .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
+            .setVirtualMachineDefinition(vmbuilder) //
             .state(state)//
             .buildApplyVirtualMachineStateDto();
     }
@@ -85,7 +86,7 @@ public class TestJobs
     {
         return new SnapshotVirtualMachineJobBuilder()
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
-            .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
+            .setVirtualMachineDefinition(vmbuilder) //
             .destinationDisk(DiskFormatType.RAW, 1024l, "nfs-devel:/opt/vm_repository",
                 "1/some/bundle/m0n0.iso", "test-snapshot")//
             .buildSnapshotVirtualMachineDto();
@@ -98,12 +99,12 @@ public class TestJobs
         hwConf.setNumVirtualCpus(4);
         hwConf.setRamInMb(1000);
 
-        VirtualMachineDefinition newVmDef = vmbuilder.build("virtualMachineID");
+        VirtualMachineDefinition newVmDef = vmbuilder.build();
         newVmDef.setHardwareConfiguration(hwConf);
 
         return new ReconfigureVirtualMachineJobBuilder()//
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
-            .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
+            .setVirtualMachineDefinition(vmbuilder) //
             .setNewVirtualMachineDefinition(newVmDef) //
             .buildReconfigureVirtualMachineDto();
     }
@@ -116,12 +117,12 @@ public class TestJobs
         hwConf.setNumVirtualCpus(0);
         hwConf.setRamInMb(0);
 
-        VirtualMachineDefinition newVmDef = vmbuilder.build("virtualMachineID");
+        VirtualMachineDefinition newVmDef = vmbuilder.build();
         newVmDef.setHardwareConfiguration(hwConf);
 
         return new ReconfigureVirtualMachineJobBuilder()//
             .connection(HypervisorType.TEST, "10.60.1.15", "root", "root") //
-            .setVirtualMachineDefinition(vmbuilder, "virtualMachineID") //
+            .setVirtualMachineDefinition(vmbuilder) //
             .setNewVirtualMachineDefinition(newVmDef) //
             .buildReconfigureVirtualMachineDto();
     }

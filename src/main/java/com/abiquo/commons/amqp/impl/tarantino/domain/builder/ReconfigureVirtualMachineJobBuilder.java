@@ -40,9 +40,9 @@ public class ReconfigureVirtualMachineJobBuilder extends VirtualFactoryJobBuilde
 
     @Override
     public ReconfigureVirtualMachineJobBuilder setVirtualMachineDefinition(
-        final VirtualMachineDescriptionBuilder vmBuilder, final String virtualMachineId)
+        final VirtualMachineDescriptionBuilder vmBuilder)
     {
-        super.setVirtualMachineDefinition(vmBuilder, virtualMachineId);
+        super.setVirtualMachineDefinition(vmBuilder);
 
         return this;
     }
