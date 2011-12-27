@@ -39,9 +39,9 @@ public class ApplyVirtualMachineStateJobBuilder extends VirtualFactoryJobBuilder
 
     @Override
     public ApplyVirtualMachineStateJobBuilder setVirtualMachineDefinition(
-        final VirtualMachineDescriptionBuilder vmBuilder, final String virtualMachineUuid)
+        final VirtualMachineDescriptionBuilder vmBuilder)
     {
-        super.setVirtualMachineDefinition(vmBuilder, virtualMachineUuid);
+        super.setVirtualMachineDefinition(vmBuilder);
 
         return this;
     }

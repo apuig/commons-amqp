@@ -33,9 +33,9 @@ public class VirtualFactoryJobBuilder
     protected VirtualMachineDefinition vmachineDefinition;
 
     public VirtualFactoryJobBuilder setVirtualMachineDefinition(
-        VirtualMachineDescriptionBuilder vmBuilder, String virtualMachineId)
+        VirtualMachineDescriptionBuilder vmBuilder)
     {
-        vmachineDefinition = vmBuilder.build(virtualMachineId);
+        vmachineDefinition = vmBuilder.build();
 
         return this;
     }

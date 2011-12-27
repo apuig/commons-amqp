@@ -39,9 +39,9 @@ public class SnapshotVirtualMachineJobBuilder extends VirtualFactoryJobBuilder
     }
 
     public SnapshotVirtualMachineJobBuilder setVirtualMachineDefinition(
-        VirtualMachineDescriptionBuilder vmBuilder, String virtualMachineId)
-    {
-        super.setVirtualMachineDefinition(vmBuilder, virtualMachineId);
+        VirtualMachineDescriptionBuilder vmBuilder)
+    {    
+        super.setVirtualMachineDefinition(vmBuilder);
 
         return this;
     }

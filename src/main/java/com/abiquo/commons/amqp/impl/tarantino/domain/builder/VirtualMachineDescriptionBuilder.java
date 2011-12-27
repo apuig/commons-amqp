@@ -37,6 +37,10 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualNIC;
 
 public class VirtualMachineDescriptionBuilder
 {
+    private String uuid;
+    
+    private String name;
+    
     private HardwareConfiguration hardConf;
 
     private NetworkConfiguration netConf;
@@ -67,6 +71,14 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
+    public VirtualMachineDescriptionBuilder setBasics(final String uuid, final String name)
+    {
+        this.uuid = uuid;
+        this.name = name;
+        
+        return this;
+    }
+    
     public VirtualMachineDescriptionBuilder addNetwork(final String macAddress, final String ip,
         final String vSwitchName, final String networkName, final int vlanTag,
         final String leaseName, final String forwardMode, final String netAddress,
@@ -207,12 +219,12 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
-    public VirtualMachineDefinition build(final String uuid)
+    public VirtualMachineDefinition build()
     {
         VirtualMachineDefinition virtualMachine = new VirtualMachineDefinition();
         // TODO check not null
         virtualMachine.setMachineUUID(uuid);
-        virtualMachine.setMachineName("ABQ_" + uuid);
+        virtualMachine.setMachineName(name);
         virtualMachine.setHardwareConfiguration(hardConf);
         virtualMachine.setNetworkConfiguration(netConf);
         virtualMachine.setBootstrap(bootstrapConf);
