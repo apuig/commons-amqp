@@ -36,6 +36,12 @@ public class ImageConverterRequest extends BPMRequest
 
     private Integer enterpriseId;
 
+    private Integer virtualMachineId;
+
+    private String creationUser;
+
+    private String templateName;
+
     public ImageConverterRequest()
     {
         this.enterpriseId = 0;
@@ -52,6 +58,23 @@ public class ImageConverterRequest extends BPMRequest
         this.conversionId = conversionId;
         this.enterpriseId = enterpriseId;
         this.sender = sender;
+    }
+
+    public ImageConverterRequest(final String sourcePath, final String destPath,
+        final String source, final String dest, final Integer enterpriseId, final int conversionId,
+        final Integer virtualMachineId, final String templateName, final String userCreation,
+        final Sender sender)
+    {
+        this.imagePathSource = sourcePath;
+        this.imagePathDest = destPath;
+        this.sourceFormat = source;
+        this.destFormat = dest;
+        this.conversionId = conversionId;
+        this.enterpriseId = enterpriseId;
+        this.sender = sender;
+        this.virtualMachineId = virtualMachineId;
+        this.creationUser = userCreation;
+        this.templateName = templateName;
     }
 
     public String getImagePathSource()
@@ -112,6 +135,36 @@ public class ImageConverterRequest extends BPMRequest
     public void setEnterpriseId(final Integer enterpriseId)
     {
         this.enterpriseId = enterpriseId;
+    }
+
+    public Integer getVirtualMachineId()
+    {
+        return virtualMachineId;
+    }
+
+    public void setVirtualMachineId(final Integer virtualMachineId)
+    {
+        this.virtualMachineId = virtualMachineId;
+    }
+
+    public String getCreationUser()
+    {
+        return creationUser;
+    }
+
+    public void setCreationUser(final String creationUser)
+    {
+        this.creationUser = creationUser;
+    }
+
+    public String getTemplateName()
+    {
+        return templateName;
+    }
+
+    public void setTemplateName(final String templateName)
+    {
+        this.templateName = templateName;
     }
 
     public static ImageConverterRequest fromByteArray(final byte[] bytes)
