@@ -23,7 +23,7 @@ package com.abiquo.commons.amqp.impl.tarantino.domain.builder;
 
 import java.util.List;
 
-import com.abiquo.commons.amqp.impl.tarantino.domain.DhcpOption;
+import com.abiquo.commons.amqp.impl.tarantino.domain.DhcpOptionCom;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskControllerType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskStandard;
@@ -87,7 +87,7 @@ public class VirtualMachineDescriptionBuilder
         final String leaseName, final String forwardMode, final String netAddress,
         final String gateway, final String mask, final String primaryDNS,
         final String secondaryDNS, final String sufixDNS, final int sequence,
-        final List<DhcpOption> dchpOptions)
+        final List<DhcpOptionCom> list)
     {
         if (netConf == null)
         {
@@ -111,7 +111,7 @@ public class VirtualMachineDescriptionBuilder
         nic.setPrimaryDNS(primaryDNS);
         nic.setSecondaryDNS(secondaryDNS);
         nic.setSufixDNS(sufixDNS);
-        nic.setDhcpOptions(dchpOptions);
+        nic.setDhcpOptions(list);
 
         netConf.getVirtualNICList().add(nic);
 

@@ -36,7 +36,7 @@ public class VirtualNIC extends DHCPRule
 
     protected String forwardMode;
 
-    protected List<DhcpOption> dhcpOptions;
+    protected List<DhcpOptionCom> dhcpOptions;
 
     @Deprecated
     // use DCHPRule.ip
@@ -120,12 +120,12 @@ public class VirtualNIC extends DHCPRule
         this.sequence = value;
     }
 
-    public List<DhcpOption> getDhcpOptions()
+    public List<DhcpOptionCom> getDhcpOptions()
     {
         return dhcpOptions;
     }
 
-    public void setDhcpOptions(final List<DhcpOption> dhcpOptions)
+    public void setDhcpOptions(final List<DhcpOptionCom> dhcpOptions)
     {
         this.dhcpOptions = dhcpOptions;
     }
