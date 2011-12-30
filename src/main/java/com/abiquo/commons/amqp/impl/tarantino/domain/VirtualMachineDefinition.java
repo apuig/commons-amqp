@@ -233,6 +233,7 @@ public class VirtualMachineDefinition
 
             return this.virtualNICs;
         }
+
     }
 
     public static class BootstrapConfiguration

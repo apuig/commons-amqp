@@ -21,9 +21,10 @@
 
 package com.abiquo.commons.amqp.impl.tarantino.domain;
 
+import java.util.List;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
-
 
 public class VirtualNIC extends DHCPRule
 {
@@ -35,26 +36,23 @@ public class VirtualNIC extends DHCPRule
 
     protected String forwardMode;
 
+    protected List<DhcpOption> dhcpOptions;
+
     @Deprecated
     // use DCHPRule.ip
     protected String netAddress;
 
-
-    
     protected int sequence;
-
 
     public String getVSwitchName()
     {
         return vSwitchName;
     }
 
-    public void setVSwitchName(String vSwitchName)
+    public void setVSwitchName(final String vSwitchName)
     {
         this.vSwitchName = vSwitchName;
     }
-
-   
 
     @JsonIgnore
     public String getRuleName()
@@ -67,7 +65,7 @@ public class VirtualNIC extends DHCPRule
         return networkName;
     }
 
-    public void setNetworkName(String value)
+    public void setNetworkName(final String value)
     {
         this.networkName = value;
     }
@@ -77,7 +75,7 @@ public class VirtualNIC extends DHCPRule
         return vlanTag;
     }
 
-    public void setVlanTag(int value)
+    public void setVlanTag(final int value)
     {
         this.vlanTag = value;
     }
@@ -87,7 +85,7 @@ public class VirtualNIC extends DHCPRule
         return forwardMode;
     }
 
-    public void setForwardMode(String value)
+    public void setForwardMode(final String value)
     {
         this.forwardMode = value;
     }
@@ -101,7 +99,7 @@ public class VirtualNIC extends DHCPRule
 
     @Deprecated
     // use DCHPRule.ip
-    public void setNetAddress(String value)
+    public void setNetAddress(final String value)
     {
         this.netAddress = value;
     }
@@ -117,8 +115,18 @@ public class VirtualNIC extends DHCPRule
         return sequence;
     }
 
-    public void setSequence(int value)
+    public void setSequence(final int value)
     {
         this.sequence = value;
+    }
+
+    public List<DhcpOption> getDhcpOptions()
+    {
+        return dhcpOptions;
+    }
+
+    public void setDhcpOptions(final List<DhcpOption> dhcpOptions)
+    {
+        this.dhcpOptions = dhcpOptions;
     }
 }
