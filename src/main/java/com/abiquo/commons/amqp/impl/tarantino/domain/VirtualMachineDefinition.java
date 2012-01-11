@@ -162,19 +162,6 @@ public class VirtualMachineDefinition
 
         protected List<VirtualNIC> virtualNICs;
 
-        /** Check if the DVS feature is enabled; */
-        protected boolean dvsEnabled;
-
-        public boolean isDvsEnabled()
-        {
-            return dvsEnabled;
-        }
-
-        public void setDvsEnabled(final boolean dvsEnabled)
-        {
-            this.dvsEnabled = dvsEnabled;
-        }
-
         public void setRdPort(final int rdport)
         {
             this.rdport = rdport;
@@ -233,6 +220,7 @@ public class VirtualMachineDefinition
 
             return this.virtualNICs;
         }
+
     }
 
     public static class BootstrapConfiguration
