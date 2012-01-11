@@ -87,7 +87,7 @@ public class VirtualMachineDescriptionBuilder
         final String leaseName, final String forwardMode, final String netAddress,
         final String gateway, final String mask, final String primaryDNS,
         final String secondaryDNS, final String sufixDNS, final int sequence,
-        final List<DhcpOptionCom> list)
+        final List<DhcpOptionCom> list, final boolean configureGateway)
     {
         if (netConf == null)
         {
@@ -112,6 +112,7 @@ public class VirtualMachineDescriptionBuilder
         nic.setSecondaryDNS(secondaryDNS);
         nic.setSufixDNS(sufixDNS);
         nic.setDhcpOptions(list);
+        nic.setConfigureGateway(configureGateway);
 
         netConf.getVirtualNICList().add(nic);
 

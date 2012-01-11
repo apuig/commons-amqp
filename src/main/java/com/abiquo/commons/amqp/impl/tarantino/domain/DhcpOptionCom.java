@@ -13,16 +13,15 @@ public class DhcpOptionCom
 
     protected String netmask;
 
-    public DhcpOptionCom(final Integer option, final String gateway, final String networkAddress,
-        final Integer mask, final String netmask)
-    {
-        super();
-        this.option = option;
-        this.gateway = gateway;
-        this.networkAddress = networkAddress;
-        this.mask = mask;
-        this.netmask = netmask;
-    }
+    // public DhcpOptionCom(final Integer mask, final Integer option, final String gateway,
+    // final String networkAddress, final String netmask)
+    // {
+    // this.option = option;
+    // this.gateway = gateway;
+    // this.networkAddress = networkAddress;
+    // this.mask = mask;
+    // this.netmask = netmask;
+    // }
 
     public Integer getOption()
     {

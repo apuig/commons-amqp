@@ -21,6 +21,10 @@
 
 package com.abiquo.commons.amqp.impl.tarantino;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.abiquo.commons.amqp.impl.tarantino.domain.DhcpOptionCom;
 import com.abiquo.commons.amqp.impl.tarantino.domain.DiskDescription.DiskFormatType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.HypervisorConnection.HypervisorType;
 import com.abiquo.commons.amqp.impl.tarantino.domain.StateTransition;
@@ -46,11 +50,26 @@ public class TestJobs
             //
             .addNetwork("mac:mac:mac", "127.0.0.1", "vSwitchName", "networkName", 1, "leaseName",
                 "forwardMode", "netAddress", "gateway", "mask", "primaryDNS", "secondaryDNS",
-                "sufixDNS", 0, null) //
+                "sufixDNS", 0, dhcp(), true) //
             // .primaryDisk("RAW", "1024", "iqn.bla.bla-lun-0")
             .primaryDisk(DiskFormatType.RAW, 1024l, "nfs-devel:/opt/vm_repo",
                 "1/rs.bcn/m0n0/m0n0.iso", "datastore1", "http://localhost/am", null) //
             .addSecondaryScsiDisk(DiskFormatType.RAW, 1024l, "iqn....", "sdasd", 1, null);
+    }
+
+    private static List<DhcpOptionCom> dhcp()
+    {
+        List<DhcpOptionCom> dhcpList = new ArrayList<DhcpOptionCom>();
+
+        DhcpOptionCom dhcp = new DhcpOptionCom();
+        dhcp.setMask(0);
+        dhcp.setOption(121);
+        dhcp.setGateway("192.168.6.1");
+        dhcp.setNetworkAddress("192.168.6.0");
+        dhcp.setNetmask("255.255.255.0");
+
+        dhcpList.add(dhcp);
+        return dhcpList;
     }
 
     public static ApplyVirtualMachineStateOp testConfigureVirtualMachine(
