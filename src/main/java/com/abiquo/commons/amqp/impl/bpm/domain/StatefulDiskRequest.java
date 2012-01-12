@@ -34,6 +34,17 @@ public class StatefulDiskRequest extends BPMRequest
 
     private Integer enterpriseId;
 
+    /**
+     * Fields used on bundle and stateful
+     */
+    protected Integer idVirtualMachine;
+
+    protected String creationUser;
+
+    protected String templateName;
+
+    protected boolean mustPowerOnWhenFinish;
+
     public StatefulDiskRequest()
     {
     }
@@ -97,6 +108,46 @@ public class StatefulDiskRequest extends BPMRequest
     public void setEnterpriseId(final Integer enterpriseId)
     {
         this.enterpriseId = enterpriseId;
+    }
+
+    public Integer getIdVirtualMachine()
+    {
+        return idVirtualMachine;
+    }
+
+    public void setIdVirtualMachine(Integer idVirtualMachine)
+    {
+        this.idVirtualMachine = idVirtualMachine;
+    }
+
+    public String getCreationUser()
+    {
+        return creationUser;
+    }
+
+    public void setCreationUser(String creationUser)
+    {
+        this.creationUser = creationUser;
+    }
+
+    public String getTemplateName()
+    {
+        return templateName;
+    }
+
+    public void setTemplateName(String templateName)
+    {
+        this.templateName = templateName;
+    }
+
+    public boolean isMustPowerOnWhenFinish()
+    {
+        return mustPowerOnWhenFinish;
+    }
+
+    public void setMustPowerOnWhenFinish(boolean mustPowerOnWhenFinish)
+    {
+        this.mustPowerOnWhenFinish = mustPowerOnWhenFinish;
     }
 
     public static StatefulDiskRequest fromByteArray(final byte[] bytes)
