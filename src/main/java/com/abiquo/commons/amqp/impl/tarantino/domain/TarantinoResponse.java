@@ -40,6 +40,18 @@ public class TarantinoResponse extends DatacenterNotification
     /** for ERROR and ROLLBACK_ERROR adds the cause. TODO use VirtualFactoryException. */
     protected String error;
 
+    protected TarantinoError tarantinoError;
+
+    public TarantinoError getTarantinoError()
+    {
+        return tarantinoError;
+    }
+
+    public void setTarantinoError(final TarantinoError tarantinoError)
+    {
+        this.tarantinoError = tarantinoError;
+    }
+
     public String getJobId()
     {
         return jobId;
