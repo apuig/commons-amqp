@@ -80,7 +80,7 @@ public class BPMManualTest
         for (int i = 0; i < 10; i++)
         {
             BPMRequest request =
-                new ImageConverterRequest("klj", "lk", "asd", "asd", 2, 0, Sender.AM_DOWNLOAD);
+                new ImageConverterRequest(1, "klj", "lk", "asd", "asd", 2, 0, Sender.AM_DOWNLOAD);
             request.setSender(Sender.AM_DOWNLOAD);
 
             p.publish(request);

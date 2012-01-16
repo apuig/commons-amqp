@@ -32,6 +32,8 @@ public class BPMRequest extends DatacenterRequest
 {
     protected Sender sender = Sender.UNKNOWN;
 
+    protected Integer userId;
+
     public BPMRequest()
     {
         this.sender = Sender.UNKNOWN;
@@ -45,6 +47,16 @@ public class BPMRequest extends DatacenterRequest
     public void setSender(final Sender sender)
     {
         this.sender = sender;
+    }
+
+    public Integer getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(final Integer userId)
+    {
+        this.userId = userId;
     }
 
     public static BPMRequest fromByteArray(final byte[] bytes)

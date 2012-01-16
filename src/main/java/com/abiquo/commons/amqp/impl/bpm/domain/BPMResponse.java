@@ -27,6 +27,8 @@ public class BPMResponse extends DatacenterNotification
 {
     protected Sender sender = Sender.UNKNOWN;
 
+    protected Integer userId;
+
     public BPMResponse()
     {
         this.sender = Sender.UNKNOWN;
@@ -40,6 +42,16 @@ public class BPMResponse extends DatacenterNotification
     public void setSender(final Sender sender)
     {
         this.sender = sender;
+    }
+
+    public Integer getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(final Integer userId)
+    {
+        this.userId = userId;
     }
 
     public static BPMResponse fromByteArray(final byte[] bytes)

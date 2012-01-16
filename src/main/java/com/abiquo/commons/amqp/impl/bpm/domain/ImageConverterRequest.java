@@ -47,10 +47,11 @@ public class ImageConverterRequest extends BPMRequest
         this.enterpriseId = 0;
     }
 
-    public ImageConverterRequest(final String sourcePath, final String destPath,
-        final String source, final String dest, final Integer enterpriseId, final int conversionId,
-        final Sender sender)
+    public ImageConverterRequest(final Integer userId, final String sourcePath,
+        final String destPath, final String source, final String dest, final Integer enterpriseId,
+        final int conversionId, final Sender sender)
     {
+        this.userId = userId;
         this.imagePathSource = sourcePath;
         this.imagePathDest = destPath;
         this.sourceFormat = source;
@@ -60,11 +61,12 @@ public class ImageConverterRequest extends BPMRequest
         this.sender = sender;
     }
 
-    public ImageConverterRequest(final String sourcePath, final String destPath,
-        final String source, final String dest, final Integer enterpriseId, final int conversionId,
-        final Integer virtualMachineId, final String templateName, final String userCreation,
-        final Sender sender)
+    public ImageConverterRequest(final Integer userId, final String sourcePath,
+        final String destPath, final String source, final String dest, final Integer enterpriseId,
+        final int conversionId, final Integer virtualMachineId, final String templateName,
+        final String userCreation, final Sender sender)
     {
+        this.userId = userId;
         this.imagePathSource = sourcePath;
         this.imagePathDest = destPath;
         this.sourceFormat = source;

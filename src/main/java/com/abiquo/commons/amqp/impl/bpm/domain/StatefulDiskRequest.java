@@ -49,9 +49,11 @@ public class StatefulDiskRequest extends BPMRequest
     {
     }
 
-    public StatefulDiskRequest(final String storagePoolTarget, final String diskPath,
-        final int nodeId, final Long volumeSize, final int enterpriseId, final Sender sender)
+    public StatefulDiskRequest(final Integer userId, final String storagePoolTarget,
+        final String diskPath, final int nodeId, final Long volumeSize, final int enterpriseId,
+        final Sender sender)
     {
+        this.userId = userId;
         this.storagePoolTarget = storagePoolTarget;
         this.diskPath = diskPath;
         this.nodeId = nodeId;
@@ -115,7 +117,7 @@ public class StatefulDiskRequest extends BPMRequest
         return idVirtualMachine;
     }
 
-    public void setIdVirtualMachine(Integer idVirtualMachine)
+    public void setIdVirtualMachine(final Integer idVirtualMachine)
     {
         this.idVirtualMachine = idVirtualMachine;
     }
@@ -125,7 +127,7 @@ public class StatefulDiskRequest extends BPMRequest
         return creationUser;
     }
 
-    public void setCreationUser(String creationUser)
+    public void setCreationUser(final String creationUser)
     {
         this.creationUser = creationUser;
     }
@@ -135,7 +137,7 @@ public class StatefulDiskRequest extends BPMRequest
         return templateName;
     }
 
-    public void setTemplateName(String templateName)
+    public void setTemplateName(final String templateName)
     {
         this.templateName = templateName;
     }
@@ -145,7 +147,7 @@ public class StatefulDiskRequest extends BPMRequest
         return mustPowerOnWhenFinish;
     }
 
-    public void setMustPowerOnWhenFinish(boolean mustPowerOnWhenFinish)
+    public void setMustPowerOnWhenFinish(final boolean mustPowerOnWhenFinish)
     {
         this.mustPowerOnWhenFinish = mustPowerOnWhenFinish;
     }
