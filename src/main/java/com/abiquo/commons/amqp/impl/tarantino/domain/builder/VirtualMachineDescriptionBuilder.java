@@ -128,6 +128,16 @@ public class VirtualMachineDescriptionBuilder
 
         netConf.setDhcpAddress(dhcpAddress);
         netConf.setDhcpPort(dhcpPort);
+        return this;
+    }
+
+    public VirtualMachineDescriptionBuilder setRdPassword(final String rdpassword)
+    {
+        if (netConf == null)
+        {
+            netConf = new NetworkConfiguration();
+        }
+        netConf.setRdPassword(rdpassword);
 
         return this;
     }
