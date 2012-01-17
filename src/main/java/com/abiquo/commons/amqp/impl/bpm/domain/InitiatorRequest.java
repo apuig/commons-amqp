@@ -29,6 +29,7 @@ public class InitiatorRequest extends BPMRequest
     public InitiatorRequest(final Integer userId, final Integer enterpriseId,
         final Integer conversionId)
     {
+        this.userId = userId;
         this.enterpriseId = enterpriseId;
         this.conversionId = conversionId;
         this.sender = Sender.INITIATOR;
