@@ -87,7 +87,7 @@ public class VirtualMachineDescriptionBuilder
         final String leaseName, final String forwardMode, final String netAddress,
         final String gateway, final String mask, final String primaryDNS,
         final String secondaryDNS, final String sufixDNS, final int sequence,
-        final List<DhcpOptionCom> list, final boolean configureGateway)
+        final List<DhcpOptionCom> list, final boolean configureGateway, final boolean isUnmanaged)
     {
         if (netConf == null)
         {
@@ -113,12 +113,13 @@ public class VirtualMachineDescriptionBuilder
         nic.setSufixDNS(sufixDNS);
         nic.setDhcpOptions(list);
         nic.setConfigureGateway(configureGateway);
+        nic.setUnmanaged(isUnmanaged);
 
         netConf.getVirtualNICList().add(nic);
 
         return this;
     }
-
+    
     public VirtualMachineDescriptionBuilder dhcp(final String dhcpAddress, final Integer dhcpPort)
     {
         if (netConf == null)

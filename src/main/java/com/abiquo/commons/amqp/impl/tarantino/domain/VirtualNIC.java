@@ -35,6 +35,8 @@ public class VirtualNIC extends DHCPRule
     protected int vlanTag;
 
     protected String forwardMode;
+    
+    protected Boolean unmanaged;
 
     protected List<DhcpOptionCom> dhcpOptions;
 
@@ -129,4 +131,15 @@ public class VirtualNIC extends DHCPRule
     {
         this.dhcpOptions = dhcpOptions;
     }
+    
+    public Boolean getUnmanaged()
+    {
+        return unmanaged;
+    }
+
+    public void setUnmanaged(Boolean unmanaged)
+    {
+        this.unmanaged = unmanaged;
+    }
+    
 }
