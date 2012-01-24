@@ -119,7 +119,7 @@ public class VirtualMachineDescriptionBuilder
 
         return this;
     }
-    
+
     public VirtualMachineDescriptionBuilder dhcp(final String dhcpAddress, final Integer dhcpPort)
     {
         if (netConf == null)
@@ -176,7 +176,7 @@ public class VirtualMachineDescriptionBuilder
 
     public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
         final long capacityInBytes, final String iqn, final String destinationDatastore,
-        final DiskControllerType controllerType)
+        final DiskControllerType controllerType, final String name)
     {
         DiskStateful disk = new DiskStateful();
         disk.setFormat(format);
@@ -184,6 +184,7 @@ public class VirtualMachineDescriptionBuilder
         disk.setLocation(iqn);
         disk.setDestinationDatastore(destinationDatastore);
         disk.setDiskControllerType(controllerType);
+        disk.setName(name); // Used in XenServer
 
         primaryDisk = new PrimaryDisk();
         primaryDisk.setDiskStateful(disk);
@@ -192,7 +193,7 @@ public class VirtualMachineDescriptionBuilder
 
     public VirtualMachineDescriptionBuilder addSecondaryScsiDisk(final DiskFormatType format,
         final long capacityInBytes, final String iqn, final String destinationDatastore,
-        final int sequence, final DiskControllerType controllerType)
+        final int sequence, final DiskControllerType controllerType, final String name)
     {
         if (secondaryDisks == null)
         {
@@ -206,6 +207,7 @@ public class VirtualMachineDescriptionBuilder
         auxDisk.setDestinationDatastore(destinationDatastore);
         auxDisk.setSequence(sequence);
         auxDisk.setDiskControllerType(controllerType);
+        auxDisk.setName(name); // Used in XenServer
 
         secondaryDisks.getStatefulDisks().add(auxDisk);
 
