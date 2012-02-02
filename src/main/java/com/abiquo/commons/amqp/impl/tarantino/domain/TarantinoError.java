@@ -167,6 +167,12 @@ public enum TarantinoError
     ESXI_INCOMPATIBLE_DISK_CONTROLER("CNTRL-0",
         "ESX can configure an SPARSE disk image in a SCSI controler"),
 
+    ESXI_RDM_DATASTORE_NOT_CONFIGURED("DRM-0", "Can't use the datastore for volume RDM, "
+        + "and ''abiquo.esxi.datastoreRdm'' it is not configured."),
+
+    ESXI_RDM_DATASTORE_INVALID("DRM-1", "Can't use the datastore for volume RDM, "
+        + "and the configured ''abiquo.esxi.datastoreRdm'' doesn't support RDM"),
+
     // DISTRIBUTED VIRTUAL SWITCH
     ESXI_DVS_CREATE_PORT_GROUP("DVS-0", "Could not create the port group"),
 
