@@ -24,7 +24,7 @@ Add maven dependency
 <dependency>
     <groupId>com.abiquo</groupId>
     <artifactId>commons-amqp</artifactId>
-    <version>2.0-tarantino-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     </dependency>
 </dependency>
 ```
