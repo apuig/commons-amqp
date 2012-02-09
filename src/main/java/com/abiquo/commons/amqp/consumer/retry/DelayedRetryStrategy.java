@@ -38,13 +38,13 @@ public class DelayedRetryStrategy extends RetryStrategy
 
     protected long msToSleep;
 
-    protected boolean infiteRetries;
+    protected boolean infiniteRetries;
 
     public DelayedRetryStrategy()
     {
         this.retriesLeft = getNumberOfRetries();
         this.msToSleep = getMsToSleep();
-        this.infiteRetries = (this.retriesLeft == 0);
+        this.infiniteRetries = (this.retriesLeft == 0);
     }
 
     /**
@@ -70,7 +70,7 @@ public class DelayedRetryStrategy extends RetryStrategy
     @Override
     public boolean shouldRetry()
     {
-        boolean retry = infiteRetries ? true : (retriesLeft-- > 0);
+        boolean retry = infiniteRetries ? true : (retriesLeft-- > 0);
 
         if (retry)
         {
@@ -78,7 +78,7 @@ public class DelayedRetryStrategy extends RetryStrategy
             {
                 LOGGER.debug(String.format(
                     "Sleeping for %d ms, %d retries left, infinite retries %b", msToSleep,
-                    retriesLeft, infiteRetries));
+                    retriesLeft, infiniteRetries));
                 Thread.sleep(msToSleep);
             }
             catch (InterruptedException e)
