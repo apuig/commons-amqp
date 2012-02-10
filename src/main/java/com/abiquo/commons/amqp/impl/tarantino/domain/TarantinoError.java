@@ -220,7 +220,9 @@ public enum TarantinoError
     UNHANDLED("MF-0", "Unhandled DatacenterJob exception"),
 
     // Task related
-    INVALID_TASKID("TK-0", "Invalid DatacenterTask ID (or child Jobs doesn't respect parent ID)");
+    INVALID_TASKID("TK-0", "Invalid DatacenterTask ID (or child Jobs doesn't respect parent ID)"),
+
+    PENDING_TASK("TK-1", "The task was in the ");
 
     /** Internal error code */
     private String code;
