@@ -190,7 +190,7 @@ public enum TarantinoError
     ESXI_DVS_HOST_NOT_CONNECTED(
         "DVS-6",
         "Host that stores the virtual machine is not connected. It may happens due the incompatibility between Abiquo's HA and vCenter."),
-        
+
     ESXI_DVS_PORT_GROUP_NOT_FOUND("DVS-7", "Port group not found and it should be created."),
 
     // deleting duplicated virtual machines
@@ -224,7 +224,7 @@ public enum TarantinoError
     // Task related
     INVALID_TASKID("TK-0", "Invalid DatacenterTask ID (or child Jobs doesn't respect parent ID)"),
 
-    PENDING_TASK("TK-1", "The task was in the ");
+    PENDING_TASK("TK-1", "Pending tasks are aborted");
 
     /** Internal error code */
     private String code;
