@@ -190,6 +190,8 @@ public enum TarantinoError
     ESXI_DVS_HOST_NOT_CONNECTED(
         "DVS-6",
         "Host that stores the virtual machine is not connected. It may happens due the incompatibility between Abiquo's HA and vCenter."),
+        
+    ESXI_DVS_PORT_GROUP_NOT_FOUND("DVS-7", "Port group not found and it should be created."),
 
     // deleting duplicated virtual machines
     ESXI_DUPLICATED_TASK("ESXI_DUP_1", "Action in duplicated machine failed"),
