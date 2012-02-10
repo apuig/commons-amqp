@@ -123,6 +123,14 @@ public class DiskDescription
 
         private String libvirtFormat;
 
+        public boolean isSparse()
+        {
+            return this == VMDK_SPARSE //
+                || this == VHD_SPARSE //
+                || this == VDI_SPARSE //
+                || this == QCOW2_SPARSE;
+        }
+
         private DiskFormatType(final String libvirtFormat)
         {
             this.libvirtFormat = libvirtFormat;
