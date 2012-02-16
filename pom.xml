@@ -102,15 +102,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>testing</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>2.4</version>
+                <configuration>                            
+                    <classifier>master</classifier>                      
+                </configuration>    
             </plugin>
 
         </plugins>
