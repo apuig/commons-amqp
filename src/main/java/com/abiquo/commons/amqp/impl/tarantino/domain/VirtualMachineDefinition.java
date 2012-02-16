@@ -148,6 +148,11 @@ public class VirtualMachineDefinition
 
     }
 
+    public enum EthernetDriver
+    {
+        PCNet32, VMXNET3, E1000
+    }
+
     public static class NetworkConfiguration
     {
         /** OMAPI address */

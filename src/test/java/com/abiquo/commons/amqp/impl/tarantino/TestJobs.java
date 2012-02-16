@@ -50,7 +50,7 @@ public class TestJobs
             //
             .addNetwork("mac:mac:mac", "127.0.0.1", "vSwitchName", "networkName", 1, "leaseName",
                 "forwardMode", "netAddress", "gateway", "mask", "primaryDNS", "secondaryDNS",
-                "sufixDNS", 0, dhcp(), true, false) //
+                "sufixDNS", 0, dhcp(), true, false, null) //
             // .primaryDisk("RAW", "1024", "iqn.bla.bla-lun-0")
             .primaryDisk(DiskFormatType.RAW, 1024l, "nfs-devel:/opt/vm_repo",
                 "1/rs.bcn/m0n0/m0n0.iso", "datastore1", "http://localhost/am", null) //

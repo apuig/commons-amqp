@@ -26,6 +26,8 @@ import java.util.List;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.EthernetDriver;
+
 public class VirtualNIC extends DHCPRule
 {
     protected String vSwitchName;
@@ -35,10 +37,12 @@ public class VirtualNIC extends DHCPRule
     protected int vlanTag;
 
     protected String forwardMode;
-    
+
     protected Boolean unmanaged;
 
     protected List<DhcpOptionCom> dhcpOptions;
+
+    protected EthernetDriver ethernetDriver;
 
     @Deprecated
     // use DCHPRule.ip
@@ -131,15 +135,27 @@ public class VirtualNIC extends DHCPRule
     {
         this.dhcpOptions = dhcpOptions;
     }
-    
+
     public Boolean getUnmanaged()
     {
         return unmanaged;
     }
 
-    public void setUnmanaged(Boolean unmanaged)
+    public void setUnmanaged(final Boolean unmanaged)
     {
         this.unmanaged = unmanaged;
     }
-    
+
+    /**
+     * Default driver is {@link EthernetDriver.E1000}
+     */
+    public EthernetDriver getEthernetDriver()
+    {
+        return ethernetDriver == null ? EthernetDriver.E1000 : ethernetDriver;
+    }
+
+    public void setEthernetDriver(final EthernetDriver networkDriver)
+    {
+        this.ethernetDriver = networkDriver;
+    }
 }

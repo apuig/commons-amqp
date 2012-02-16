@@ -32,6 +32,7 @@ import com.abiquo.commons.amqp.impl.tarantino.domain.SecondaryDiskStandard;
 import com.abiquo.commons.amqp.impl.tarantino.domain.SecondaryDiskStateful;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.BootstrapConfiguration;
+import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.EthernetDriver;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.HardwareConfiguration;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.NetworkConfiguration;
 import com.abiquo.commons.amqp.impl.tarantino.domain.VirtualMachineDefinition.PrimaryDisk;
@@ -87,7 +88,8 @@ public class VirtualMachineDescriptionBuilder
         final String leaseName, final String forwardMode, final String netAddress,
         final String gateway, final String mask, final String primaryDNS,
         final String secondaryDNS, final String sufixDNS, final int sequence,
-        final List<DhcpOptionCom> list, final boolean configureGateway, final boolean isUnmanaged)
+        final List<DhcpOptionCom> list, final boolean configureGateway, final boolean isUnmanaged,
+        final EthernetDriver driver)
     {
         if (netConf == null)
         {
@@ -114,6 +116,8 @@ public class VirtualMachineDescriptionBuilder
         nic.setDhcpOptions(list);
         nic.setConfigureGateway(configureGateway);
         nic.setUnmanaged(isUnmanaged);
+
+        nic.setEthernetDriver(driver);
 
         netConf.getVirtualNICList().add(nic);
 
