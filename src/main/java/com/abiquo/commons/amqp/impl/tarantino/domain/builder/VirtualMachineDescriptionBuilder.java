@@ -96,7 +96,7 @@ public class VirtualMachineDescriptionBuilder
             netConf = new NetworkConfiguration();
         }
 
-        VirtualNIC nic = new VirtualNIC();
+        final VirtualNIC nic = new VirtualNIC();
         nic.setMacAddress(macAddress);
         nic.setIp(ip);
 
@@ -117,11 +117,26 @@ public class VirtualMachineDescriptionBuilder
         nic.setConfigureGateway(configureGateway);
         nic.setUnmanaged(isUnmanaged);
 
-        nic.setEthernetDriver(driver);
+        if (driver != null)
+        {
+            nic.setEthernetDriver(driver);
+        }
 
         netConf.getVirtualNICList().add(nic);
 
         return this;
+    }
+
+    public VirtualMachineDescriptionBuilder addNetwork(final String macAddress, final String ip,
+        final String vSwitchName, final String networkName, final int vlanTag,
+        final String leaseName, final String forwardMode, final String netAddress,
+        final String gateway, final String mask, final String primaryDNS,
+        final String secondaryDNS, final String sufixDNS, final int sequence,
+        final List<DhcpOptionCom> list, final boolean configureGateway, final boolean isUnmanaged)
+    {
+        return addNetwork(macAddress, ip, vSwitchName, networkName, vlanTag, leaseName,
+            forwardMode, netAddress, gateway, mask, primaryDNS, secondaryDNS, sufixDNS, sequence,
+            list, configureGateway, isUnmanaged, null);
     }
 
     public VirtualMachineDescriptionBuilder dhcp(final String dhcpAddress, final Integer dhcpPort)
@@ -162,7 +177,7 @@ public class VirtualMachineDescriptionBuilder
         final DiskControllerType controllerType)
     {
 
-        DiskStandard disk = new DiskStandard();
+        final DiskStandard disk = new DiskStandard();
         disk.setFormat(format);
         disk.setCapacityInBytes(capacityInBytes);
         disk.setRepository(repository);
@@ -182,7 +197,7 @@ public class VirtualMachineDescriptionBuilder
         final long capacityInBytes, final String iqn, final String destinationDatastore,
         final DiskControllerType controllerType, final String name)
     {
-        DiskStateful disk = new DiskStateful();
+        final DiskStateful disk = new DiskStateful();
         disk.setFormat(format);
         disk.setCapacityInBytes(capacityInBytes);
         disk.setLocation(iqn);
@@ -204,7 +219,7 @@ public class VirtualMachineDescriptionBuilder
             secondaryDisks = new SecondaryDisks();
         }
 
-        SecondaryDiskStateful auxDisk = new SecondaryDiskStateful();
+        final SecondaryDiskStateful auxDisk = new SecondaryDiskStateful();
         auxDisk.setFormat(format);
         auxDisk.setCapacityInBytes(capacityInBytes);
         auxDisk.setLocation(iqn);
@@ -226,7 +241,7 @@ public class VirtualMachineDescriptionBuilder
             secondaryDisks = new SecondaryDisks();
         }
 
-        SecondaryDiskStandard hdDisk = new SecondaryDiskStandard();
+        final SecondaryDiskStandard hdDisk = new SecondaryDiskStandard();
         hdDisk.setCapacityInBytes(0l);
         hdDisk.setDestinationDatastore(datastorePath);
         hdDisk.setDiskFileSizeInBytes(diskFileSizeInBytes);
@@ -244,7 +259,7 @@ public class VirtualMachineDescriptionBuilder
 
     public VirtualMachineDefinition build()
     {
-        VirtualMachineDefinition virtualMachine = new VirtualMachineDefinition();
+        final VirtualMachineDefinition virtualMachine = new VirtualMachineDefinition();
         // TODO check not null
         virtualMachine.setMachineUUID(uuid);
         virtualMachine.setMachineName(name);
