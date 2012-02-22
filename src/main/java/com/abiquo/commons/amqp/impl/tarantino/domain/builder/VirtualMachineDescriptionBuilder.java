@@ -174,7 +174,7 @@ public class VirtualMachineDescriptionBuilder
     public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
         final long capacityInBytes, final String repository, final String sourcePath,
         final String destinationDatastore, final String repositoryManagerAddress,
-        final DiskControllerType controllerType)
+        final DiskControllerType controllerType, final boolean isHA)
     {
 
         final DiskStandard disk = new DiskStandard();
@@ -188,7 +188,7 @@ public class VirtualMachineDescriptionBuilder
 
         primaryDisk = new PrimaryDisk();
         primaryDisk.setDiskStandard(disk);
-        primaryDisk.setRequiresMoveToDatastore(true);
+        primaryDisk.setRequiresMoveToDatastore(!isHA);
 
         return this;
     }

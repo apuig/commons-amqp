@@ -75,6 +75,78 @@ public class VSMManualTest
         consumer.stop();
     }
 
+    /**
+     * MOVEs between PMs Test environment set with 2PMs (ESXi) and 3VMs faking MOVE events to
+     * overload rabbit and force unresponsive server. More info at
+     * 
+     * @throws IOException
+     */
+    @Test(enabled = true)
+    public void stressTest() throws IOException
+    {
+        final String[] vMachines2Move =
+            new String[] {"ABQ_3653ff3a-6d84-4615-8b3e-9c649f54e74c",
+            "ABQ_a95fbe29-b062-4e9a-a3c4-bb64a7221cd2", "ABQ_deb8c48a-7b83-48a7-bb86-fc77702ce2d5"};
+
+        final String HYPERVISOR1 = "http://10.60.20.70:8080";
+        final String HYPERVISOR2 = "http://10.60.20.71:8080";
+
+        VSMConsumer consumer = new VSMConsumer(VSMConfiguration.EVENT_SYNK_QUEUE);
+
+        consumer.addCallback(new VSMCallback()
+        {
+            @Override
+            public void onEvent(VirtualSystemEvent message)
+            {
+                System.out.println(message.toString());
+            }
+        });
+
+        consumer.start();
+
+        VSMProducer p = createProducer();
+        p.openChannel();
+
+        for (int i = 0; i < 30; i++)
+        {
+            p.publish(new VirtualSystemEvent(vMachines2Move[0], "VMX_04", HYPERVISOR1, "MOVED"));
+
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+
+            p.publish(new VirtualSystemEvent(vMachines2Move[1], "VMX_04", HYPERVISOR2, "MOVED"));
+
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+
+            p.publish(new VirtualSystemEvent(vMachines2Move[2], "VMX_04", HYPERVISOR1, "MOVED"));
+
+            try
+            {
+                Thread.sleep(1000);
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        p.closeChannel();
+        consumer.stop();
+    }
+
     @Test(enabled = false)
     public void single() throws IOException
     {

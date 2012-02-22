@@ -53,7 +53,7 @@ public class TestJobs
                 "sufixDNS", 0, dhcp(), true, false, null) //
             // .primaryDisk("RAW", "1024", "iqn.bla.bla-lun-0")
             .primaryDisk(DiskFormatType.RAW, 1024l, "nfs-devel:/opt/vm_repo",
-                "1/rs.bcn/m0n0/m0n0.iso", "datastore1", "http://localhost/am", null) //
+                "1/rs.bcn/m0n0/m0n0.iso", "datastore1", "http://localhost/am", null, false) //
             .addSecondaryScsiDisk(DiskFormatType.RAW, 1024l, "iqn....", "sdasd", 1, null,
                 "scsi-disk");
     }
