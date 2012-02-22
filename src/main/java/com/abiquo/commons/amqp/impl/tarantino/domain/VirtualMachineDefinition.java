@@ -289,7 +289,7 @@ public class VirtualMachineDefinition
          */
         public Boolean getRequiresMoveToDatastore()
         {
-            return requiresMoveToDatastore;
+            return requiresMoveToDatastore == null ? true : requiresMoveToDatastore;
         }
 
         // TODO compatibility with old code FIXME
