@@ -1,7 +1,7 @@
 Abiquo Commons AMQP
 ===================
 
-One library to use RabbitMQ in an unified way between Abiquo's modules. It includes producers, consumers and exchange/binding/queue configurations for each module.
+One library to use RabbitMQ in an unified way between Abiquo's modules. It includes producers, consumers, DTOs, and exchange/binding/queue configurations for each module.
 
 Maven coordinates
 -----------------
