@@ -193,6 +193,16 @@ public class VirtualMachineDescriptionBuilder
         return this;
     }
 
+    @Deprecated
+    public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
+        final long capacityInBytes, final String repository, final String sourcePath,
+        final String destinationDatastore, final String repositoryManagerAddress,
+        final DiskControllerType controllerType)
+    {
+        return primaryDisk(format, capacityInBytes, repository, sourcePath, destinationDatastore,
+            repositoryManagerAddress, controllerType, false);
+    }
+
     public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
         final long capacityInBytes, final String iqn, final String destinationDatastore,
         final DiskControllerType controllerType, final String name)
