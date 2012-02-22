@@ -81,7 +81,7 @@ public class VSMManualTest
      * 
      * @throws IOException
      */
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void stressTest() throws IOException
     {
         final String[] vMachines2Move =
