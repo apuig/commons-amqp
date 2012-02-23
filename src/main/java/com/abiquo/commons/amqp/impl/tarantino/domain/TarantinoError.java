@@ -136,7 +136,7 @@ public enum TarantinoError
     HYPERVISOR_DISCONNECTION("HYP-02",
         "Unable to disconnect; invalid hypervisor (ip or port) location"),
 
-    HYPERVISOR_CONFIGURATION("HYP-03", "Hypervisor is not properly configured to eb used in Abiquo"),
+    HYPERVISOR_CONFIGURATION("HYP-03", "Hypervisor is not properly configured to be used in Abiquo"),
 
     HYPERVISOR_UNREADABLE("HYP-04", "Could not read hypervisor configuration"),
 
@@ -264,8 +264,8 @@ public enum TarantinoError
         // Outputs all errors in wiki table format
         for (TarantinoError error : errors)
         {
-            System.out.println(String.format("| %s | %s | %s |", error.code, error.message,
-                error.name()));
+            System.out.println(String.format("| %s | %s | %s |", error.code, error.message, error
+                .name()));
         }
     }
 }
