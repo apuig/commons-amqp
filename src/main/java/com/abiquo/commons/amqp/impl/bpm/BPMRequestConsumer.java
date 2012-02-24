@@ -82,11 +82,11 @@ public class BPMRequestConsumer extends DatacenterRequestConsumer
 
             switch (request.getSender())
             {
-                case STATEFUL:
+                case PERSISTENT:
                     realCallback.dumpDiskToVolume(request);
                     break;
 
-                case STATEFUL_BUNDLE:
+                case PERSISTENT_BUNDLE:
                     realCallback.dumpVolumeToDisk(request);
                     break;
             }
