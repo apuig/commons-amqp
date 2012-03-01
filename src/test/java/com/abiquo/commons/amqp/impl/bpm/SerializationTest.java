@@ -44,7 +44,7 @@ public class SerializationTest
         Assert.assertFalse(deserialization instanceof StatefulDiskRequest);
 
         StatefulDiskRequest statefulRequest =
-            new StatefulDiskRequest(1, "", "", 1, 22L, 22, Sender.STATEFUL_BUNDLE);
+            new StatefulDiskRequest(1, "", "", 1, 22L, 22, Sender.PERSISTENT_BUNDLE);
         serialization = new String(statefulRequest.toByteArray());
 
         deserialization = BPMRequest.fromByteArray(serialization.getBytes());

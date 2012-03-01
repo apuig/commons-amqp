@@ -89,7 +89,7 @@ public class BPMManualTest
         for (int i = 0; i < 10; i++)
         {
             BPMRequest request = new StatefulDiskRequest();
-            request.setSender(Sender.STATEFUL);
+            request.setSender(Sender.PERSISTENT);
 
             p.publish(request);
         }
