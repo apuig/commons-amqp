@@ -45,6 +45,8 @@ public class VirtualMachineDefinition
 
     protected BootstrapConfiguration bootstrap;
 
+    protected boolean isHA;
+
     public String getMachineUUID()
     {
         return machineUUID;
@@ -261,9 +263,6 @@ public class VirtualMachineDefinition
 
         protected DiskStateful diskStateful;
 
-        /** If not ''requiresMoveToDatastore'' then is a HA deploy. */
-        protected Boolean requiresMoveToDatastore;
-
         public DiskStandard getDiskStandard()
         {
             return diskStandard;
@@ -284,24 +283,6 @@ public class VirtualMachineDefinition
             this.diskStateful = value;
         }
 
-        /**
-         * Only DiskStandard
-         */
-        public Boolean getRequiresMoveToDatastore()
-        {
-            return requiresMoveToDatastore == null ? true : requiresMoveToDatastore;
-        }
-
-        // TODO compatibility with old code FIXME
-        public boolean requiresMoveToDatastore()
-        {
-            return requiresMoveToDatastore;
-        }
-
-        public void setRequiresMoveToDatastore(final Boolean requiresMoveToDatastore)
-        {
-            this.requiresMoveToDatastore = requiresMoveToDatastore;
-        }
 
         @JsonIgnore
         public boolean isStateful()
@@ -379,5 +360,15 @@ public class VirtualMachineDefinition
             return getStatefulDisks().isEmpty();
         }
 
+    }
+
+    public boolean isHA()
+    {
+        return isHA;
+    }
+
+    public void setHA(boolean isHA)
+    {
+        this.isHA = isHA;
     }
 }

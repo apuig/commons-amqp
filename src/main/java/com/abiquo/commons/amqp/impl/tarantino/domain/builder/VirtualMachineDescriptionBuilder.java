@@ -55,6 +55,8 @@ public class VirtualMachineDescriptionBuilder
 
     private BootstrapConfiguration bootstrapConf;
 
+    private boolean isHA;
+
     public VirtualMachineDescriptionBuilder hardware(final int virtualCpu, final int ramInMb)
     {
         hardConf = new HardwareConfiguration();
@@ -79,6 +81,13 @@ public class VirtualMachineDescriptionBuilder
     {
         this.uuid = uuid;
         this.name = name;
+
+        return this;
+    }
+
+    public VirtualMachineDescriptionBuilder setHA(final boolean isHA)
+    {
+        this.isHA = isHA;
 
         return this;
     }
@@ -174,7 +183,7 @@ public class VirtualMachineDescriptionBuilder
     public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
         final long capacityInBytes, final String repository, final String sourcePath,
         final String destinationDatastore, final String repositoryManagerAddress,
-        final DiskControllerType controllerType, final boolean isHA)
+        final DiskControllerType controllerType)
     {
 
         final DiskStandard disk = new DiskStandard();
@@ -188,19 +197,8 @@ public class VirtualMachineDescriptionBuilder
 
         primaryDisk = new PrimaryDisk();
         primaryDisk.setDiskStandard(disk);
-        primaryDisk.setRequiresMoveToDatastore(!isHA);
 
         return this;
-    }
-
-    @Deprecated
-    public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
-        final long capacityInBytes, final String repository, final String sourcePath,
-        final String destinationDatastore, final String repositoryManagerAddress,
-        final DiskControllerType controllerType)
-    {
-        return primaryDisk(format, capacityInBytes, repository, sourcePath, destinationDatastore,
-            repositoryManagerAddress, controllerType, false);
     }
 
     public VirtualMachineDescriptionBuilder primaryDisk(final DiskFormatType format,
@@ -279,6 +277,7 @@ public class VirtualMachineDescriptionBuilder
 
         virtualMachine.setPrimaryDisk(primaryDisk);
         virtualMachine.setSecondaryDisks(secondaryDisks);
+        virtualMachine.setHA(isHA);
 
         return virtualMachine;
     }
