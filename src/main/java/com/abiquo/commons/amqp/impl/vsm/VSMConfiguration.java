@@ -33,9 +33,9 @@ import com.rabbitmq.client.Channel;
  */
 public class VSMConfiguration extends DefaultConfiguration
 {
-    public static final String VSM_EXCHANGE = "abq.vsm";
+    public static final String VSM_EXCHANGE = "abiquo.vsm";
 
-    public static final String EVENT_SYNK_QUEUE = "abq.event_synk";
+    public static final String EVENT_SYNK_QUEUE = "abiquo.vsm.eventsynk";
 
     public static final String VSM_ROUTING_KEY = "";
 
