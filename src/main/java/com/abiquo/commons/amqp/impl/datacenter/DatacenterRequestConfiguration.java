@@ -40,7 +40,7 @@ public class DatacenterRequestConfiguration extends DefaultConfiguration
 
     public enum RequestType
     {
-        TARANTINO, BPM
+        VIRTUAL_FACTORY, BPM
     };
 
     public static String getDatacenterExchange()
@@ -50,7 +50,8 @@ public class DatacenterRequestConfiguration extends DefaultConfiguration
 
     public static String buildJobsRoutingKey(final String datacenterId, final RequestType type)
     {
-        return JOBS_ROUTING_KEY.concat(".").concat(datacenterId).concat(".").concat(type.name());
+        return JOBS_ROUTING_KEY.concat(".").concat(datacenterId).concat(".")
+            .concat(type.name().toLowerCase());
     }
 
     public static String buildJobsQueue(final String datacenterId, final RequestType type)

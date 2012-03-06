@@ -27,6 +27,6 @@ public class TarantinoRequestProducer extends DatacenterRequestProducer
 {
     public TarantinoRequestProducer(String datacenterId)
     {
-        super(datacenterId, RequestType.TARANTINO);
+        super(datacenterId, RequestType.VIRTUAL_FACTORY);
     }
 }
