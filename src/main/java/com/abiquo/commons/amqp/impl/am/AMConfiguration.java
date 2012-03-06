@@ -28,9 +28,9 @@ import com.rabbitmq.client.Channel;
 
 public class AMConfiguration extends DefaultConfiguration
 {
-    public static final String AM_EXCHANGE = "abq.am";
+    public static final String AM_EXCHANGE = "abiquo.am";
 
-    public static final String AM_ROUTING_KEY = "abq.am.dowloads";
+    public static final String AM_ROUTING_KEY = "abiquo.am.downloads";
 
     public static final String AM_QUEUE = AM_ROUTING_KEY;
 
