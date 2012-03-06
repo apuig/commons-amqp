@@ -40,7 +40,14 @@ public class DatacenterRequestConfiguration extends DefaultConfiguration
 
     public enum RequestType
     {
-        VIRTUAL_FACTORY, BPM
+        VIRTUAL_FACTORY("virtualfactory"), BPM("bpm");
+
+        public String internalName;
+
+        private RequestType(final String internalName)
+        {
+            this.internalName = internalName;
+        }
     };
 
     public static String getDatacenterExchange()
@@ -51,12 +58,12 @@ public class DatacenterRequestConfiguration extends DefaultConfiguration
     public static String buildJobsRoutingKey(final String datacenterId, final RequestType type)
     {
         return JOBS_ROUTING_KEY.concat(".").concat(datacenterId).concat(".")
-            .concat(type.name().toLowerCase());
+            .concat(type.internalName);
     }
 
     public static String buildJobsQueue(final String datacenterId, final RequestType type)
     {
-        return JOBS_QUEUE.concat(".").concat(datacenterId).concat(".").concat(type.name());
+        return JOBS_QUEUE.concat(".").concat(datacenterId).concat(".").concat(type.internalName);
     }
 
     public DatacenterRequestConfiguration(final String datacenterId, final RequestType type)
